@@ -47,14 +47,14 @@ describe('/api/payments', () => {
   describe('GET /api/payments', () => {
     it('should return 401 when not authenticated', async () => {
       auth.mockResolvedValue(null);
-      
+
       const response = await testApi.get(GET, 'http://localhost:3000/api/payments', undefined);
       expectApiError(response, 401, 'Unauthorized');
     });
 
     it('should return empty array when no payments exist', async () => {
       const response = await testApi.get(GET, 'http://localhost:3000/api/payments');
-      
+
       expectApiSuccess(response);
       expect(response.data).toEqual([]);
     });
@@ -65,7 +65,7 @@ describe('/api/payments', () => {
       });
 
       const response = await testApi.get(GET, 'http://localhost:3000/api/payments');
-      
+
       expectApiSuccess(response);
       expect(response.data).toHaveLength(3);
       expect(response.data[0]).toMatchObject({
@@ -90,7 +90,7 @@ describe('/api/payments', () => {
       });
 
       const response = await testApi.get(GET, 'http://localhost:3000/api/payments?status=pending');
-      
+
       expectApiSuccess(response);
       expect(response.data).toHaveLength(2);
       expect(response.data.every((payment: any) => payment.status === 'pending')).toBe(true);
@@ -104,7 +104,7 @@ describe('/api/payments', () => {
       // Create table and session linked to payment
       const table = factories.billiardTable();
       const [insertedTable] = await db.insert(billiardTables).values(table).returning();
-      
+
       const session = factories.tableSession({
         tableId: insertedTable.id,
         paymentId: insertedPayment.id,
@@ -112,10 +112,10 @@ describe('/api/payments', () => {
       const [insertedSession] = await db.insert(tableSessions).values(session).returning();
 
       const response = await testApi.get(
-        GET, 
+        GET,
         `http://localhost:3000/api/payments?sessionId=${insertedSession.id}`
       );
-      
+
       expectApiSuccess(response);
       expect(response.data).toHaveLength(1);
       expect(response.data[0].id).toBe(insertedPayment.id);
@@ -137,7 +137,7 @@ describe('/api/payments', () => {
         GET,
         `http://localhost:3000/api/payments?orderId=${insertedOrder.id}`
       );
-      
+
       expectApiSuccess(response);
       expect(response.data).toHaveLength(1);
       expect(response.data[0].id).toBe(insertedPayment.id);
@@ -166,14 +166,14 @@ describe('/api/payments', () => {
 
     it('should return 401 when not authenticated', async () => {
       auth.mockResolvedValue(null);
-      
+
       const response = await testApi.post(
         POST,
         'http://localhost:3000/api/payments',
         validPaymentData,
         undefined
       );
-      
+
       expectApiError(response, 401, 'Unauthorized');
     });
 
@@ -186,7 +186,7 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         invalidData
       );
-      
+
       expectApiError(response, 400, 'Total amount is required');
     });
 
@@ -196,7 +196,7 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         validPaymentData
       );
-      
+
       expectApiSuccess(response, 201);
       expect(response.data).toMatchObject({
         transactionNumber: expect.stringMatching(/^TXN-/),
@@ -213,7 +213,7 @@ describe('/api/payments', () => {
         transactionId: expect.stringMatching(/^TXN-/),
         midtransOrderId: expect.stringMatching(/^ORDER-/),
         amount: '159500.00',
-        currency: 'IDR',
+        currency: 'UZS',
       });
 
       // Verify payment methods are stored as JSON
@@ -228,7 +228,7 @@ describe('/api/payments', () => {
       const legacyData = {
         customerName: 'Jane Smith',
         amount: 75000,
-        currency: 'IDR',
+        currency: 'UZS',
         paymentMethod: 'cash',
         staffId: testStaff.id,
       };
@@ -238,13 +238,13 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         legacyData
       );
-      
+
       expectApiSuccess(response, 201);
       expect(response.data).toMatchObject({
         customerName: 'Jane Smith',
         totalAmount: '75000.00',
         amount: '75000.00',
-        currency: 'IDR',
+        currency: 'UZS',
         paymentMethod: 'cash',
         tableAmount: '0.00',
         fnbAmount: '0.00',
@@ -271,7 +271,7 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         dataWithoutCustomer
       );
-      
+
       expectApiSuccess(response, 201);
       expect(response.data.customerName).toBe('Walk-in Customer');
     });
@@ -280,7 +280,7 @@ describe('/api/payments', () => {
       // Create table and session
       const table = factories.billiardTable();
       const [insertedTable] = await db.insert(billiardTables).values(table).returning();
-      
+
       const session = factories.tableSession({
         tableId: insertedTable.id,
         paymentId: null,
@@ -297,7 +297,7 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         dataWithSession
       );
-      
+
       expectApiSuccess(response, 201);
 
       // Verify session was linked to payment
@@ -325,7 +325,7 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         dataWithOrder
       );
-      
+
       expectApiSuccess(response, 201);
 
       // Verify order was linked to payment
@@ -337,14 +337,14 @@ describe('/api/payments', () => {
 
     it('should allow staff to create payments', async () => {
       auth.mockResolvedValue(mockStaffSession);
-      
+
       const response = await testApi.post(
         POST,
         'http://localhost:3000/api/payments',
         validPaymentData,
         mockStaffSession
       );
-      
+
       expectApiSuccess(response, 201);
       expect(response.data.customerName).toBe('John Doe');
     });
@@ -368,7 +368,7 @@ describe('/api/payments', () => {
         'http://localhost:3000/api/payments',
         zeroAmountData
       );
-      
+
       expectApiSuccess(response, 201);
       expect(response.data).toMatchObject({
         tableAmount: '0.00',

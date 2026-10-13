@@ -6,6 +6,8 @@ import { fnbOrders, fnbOrderItems, fnbItems, fnbCategories, staff } from '@/sche
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
@@ -126,8 +128,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     const validStatuses = ['pending', 'success', 'failed', 'cancelled'];
     if (!validStatuses.includes(newStatus)) {
-      return NextResponse.json({ 
-        error: 'Invalid status. Must be one of: pending, success, failed, cancelled' 
+      return NextResponse.json({
+        error: 'Invalid status. Must be one of: pending, success, failed, cancelled'
       }, { status: 400 });
     }
 
@@ -157,16 +159,16 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     // If payment is marked as successful, update all related F&B orders to 'paid' status
     if (newStatus === 'success') {
       await db.update(fnbOrders)
-        .set({ 
+        .set({
           status: 'paid',
         })
         .where(eq(fnbOrders.paymentId, paymentId));
     }
-    
+
     // If payment is cancelled or failed, update F&B orders back to 'billed' status
     else if (newStatus === 'cancelled' || newStatus === 'failed') {
       await db.update(fnbOrders)
-        .set({ 
+        .set({
           status: 'billed',
         })
         .where(eq(fnbOrders.paymentId, paymentId));
@@ -179,4 +181,4 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     console.error('Error updating payment:', error);
     return NextResponse.json({ error: 'Failed to update payment' }, { status: 500 });
   }
-} 
+}

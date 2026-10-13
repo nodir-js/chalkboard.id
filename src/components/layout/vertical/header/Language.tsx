@@ -4,26 +4,32 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import Image from "next/image";
 import { Dropdown } from "flowbite-react";
+import { AppLocale } from '@/lib/locale';
 
 const Languages = [
+  {
+    flagname: "O'zbekcha",
+    icon: "/images/flag/icon-flag-uz.svg",
+    value: "uz",
+  },
+  {
+    flagname: "Russkiy",
+    icon: "/images/flag/icon-flag-ru.svg",
+    value: "ru",
+  },
   {
     flagname: "English",
     icon: "/images/flag/icon-flag-en.svg",
     value: "en",
   },
-  {
-    flagname: "Bahasa Indonesia",
-    icon: "/images/flag/icon-flag-id.svg", // You can add Indonesian flag later
-    value: "id",
-  },
-];
+] as const satisfies ReadonlyArray<{ flagname: string; icon: string; value: AppLocale }>;
 
 export const Language = () => {
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
 
-  const switchLocale = (nextLocale: string) => {
+  const switchLocale = (nextLocale: AppLocale) => {
     // Replace the locale part of the path
     const newPath = pathname.replace(`/${locale}`, `/${nextLocale}`);
     router.replace(newPath);
@@ -72,4 +78,3 @@ export const Language = () => {
     </>
   );
 };
-

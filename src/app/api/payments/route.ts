@@ -6,6 +6,8 @@ import { fnbOrders, fnbOrderItems, fnbItems, fnbCategories, staff } from '@/sche
 import { eq, and, sql } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -19,7 +21,7 @@ export async function GET(request: NextRequest) {
     const orderId = searchParams.get('orderId');
 
     let paymentsList: any[];
-    
+
     if (status) {
       paymentsList = await db.select().from(payments)
         .where(eq(payments.status, status))
@@ -31,7 +33,7 @@ export async function GET(request: NextRequest) {
       }).from(tableSessions)
       .where(eq(tableSessions.id, parseInt(sessionId)))
       .limit(1);
-      
+
       if (sessionWithPayment.length > 0 && sessionWithPayment[0].paymentId) {
         paymentsList = await db.select().from(payments)
           .where(eq(payments.id, sessionWithPayment[0].paymentId))
@@ -46,7 +48,7 @@ export async function GET(request: NextRequest) {
       }).from(fnbOrders)
       .where(eq(fnbOrders.id, parseInt(orderId)))
       .limit(1);
-      
+
       if (orderWithPayment.length > 0 && orderWithPayment[0].paymentId) {
         paymentsList = await db.select().from(payments)
           .where(eq(payments.id, orderWithPayment[0].paymentId))
@@ -155,31 +157,31 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { 
-      customerName, 
-      customerPhone, 
-      tableAmount = 0, 
-      fnbAmount = 0, 
-      discountAmount = 0, 
-      taxAmount = 0, 
-      totalAmount, 
-      paymentMethods = [], 
+    const {
+      customerName,
+      customerPhone,
+      tableAmount = 0,
+      fnbAmount = 0,
+      discountAmount = 0,
+      taxAmount = 0,
+      totalAmount,
+      paymentMethods = [],
       staffId,
       // Legacy support for existing integrations
-      sessionId, 
-      orderId, 
-      amount, 
-      currency = 'IDR', 
-      paymentMethod 
+      sessionId,
+      orderId,
+      amount,
+      currency = 'UZS',
+      paymentMethod
     } = body;
 
     // Support both new consolidated format and legacy format
     const finalTotalAmount = totalAmount || amount;
     const finalCustomerName = customerName || 'Walk-in Customer';
-    
+
     if (!finalTotalAmount) {
-      return NextResponse.json({ 
-        error: 'Total amount is required' 
+      return NextResponse.json({
+        error: 'Total amount is required'
       }, { status: 400 });
     }
 
@@ -201,14 +203,14 @@ export async function POST(request: NextRequest) {
       paymentMethods: JSON.stringify(paymentMethods.length > 0 ? paymentMethods : [{ type: paymentMethod || 'cash', amount: finalTotalAmount }]),
       staffId: staffId || null,
       status: 'pending',
-      
+
       // Legacy Midtrans fields (for backward compatibility)
       transactionId,
       midtransOrderId,
       amount: finalTotalAmount.toString(),
       currency,
       paymentMethod: paymentMethod || 'cash',
-      
+
       createdAt: new Date(),
       updatedAt: new Date(),
     }).returning();
@@ -247,4 +249,4 @@ export async function POST(request: NextRequest) {
     console.error('Error creating payment:', error);
     return NextResponse.json({ error: 'Failed to create payment' }, { status: 500 });
   }
-} 
+}

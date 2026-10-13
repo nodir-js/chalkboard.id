@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import BreadcrumbComp from "@/components/layout/shared/breadcrumb/BreadcrumbComp";
 import { Button, Select, Badge, Tabs } from "flowbite-react";
 import {
@@ -25,15 +25,17 @@ import PeakHoursChart from "@/components/analytics/PeakHoursChart";
 import CardBox from "@/components/shared/CardBox";
 import { AnalyticsData } from "@/lib/analytics-types";
 import DefaultSpinner from "@/components/ui-components/Spinner/DefaultSpinner";
+import { formatCurrencyByLocale, formatDateByLocale } from "@/lib/locale";
 
 // BCrumb will be constructed dynamically with translations
 
 const EnhancedAnalytics = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = useLocale();
   const tAnalytics = useTranslations('Analytics');
   const tCommon = useTranslations('Common');
-  
+
   const BCrumb = [
     {
       to: "/",
@@ -69,11 +71,11 @@ const EnhancedAnalytics = () => {
     const [days, period] = timeViewValue.split('-');
     setLoading(true);
     setRefreshing(true);
-    
+
     try {
       const [
-        dailyStatsRes, 
-        peakHoursRes, 
+        dailyStatsRes,
+        peakHoursRes,
         tableUtilizationRes,
         revenueRes,
         fnbRes,
@@ -90,8 +92,8 @@ const EnhancedAnalytics = () => {
       ]);
 
       const [
-        dailyStats, 
-        peakHours, 
+        dailyStats,
+        peakHours,
         tableUtilization,
         revenueBreakdown,
         fnbAnalytics,
@@ -138,13 +140,7 @@ const EnhancedAnalytics = () => {
     setTimeView(event.target.value);
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  const formatCurrency = (amount: number) => formatCurrencyByLocale(amount, locale);
 
   const formatPercentage = (value: number) => {
     if (value == null || value == undefined) {
@@ -172,13 +168,13 @@ const EnhancedAnalytics = () => {
     );
   }
 
-  const { 
-    dailyStats, 
-    peakHours, 
-    revenueBreakdown, 
-    fnbAnalytics, 
-    customerAnalytics, 
-    operationalMetrics 
+  const {
+    dailyStats,
+    peakHours,
+    revenueBreakdown,
+    fnbAnalytics,
+    customerAnalytics,
+    operationalMetrics
   } = analyticsData;
 
 
@@ -207,9 +203,9 @@ const EnhancedAnalytics = () => {
             <option value="90-weekly">{tAnalytics('timeRanges.last90DaysWeekly')}</option>
             <option value="90-monthly">{tAnalytics('timeRanges.last90DaysMonthly')}</option>
           </Select>
-          <Button 
-            color="primary" 
-            size="sm" 
+          <Button
+            color="primary"
+            size="sm"
             onClick={handleRefresh}
             disabled={refreshing}
           >
@@ -226,7 +222,7 @@ const EnhancedAnalytics = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
               <StatCard
                 title={tAnalytics('cards.totalRevenue')}
-                value={`Rp${Number(revenueBreakdown.summary.totalRevenue)}`}
+                value={`UZS ${Number(revenueBreakdown.summary.totalRevenue)}`}
                 subtitle={`${Number(revenueBreakdown.summary.totalRevenue) > 0 ? '+' : ''}${formatPercentage(Number(revenueBreakdown.summary.totalRevenue))} ${tAnalytics('cards.vsLastPeriod')}`}
                 icon={IconCurrency}
                 color="primary"
@@ -234,7 +230,7 @@ const EnhancedAnalytics = () => {
               />
               <StatCard
                 title={tAnalytics('cards.tableRevenue')}
-                value={`Rp${Number(revenueBreakdown.summary.tableRevenue)}`}
+                value={`UZS ${Number(revenueBreakdown.summary.tableRevenue)}`}
                 subtitle={`${dailyStats.sessions.totalSessions} ${tAnalytics('cards.sessions')}`}
                 icon={IconTable}
                 color="secondary"
@@ -242,7 +238,7 @@ const EnhancedAnalytics = () => {
               />
               <StatCard
                 title={tAnalytics('cards.fnbRevenue')}
-                value={`Rp${Number(revenueBreakdown.summary.fnbRevenue)}`}
+                value={`UZS ${Number(revenueBreakdown.summary.fnbRevenue)}`}
                 subtitle={`${dailyStats.fnb.totalOrders} ${tAnalytics('cards.orders')}`}
                 icon={IconCoffee}
                 color="success"
@@ -279,44 +275,40 @@ const EnhancedAnalytics = () => {
                             </linearGradient>
                           </defs>
                           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                          <XAxis 
-                            dataKey="date" 
-                            tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          <XAxis
+                            dataKey="date"
+                            tickFormatter={(value) => formatDateByLocale(value, locale, { month: 'short', day: 'numeric' })}
                             className="text-xs"
                           />
-                          <YAxis 
+                          <YAxis
                             tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
                             className="text-xs"
                           />
-                          <Tooltip 
+                          <Tooltip
                             formatter={(value: any, name: any) => [
-                              new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR',
-                                minimumFractionDigits: 0,
-                              }).format(Number(value) || 0),
-                              name === 'tableRevenue' ? tAnalytics('tooltip.tableRevenue') : 
+                              formatCurrencyByLocale(Number(value) || 0, locale),
+                              name === 'tableRevenue' ? tAnalytics('tooltip.tableRevenue') :
                               name === 'fnbRevenue' ? tAnalytics('tooltip.fnbRevenue') : tAnalytics('tooltip.totalRevenue')
                             ]}
-                            labelFormatter={(label) => new Date(label).toLocaleDateString('en-US', { 
-                              weekday: 'short', 
-                              month: 'short', 
-                              day: 'numeric' 
+                            labelFormatter={(label) => formatDateByLocale(label, locale, {
+                              weekday: 'short',
+                              month: 'short',
+                              day: 'numeric'
                             })}
                           />
                           <Legend />
-                          <Area 
-                            type="monotone" 
-                            dataKey="tableRevenue" 
-                            stroke="#3b82f6" 
+                          <Area
+                            type="monotone"
+                            dataKey="tableRevenue"
+                            stroke="#3b82f6"
                             fill="url(#tableGradient)"
                             fillOpacity={0.6}
                             name={tAnalytics('tooltip.tableRevenue')}
                           />
-                          <Area 
-                            type="monotone" 
-                            dataKey="fnbRevenue" 
-                            stroke="#10b981" 
+                          <Area
+                            type="monotone"
+                            dataKey="fnbRevenue"
+                            stroke="#10b981"
                             fill="url(#fnbGradient)"
                             fillOpacity={0.6}
                             name={tAnalytics('tooltip.fnbRevenue')}
@@ -346,7 +338,7 @@ const EnhancedAnalytics = () => {
                         <IconShoppingCart className="w-8 h-8 text-primary" />
                       </div>
                     )}
-                    
+
                     {customerAnalytics && (
                       <div className="flex items-center justify-between p-3 bg-lightsecondary dark:bg-lightsecondary/20 rounded-lg">
                         <div>
@@ -524,17 +516,17 @@ const EnhancedAnalytics = () => {
                         <p className="text-sm text-bodytext">{tAnalytics('labels.tableUtilization')}</p>
                         <p className="text-2xl font-bold text-primary">{formatPercentage(Number(operationalMetrics.tableUtilization))}</p>
                       </div>
-                      
+
                       <div className="p-3 bg-lightsecondary rounded-lg">
                         <p className="text-sm text-bodytext">{tAnalytics('charts.avgSessionDuration')}</p>
                         <p className="text-2xl font-bold text-secondary">{operationalMetrics.avgSessionDuration} {tAnalytics('labels.min')}</p>
                       </div>
-                      
+
                       <div className="p-3 bg-lightwarning rounded-lg">
                         <p className="text-sm text-bodytext">{tAnalytics('labels.inventoryAlerts')}</p>
                         <p className="text-2xl font-bold text-warning">{operationalMetrics.inventoryAlerts}</p>
                       </div>
-                      
+
                       <div className="p-3 bg-lightinfo rounded-lg">
                         <p className="text-sm text-bodytext">{tAnalytics('labels.peakHours')}</p>
                         <p className="text-lg font-bold text-info">
@@ -573,7 +565,7 @@ const EnhancedAnalytics = () => {
                         <p className="text-sm text-bodytext">{tAnalytics('labels.totalCustomers')}</p>
                         <p className="text-3xl font-bold text-primary">{customerAnalytics.totalCustomers}</p>
                       </div>
-                      
+
                       <div className="p-3 bg-lightsuccess rounded-lg">
                         <p className="text-sm text-bodytext">{tAnalytics('labels.returningCustomers')}</p>
                         <p className="text-2xl font-bold text-success">{customerAnalytics.returningCustomers}</p>
@@ -581,7 +573,7 @@ const EnhancedAnalytics = () => {
                           {formatPercentage((customerAnalytics.returningCustomers / customerAnalytics.totalCustomers) * 100)} {tAnalytics('labels.retention')}
                         </p>
                       </div>
-                      
+
                       <div className="p-3 bg-lightsecondary rounded-lg">
                         <p className="text-sm text-bodytext">{tAnalytics('labels.avgSpendPerCustomer')}</p>
                         <p className="text-2xl font-bold text-secondary">{formatCurrency(customerAnalytics.avgSpendPerCustomer)}</p>
@@ -609,8 +601,8 @@ const EnhancedAnalytics = () => {
                             </div>
                             <div className="flex items-center gap-4">
                               <div className="w-32 bg-gray-200 rounded-full h-2">
-                                <div 
-                                  className="bg-primary h-2 rounded-full" 
+                                <div
+                                  className="bg-primary h-2 rounded-full"
                                   style={{width: `${percentage}%`}}
                                 ></div>
                               </div>
@@ -632,4 +624,4 @@ const EnhancedAnalytics = () => {
   );
 };
 
-export default EnhancedAnalytics; 
+export default EnhancedAnalytics;

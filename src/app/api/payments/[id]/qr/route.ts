@@ -4,6 +4,8 @@ import { payments } from '@/schema/payments';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
@@ -21,7 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     const paymentData = payment[0];
-    
+
     // Generate QR code data (in a real implementation, this would integrate with Midtrans)
     const qrData = {
       orderId: paymentData.midtransOrderId,
@@ -43,4 +45,4 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     console.error('Error generating QR code:', error);
     return NextResponse.json({ error: 'Failed to generate QR code' }, { status: 500 });
   }
-} 
+}

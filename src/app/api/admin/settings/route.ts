@@ -4,6 +4,8 @@ import { systemSettings } from '@/schema/settings';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await auth();
@@ -12,7 +14,7 @@ export async function GET() {
     }
 
     const settings = await db.select().from(systemSettings).where(eq(systemSettings.isActive, true));
-    
+
     // Convert to key-value object for easier access
     const settingsObject = settings.reduce((acc, setting) => {
       acc[setting.key] = setting.value;
@@ -46,10 +48,10 @@ export async function POST(request: NextRequest) {
     if (existingSetting.length > 0) {
       // Update existing setting
       const updatedSetting = await db.update(systemSettings)
-        .set({ 
-          value, 
+        .set({
+          value,
           description,
-          updatedAt: new Date() 
+          updatedAt: new Date()
         })
         .where(eq(systemSettings.key, key))
         .returning();

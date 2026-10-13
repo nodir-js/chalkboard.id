@@ -48,14 +48,14 @@ export async function ensureMigrationsTable(): Promise<void> {
 export async function getCurrentDatabaseVersion(): Promise<string> {
   try {
     await ensureMigrationsTable();
-    
+
     const result = await db.execute(sql`
-      SELECT version 
-      FROM __migrations 
-      ORDER BY applied_at DESC 
+      SELECT version
+      FROM __migrations
+      ORDER BY applied_at DESC
       LIMIT 1
     `);
-    
+
     const rows = Array.isArray(result) ? result : result.rows || result;
     return rows.length > 0 ? (rows[0] as any).version as string : '0.0.0';
   } catch (error) {
@@ -69,13 +69,13 @@ export async function getCurrentDatabaseVersion(): Promise<string> {
  */
 export async function getAppliedMigrations(): Promise<MigrationInfo[]> {
   await ensureMigrationsTable();
-  
+
   const result = await db.execute(sql`
     SELECT version, description, applied_at as timestamp, checksum
     FROM __migrations
     ORDER BY applied_at ASC
   `);
-  
+
   const rows = Array.isArray(result) ? result : result.rows || result;
   return rows.map((row: any) => ({
     version: row.version as string,
@@ -91,7 +91,7 @@ export async function getAppliedMigrations(): Promise<MigrationInfo[]> {
  */
 export async function createDatabaseBackup(version: string): Promise<string | null> {
   const config = getDeploymentConfig();
-  
+
   if (config.mode !== 'standalone') {
     console.log('Database backup skipped (not in standalone mode)');
     return null;
@@ -100,18 +100,18 @@ export async function createDatabaseBackup(version: string): Promise<string | nu
   try {
     const backupDir = './backups';
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupFile = path.join(backupDir, `chalkboard-backup-v${version}-${timestamp}.sql`);
-    
+    const backupFile = path.join(backupDir, `kiy24-backup-v${version}-${timestamp}.sql`);
+
     // Ensure backup directory exists
     if (!fs.existsSync(backupDir)) {
       fs.mkdirSync(backupDir, { recursive: true });
     }
-    
+
     // Extract database connection details
     const dbUrl = new URL(process.env.DATABASE_URL!);
     const { hostname, port, username, password, pathname } = dbUrl;
     const database = pathname.slice(1); // Remove leading slash
-    
+
     // Create pg_dump command
     const { spawn } = require('child_process');
     const pgDump = spawn('pg_dump', [
@@ -128,7 +128,7 @@ export async function createDatabaseBackup(version: string): Promise<string | nu
         PGPASSWORD: password,
       }
     });
-    
+
     return new Promise((resolve, reject) => {
       pgDump.on('close', (code: number) => {
         if (code === 0) {
@@ -139,7 +139,7 @@ export async function createDatabaseBackup(version: string): Promise<string | nu
           resolve(null);
         }
       });
-      
+
       pgDump.on('error', (error: Error) => {
         console.error('Database backup error:', error);
         resolve(null);
@@ -160,31 +160,31 @@ export async function applyMigration(
   migrationSql: string
 ): Promise<{ success: boolean; executionTime: number; error?: string }> {
   const startTime = Date.now();
-  
+
   try {
     // Begin transaction
     await db.execute(sql`BEGIN`);
-    
+
     try {
       // Apply the migration
       await db.execute(sql.raw(migrationSql));
-      
+
       // Calculate checksum
       const crypto = require('crypto');
       const checksum = crypto.createHash('sha256').update(migrationSql).digest('hex');
-      
+
       // Record the migration
       await db.execute(sql`
         INSERT INTO __migrations (version, description, checksum, execution_time_ms)
         VALUES (${version}, ${description}, ${checksum}, ${Date.now() - startTime})
       `);
-      
+
       // Commit transaction
       await db.execute(sql`COMMIT`);
-      
+
       const executionTime = Date.now() - startTime;
       console.log(`Migration ${version} applied successfully in ${executionTime}ms`);
-      
+
       return { success: true, executionTime };
     } catch (migrationError) {
       // Rollback transaction
@@ -194,7 +194,7 @@ export async function applyMigration(
   } catch (error) {
     const executionTime = Date.now() - startTime;
     console.error(`Migration ${version} failed:`, error);
-    
+
     return {
       success: false,
       executionTime,
@@ -212,18 +212,18 @@ export function getMigrationFiles(targetVersion: string): Array<{
   filePath: string;
 }> {
   const migrationsDir = path.join(process.cwd(), 'migrations');
-  
+
   if (!fs.existsSync(migrationsDir)) {
     console.warn('Migrations directory not found:', migrationsDir);
     return [];
   }
-  
+
   const files = fs.readdirSync(migrationsDir)
     .filter(file => file.endsWith('.sql'))
     .map(file => {
       const match = file.match(/^(\d+\.\d+\.\d+)[-_](.+)\.sql$/);
       if (!match) return null;
-      
+
       const [, version, description] = match;
       return {
         version,
@@ -236,7 +236,7 @@ export function getMigrationFiles(targetVersion: string): Array<{
       // Simple version comparison (assumes semantic versioning)
       const aVersion = a.version.split('.').map(Number);
       const bVersion = b.version.split('.').map(Number);
-      
+
       for (let i = 0; i < Math.max(aVersion.length, bVersion.length); i++) {
         const aPart = aVersion[i] || 0;
         const bPart = bVersion[i] || 0;
@@ -244,11 +244,11 @@ export function getMigrationFiles(targetVersion: string): Array<{
       }
       return 0;
     });
-  
+
   return files.filter(migration => {
     const targetVersionParts = targetVersion.split('.').map(Number);
     const migrationVersionParts = migration.version.split('.').map(Number);
-    
+
     for (let i = 0; i < Math.max(targetVersionParts.length, migrationVersionParts.length); i++) {
       const targetPart = targetVersionParts[i] || 0;
       const migrationPart = migrationVersionParts[i] || 0;
@@ -264,7 +264,7 @@ export function getMigrationFiles(targetVersion: string): Array<{
  */
 export async function runMigrations(targetVersion: string): Promise<MigrationResult> {
   const config = getDeploymentConfig();
-  
+
   if (!config.versioning.autoMigration) {
     return {
       success: false,
@@ -273,21 +273,21 @@ export async function runMigrations(targetVersion: string): Promise<MigrationRes
       error: 'Auto migration is disabled',
     };
   }
-  
+
   try {
     console.log(`Starting migration to version ${targetVersion}`);
-    
+
     // Get current version and applied migrations
     const currentVersion = await getCurrentDatabaseVersion();
     const appliedMigrations = await getAppliedMigrations();
     const appliedVersions = new Set(appliedMigrations.map(m => m.version));
-    
+
     console.log(`Current database version: ${currentVersion}`);
-    
+
     // Get migration files
     const migrationFiles = getMigrationFiles(targetVersion);
     const pendingMigrations = migrationFiles.filter(m => !appliedVersions.has(m.version));
-    
+
     if (pendingMigrations.length === 0) {
       console.log('Database is up to date');
       return {
@@ -296,32 +296,32 @@ export async function runMigrations(targetVersion: string): Promise<MigrationRes
         migrationsApplied: 0,
       };
     }
-    
+
     console.log(`Found ${pendingMigrations.length} pending migrations`);
-    
+
     // Create backup if in standalone mode
     let backupPath: string | null = null;
     if (config.mode === 'standalone' && process.env.MIGRATION_BACKUP !== 'false') {
       backupPath = await createDatabaseBackup(currentVersion);
     }
-    
+
     // Apply migrations
     let migrationsApplied = 0;
     for (const migration of pendingMigrations) {
       try {
         console.log(`Applying migration ${migration.version}: ${migration.description}`);
-        
+
         const migrationSql = fs.readFileSync(migration.filePath, 'utf-8');
         const result = await applyMigration(migration.version, migration.description, migrationSql);
-        
+
         if (!result.success) {
           throw new Error(result.error || 'Migration failed');
         }
-        
+
         migrationsApplied++;
       } catch (error) {
         console.error(`Failed to apply migration ${migration.version}:`, error);
-        
+
         return {
           success: false,
           version: migration.version,
@@ -331,9 +331,9 @@ export async function runMigrations(targetVersion: string): Promise<MigrationRes
         };
       }
     }
-    
+
     console.log(`Successfully applied ${migrationsApplied} migrations to version ${targetVersion}`);
-    
+
     return {
       success: true,
       version: targetVersion,
@@ -342,7 +342,7 @@ export async function runMigrations(targetVersion: string): Promise<MigrationRes
     };
   } catch (error) {
     console.error('Migration process failed:', error);
-    
+
     return {
       success: false,
       version: targetVersion,
@@ -366,7 +366,7 @@ export async function checkMigrationStatus(targetVersion: string): Promise<{
   const appliedMigrations = await getAppliedMigrations();
   const appliedVersions = new Set(appliedMigrations.map(m => m.version));
   const pendingMigrations = migrationFiles.filter(m => !appliedVersions.has(m.version)).length;
-  
+
   return {
     needsMigration: pendingMigrations > 0,
     currentVersion,

@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import { useLocale } from "next-intl";
 import CardBox from "../shared/CardBox";
 import dynamic from "next/dynamic";
+import { formatCurrencyByLocale } from "@/lib/locale";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface TopSellingItemsChartProps {
@@ -16,6 +18,7 @@ interface TopSellingItemsChartProps {
 }
 
 const TopSellingItemsChart: React.FC<TopSellingItemsChartProps> = ({ data, title, subtitle }) => {
+  const locale = useLocale();
   const chartData: any = {
     series: [
       {
@@ -70,15 +73,10 @@ const TopSellingItemsChart: React.FC<TopSellingItemsChartProps> = ({ data, title
     yaxis: [
       {
         title: {
-          text: "Revenue (IDR)",
+          text: "Revenue (UZS)",
         },
         labels: {
-          formatter: (val: number) => new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          }).format(val),
+          formatter: (val: number) => formatCurrencyByLocale(val, locale),
         },
       },
       {
@@ -112,13 +110,9 @@ const TopSellingItemsChart: React.FC<TopSellingItemsChartProps> = ({ data, title
         formatter: function (val: number, opts: any) {
           const itemIndex = opts.dataPointIndex;
           const itemData = data[itemIndex];
-          
+
           if (opts.seriesIndex === 0) {
-            return `${new Intl.NumberFormat('id-ID', {
-              style: 'currency',
-              currency: 'IDR',
-              minimumFractionDigits: 0,
-            }).format(val)} (${itemData.orderCount} orders)`;
+            return `${formatCurrencyByLocale(val, locale)} (${itemData.orderCount} orders)`;
           }
           return `${val} units sold`;
         },
@@ -143,4 +137,4 @@ const TopSellingItemsChart: React.FC<TopSellingItemsChartProps> = ({ data, title
   );
 };
 
-export default TopSellingItemsChart; 
+export default TopSellingItemsChart;

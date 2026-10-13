@@ -5,6 +5,8 @@ import { fnbOrders } from '@/schema/fnb';
 import { and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -98,14 +100,14 @@ export async function GET(request: NextRequest) {
 
     const customers = Array.from(customerMap.values());
     const totalCustomers = customers.length;
-    
+
     // Calculate returning customers (more than 1 session or order)
-    const returningCustomers = customers.filter(c => 
+    const returningCustomers = customers.filter(c =>
       (c.sessionCount + c.orderCount) > 1
     ).length;
 
     // Calculate average spend per customer
-    const totalSpend = customers.reduce((sum, c) => 
+    const totalSpend = customers.reduce((sum, c) =>
       sum + c.tableSpent + c.fnbSpent, 0
     );
     const avgSpendPerCustomer = totalCustomers > 0 ? totalSpend / totalCustomers : 0;

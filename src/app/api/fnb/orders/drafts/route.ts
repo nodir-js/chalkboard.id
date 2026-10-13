@@ -4,6 +4,8 @@ import { fnbOrders, fnbOrderItems } from '@/schema/fnb';
 import { eq, and, sql } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -55,4 +57,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching draft orders:', error);
     return NextResponse.json({ error: 'Failed to fetch draft orders' }, { status: 500 });
   }
-} 
+}

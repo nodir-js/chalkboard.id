@@ -1,5 +1,5 @@
-import { 
-  pricingPackages, 
+import {
+  pricingPackages,
   fnbCategories,
   fnbItems,
   fnbOrders,
@@ -148,7 +148,7 @@ export const factories = {
     staffId: null, // Must be set in tests when creating related staff
     status: 'pending',
     amount: '110000.00',
-    currency: 'IDR',
+    currency: 'UZS',
     paymentMethod: 'cash',
     createdAt: new Date(),
     updatedAt: new Date(),

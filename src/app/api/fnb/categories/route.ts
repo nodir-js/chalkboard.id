@@ -4,6 +4,8 @@ import { fnbCategories } from '@/schema/fnb';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await auth();
@@ -42,4 +44,4 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create category' }, { status: 500 });
   }
-} 
+}

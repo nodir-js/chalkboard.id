@@ -2,18 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl';
-import { 
-  Alert, 
-  Card, 
-  Button, 
-  Table, 
+import { useLocale, useTranslations } from 'next-intl';
+import {
+  Alert,
+  Card,
+  Button,
+  Table,
   Badge
 } from "flowbite-react";
-import { 
-  IconPackage, 
-  IconPlus, 
-  IconEdit, 
+import {
+  IconPackage,
+  IconPlus,
+  IconEdit,
   IconTrash,
   IconClock,
   IconClockHour4
@@ -21,19 +21,12 @@ import {
 import DefaultSpinner from "@/components/ui-components/Spinner/DefaultSpinner";
 import PricingPackageModal from "@/components/pricing-packages/PricingPackageModal";
 import { PricingPackage } from "@/schema";
-// Helper function to format currency
-const formatCurrency = (amount: number | string) => {
-  const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    minimumFractionDigits: 0
-  }).format(num);
-};
+import { formatCurrencyByLocale } from "@/lib/locale";
 
 export default function PricingPackagesPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations('PricingPackages');
   const tAlerts = useTranslations('Alerts');
   const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -42,6 +35,8 @@ export default function PricingPackagesPage() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<PricingPackage | null>(null);
+
+  const formatCurrency = (amount: number | string) => formatCurrencyByLocale(amount, locale);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -119,7 +114,7 @@ export default function PricingPackagesPage() {
 
   if (!session) return null;
 
-  const filteredPackages = packages.filter(pkg => 
+  const filteredPackages = packages.filter(pkg =>
     activeTab === "all" || pkg.category === activeTab
   );
 
@@ -186,7 +181,7 @@ export default function PricingPackagesPage() {
             </button>
           </div>
         </div>
-        
+
         <div className="overflow-x-auto">
           <Table>
             <Table.Head>
@@ -217,7 +212,7 @@ export default function PricingPackagesPage() {
                     </div>
                   </Table.Cell>
                   <Table.Cell>
-                    {pkg.category === 'hourly' 
+                    {pkg.category === 'hourly'
                       ? formatCurrency(Number(pkg.hourlyRate))
                       : formatCurrency(Number(pkg.perMinuteRate))
                     }

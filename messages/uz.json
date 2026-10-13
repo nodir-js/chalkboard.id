@@ -1,0 +1,1055 @@
+{
+  "auth": {
+    "signin": {
+      "title": "Kirish",
+      "subtitle": "Hisobingizga kiring",
+      "systemSubtitle": "Bilyard zali boshqaruv tizimi",
+      "email": "Elektron pochta",
+      "password": "Parol",
+      "helperText": "Hisobingiz yo'qmi?",
+      "emailPlaceholder": "Elektron pochtangizni kiriting",
+      "passwordPlaceholder": "Parolingizni kiriting",
+      "loading": "Kirish...",
+      "signin": "Kirish",
+      "demoCredentials": "Demo hisob ma'lumotlari",
+      "invalidCredentials": "Yaroqsiz elektron pochta yoki parol",
+      "signInError": "Tizimga kirishda xatolik yuz berdi"
+    },
+    "signup": {
+      "title": "Hisob yaratish",
+      "name": "Ism",
+      "namePlaceholder": "Ismingizni kiriting",
+      "email": "Elektron pochta",
+      "emailPlaceholder": "Elektron pochtangizni kiriting",
+      "password": "Parol",
+      "passwordPlaceholder": "Kamida 6 ta belgi",
+      "signup": "Hisob yaratish",
+      "loading": "Hisob yaratilmoqda...",
+      "hasAccount": "Hisobingiz bormi?",
+      "switchToSignin": "Kirish",
+      "switchToSignup": "Hisob yaratish"
+    }
+  },
+  "TablesManagement": {
+    "title": "Stollarni boshqarish",
+    "subtitle": "Bilyard stollari va seanslaringizni boshqaring",
+    "addNewTable": "Yangi stol qo'shish",
+    "loading": "Stollar yuklanmoqda...",
+    "noTables": {
+      "title": "Hech qanday stol topilmadi",
+      "subtitle": "Birinchi bilyard stolingizni yaratishdan boshlang",
+      "button": "Birinchi stolingizni yarating"
+    },
+    "stopConfirmation": {
+      "title": "Seansni to'xtatish",
+      "message": "Haqiqatan ham {tableName} uchun sessiyani toʻxtatmoqchimisiz?",
+      "currentDuration": "Joriy muddat",
+      "confirm": "Ha, sessiyani to'xtating",
+      "cancel": "Bekor qilish"
+    },
+    "timeExpired": {
+      "notification": "{tableName} uchun vaqt tugadi!"
+    }
+  },
+  "TableCard": {
+    "occupied": "FAOL",
+    "available": "BOS",
+    "maintenance": "XIZMAT",
+    "reserved": "BO'LGAN",
+    "startTime": "Boshlash",
+    "endTime": "Tugatish",
+    "duration": "Davomiyligi",
+    "cost": "Narxi",
+    "billableHours": "{hisoblash, koʻplik, =1 {# hour} boshqa {# hours}}",
+    "billableMinutes": "{hisoblash, koʻplik, =1 {# minute} boshqa {# minutes}}",
+    "fnbButton": "F&B",
+    "stopButton": "To'xtang",
+    "startButton": "Boshlash",
+    "editButton": "Tahrirlash",
+    "deleteButton": "Oʻchirish",
+    "perMinute": "Daqiqada",
+    "hourly": "Soatlik"
+  },
+  "Dashboard": {
+    "title": "Kiy24 boshqaruv paneli",
+    "subtitle": "Xush kelibsiz, {name}",
+    "loading": "Boshqaruv paneli yuklanmoqda...",
+    "redirecting": "Kirish uchun yoʻnaltirilmoqda...",
+    "stats": {
+      "totalTables": "Jami stollar",
+      "occupied": "Ishg'ol qilingan",
+      "available": "Mavjud",
+      "todaysRevenue": "Bugungi daromad"
+    },
+    "tableStatusBoard": {
+      "title": "Jadval holati kengashi",
+      "refresh": "Yangilash",
+      "rate": "Baho",
+      "customer": "Mijoz",
+      "duration": "Davomiyligi",
+      "billableHours": "Hisob-kitob soatlari",
+      "cost": "Narxi",
+      "endSession": "Seansni tugatish",
+      "startSession": "Seansni boshlash"
+    },
+    "noTables": "Hech qanday jadval topilmadi",
+    "createFirstTable": "Birinchi jadvalingizni yarating",
+    "buttons": {
+      "posSystem": "POS tizimi",
+      "addTable": "Jadval qo'shish"
+    },
+    "billingModal": {
+      "title": "Seans hisob-kitobi xulosasi",
+      "sessionDetails": "Sessiya tafsilotlari",
+      "customer": "Mijoz",
+      "duration": "Davomiyligi",
+      "billableHours": "Hisob-kitob soatlari",
+      "billableMinutes": "Hisobga olinadigan daqiqalar",
+      "tableCost": "Jadval narxi",
+      "fnbOrders": "Oziq-ovqat va ichimliklar buyurtmalari",
+      "fnbSubtotal": "F&B oraliq jami",
+      "totalAmount": "Jami miqdor",
+      "processPayment": "To'lov jarayoni",
+      "closeButton": "Yopish"
+    }
+  },
+  "SessionModal": {
+    "startTitle": "Seansni boshlash - {tableName}",
+    "customerName": "Mijoz nomi",
+    "customerNamePlaceholder": "Mijoz ismini kiriting",
+    "plannedDuration": "Rejalashtirilgan davomiylik (daqiqa)",
+    "estimatedCost": "Taxminiy xarajat: {cost}",
+    "startButton": "Seansni boshlash",
+    "cancelButton": "Bekor qilish",
+    "durationOptions": {
+      "30minutes": "30 daqiqa",
+      "60minutes": "1 soat",
+      "90minutes": "1,5 soat",
+      "120minutes": "2 soat",
+      "180minutes": "3 soat"
+    },
+    "customerLabel": "Mijoz nomi",
+    "customerPlaceholder": "Mijoz ismini kiriting",
+    "plannedDurationLabel": "Rejalashtirilgan davomiylik (daqiqa)",
+    "modeLabel": "Seans rejimi",
+    "modeOptions": {
+      "open": "Jadvalni ochish (hisoblash)",
+      "planned": "Rejalashtirilgan (orqaga hisoblash)"
+    },
+    "pricingPackageLabel": "Narxlar to'plami",
+    "selectPackage": "Narxlar paketini tanlang",
+    "packageRequired": "Iltimos, narxlash paketini tanlang"
+  },
+  "POS": {
+    "title": "Kengaytirilgan POS tizimi",
+    "subtitle": "Kengaytirilgan savdo nuqtasi - qoralama buyurtmalar bilan oziq-ovqat va ichimliklar",
+    "loading": "POS yuklanmoqda...",
+    "cartItems": "Savat buyumlari",
+    "draftOrders": "Buyurtmalar qoralamalari ({count})",
+    "menu": {
+      "allItems": "Barcha elementlar",
+      "outofstock": "Stokda yoʻq",
+      "lowstock": "Kam zaxira",
+      "instock": "Stokda",
+      "stock": "Stok: {quantity} {unit}",
+      "noItemsFound": "Ushbu turkumda hech narsa topilmadi"
+    },
+    "cart": {
+      "title": "Arava",
+      "empty": "Savatingiz boʻsh",
+      "addItems": "Menyudan elementlarni qo'shing",
+      "clear": "Toza",
+      "subtotal": "Oraliq jami",
+      "tax": "Soliq (10%)",
+      "total": "Jami"
+    },
+    "checkout": {
+      "button": "Hisob-kitob ({total})",
+      "title": "Kengaytirilgan tekshiruv",
+      "orderType": "Buyurtma turi *",
+      "orderTypes": {
+        "standalone": {
+          "title": "Mustaqil",
+          "description": "Darhol sotiladi"
+        },
+        "waiting": {
+          "title": "Kutilmoqda",
+          "description": "Qoralama sifatida saqlash"
+        },
+        "tableSession": {
+          "title": "Stol sessiyasi",
+          "description": "Hisobga qo'shish"
+        },
+        "pendingTransaction": {
+          "title": "Kutilayotgan tranzaksiya",
+          "description": "Mavjudga qo'shing"
+        }
+      },
+      "customerName": "Mijoz nomi *",
+      "customerNamePlaceholder": "Mijoz ismini kiriting",
+      "phoneNumber": "Telefon raqami",
+      "phonePlaceholder": "Qoralama kuzatuvi uchun ixtiyoriy",
+      "tableAssignment": "Jadval topshirig'i *",
+      "selectTable": "Jadvalni tanlang",
+      "pendingTransaction": "Kutilayotgan tranzaksiya *",
+      "selectTransaction": "Kutilayotgan tranzaksiyani tanlang",
+      "noPendingTransactions": "Kutilayotgan tranzaksiya mavjud emas. Kutilayotgan tranzaksiyani yaratish uchun avvalo mustaqil buyurtma yarating.",
+      "staffMember": "Xodim *",
+      "selectStaff": "Xodimni tanlang",
+      "notes": "Eslatmalar",
+      "notesPlaceholder": "Maxsus ko'rsatmalar yoki mijozning xohishi ...",
+      "orderSummary": "Buyurtma xulosasi",
+      "buttons": {
+        "processPayment": "To'lov jarayoni",
+        "saveAsDraft": "Qoralama sifatida saqlash",
+        "addToTableBill": "Hisob-kitob jadvaliga qo'shing",
+        "addToTransaction": "Tranzaksiyaga qo'shish",
+        "cancel": "Bekor qilish"
+      },
+      "contextInfo": {
+        "standalone": {
+          "title": "Mustaqil buyurtma",
+          "description": "Bu darhol to'lov bilan alohida tranzaksiya sifatida qayta ishlanadi."
+        },
+        "waiting": {
+          "title": "Buyurtma loyihasi",
+          "description": "Bu buyurtma qoralama sifatida saqlanadi va keyinroq jadvalga tayinlanishi mumkin."
+        },
+        "tableSession": {
+          "title": "Jadvalga topshiriq",
+          "description": "Ushbu buyurtma jadval hisobiga qo'shiladi. Toʻlov sessiya tugashi bilan amalga oshiriladi."
+        },
+        "pendingTransaction": {
+          "title": "Kutilayotgan tranzaksiya topshirig‘i",
+          "description": "Bu buyurtma tanlangan kutilayotgan tranzaksiyaga qo'shiladi. Tranzaksiya summasi avtomatik ravishda yangilanadi."
+        }
+      }
+    },
+    "draftOrdersModal": {
+      "title": "Buyurtmalar loyihasini boshqarish - stollarga yoki tranzaksiyalarga tayinlash",
+      "noOrders": "Buyurtma loyihasi yo'q",
+      "ordersWillAppear": "Buyurtmalar qoralamalari mijozlar kutayotganda shu yerda paydo bo‘ladi",
+      "staffMember": "Xodim *",
+      "assignmentOptions": "Topshiriq variantlari:",
+      "assignToTable": {
+        "title": "Faol jadvalga tayinlash",
+        "button": "Jadvalga tayinlash",
+        "noTables": "Faol stollar mavjud emas"
+      },
+      "assignToTransaction": {
+        "title": "Kutilayotgan tranzaksiyaga tayinlash",
+        "button": "Tranzaksiyaga tayinlash",
+        "noTransactions": "Kutilayotgan tranzaksiya mavjud emas. Avval mustaqil buyurtma yarating."
+      },
+      "selectStaff": "Xodimni tanlang",
+      "selectTable": "Jadvalni tanlang...",
+      "selectTransaction": "Tranzaksiyani tanlang...",
+      "close": "Yopish"
+    },
+    "orderCreated": "Buyurtma muvaffaqiyatli yaratildi",
+    "draftOrderCreated": "Buyurtma loyihasi muvaffaqiyatli yaratildi",
+    "tableOrderCreated": "Jadval tartibi muvaffaqiyatli yaratildi",
+    "pendingTransactionOrderCreated": "Kutilayotgan tranzaksiya buyurtmasi yaratildi",
+    "orderNumber": "Buyurtma raqami: #{orderNumber}"
+  },
+  "FnB": {
+    "title": "Kengaytirilgan F&B boshqaruvi",
+    "subtitle": "Buyurtmalar loyihasi va real vaqtda yangilanishlar bilan oziq-ovqat va ichimliklarni kompleks boshqarish",
+    "loading": "Yuklanmoqda...",
+    "refresh": "Yangilash",
+    "filters": "Filtrlar",
+    "search": "Qidiruv...",
+    "advancedFilters": {
+      "status": "Status",
+      "allStatus": "Barcha holat",
+      "staffMember": "Xodim a'zosi",
+      "allStaff": "Barcha Xodimlar",
+      "dateRange": "Sana diapazoni",
+      "today": "Bugun",
+      "thisWeek": "Bu hafta",
+      "thisMonth": "Shu oy",
+      "allTime": "Hamma vaqt",
+      "clearFilters": "Filtrlarni tozalash"
+    },
+    "paymentWorkflow": {
+      "title": "To'lov ish jarayoni uchun qo'llanma",
+      "standalone": "Mustaqil buyurtmalar: avtomatik ravishda to'lov yozuvlarini yarating. Toʻlovni amalga oshirish uchun “Tranzaksiyalar” sahifasini tekshiring.",
+      "draft": "Buyurtmalar loyihasi: faol stollar yoki jamlangan hisob-kitoblar uchun kutilayotgan tranzaksiyalarga tayinlanishi mumkin.",
+      "table": "Jadval buyurtmalari: Seans tugashi bilan avtomatik ravishda jadval sessiyasi hisob-kitobiga kiritiladi."
+    },
+    "tabs": {
+      "orders": "Buyurtmalar ({count})",
+      "categories": "Kategoriyalar",
+      "items": "Elementlar"
+    },
+    "orders": {
+      "title": "Barcha Buyurtmalar",
+      "drafts": "{count} qoralamalar",
+      "columns": {
+        "orderNumber": "Buyurtma #",
+        "customer": "Mijoz",
+        "table": "Jadval",
+        "staff": "Xodimlar",
+        "total": "Jami",
+        "status": "Status",
+        "payment": "To'lov",
+        "date": "Sana",
+        "actions": "Harakatlar"
+      },
+      "statuses": {
+        "draft": "Qoralama",
+        "pending": "Kutilmoqda",
+        "billed": "Hisob-kitob qilingan",
+        "paid": "To'langan",
+        "cancelled": "Bekor qilingan"
+      },
+      "paymentStatuses": {
+        "readyToPay": "Toʻlashga tayyor",
+        "paid": "To'langan",
+        "noPayment": "Toʻlov yoʻq",
+        "pending": "Kutilmoqda"
+      },
+      "noOrders": "Hech qanday buyurtma topilmadi"
+    },
+    "categories": {
+      "title": "Turkumlar ({count})",
+      "addCategory": "Kategoriya qo'shish",
+      "columns": {
+        "name": "Ism",
+        "description": "Tavsif",
+        "status": "Status",
+        "created": "Yaratilgan",
+        "actions": "Harakatlar"
+      },
+      "modal": {
+        "addTitle": "Yangi toifa qo'shing",
+        "editTitle": "Kategoriyani tahrirlash",
+        "name": "Ism *",
+        "description": "Tavsif",
+        "active": "Faol",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "cancel": "Bekor qilish",
+        "deleteConfirmation": "Haqiqatan ham ushbu turkumni oʻchirib tashlamoqchimisiz?"
+      }
+    },
+    "items": {
+      "title": "Elementlar ({count})",
+      "addItem": "Element qo'shish",
+      "columns": {
+        "name": "Ism",
+        "category": "Turkum",
+        "price": "Narxi",
+        "stock": "Birja",
+        "status": "Status",
+        "actions": "Harakatlar"
+      },
+      "modal": {
+        "addTitle": "Yangi element qo'shish",
+        "editTitle": "Elementni tahrirlash",
+        "name": "Ism *",
+        "category": "Turkum *",
+        "selectCategory": "Kategoriyani tanlang",
+        "description": "Tavsif",
+        "price": "Narxi *",
+        "cost": "Narxi",
+        "stockQuantity": "Zaxira miqdori",
+        "minStockLevel": "Minimal zaxira darajasi",
+        "unit": "Birlik",
+        "units": {
+          "pcs": "Parchalar",
+          "kg": "Kilogramm",
+          "g": "Gram",
+          "l": "Litr",
+          "ml": "Millilitr",
+          "dozen": "O'nlab"
+        },
+        "active": "Faol",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "cancel": "Bekor qilish",
+        "deleteConfirmation": "Haqiqatan ham bu elementni oʻchirib tashlamoqchimisiz?"
+      }
+    },
+    "orderDetail": {
+      "title": "Buyurtma tafsilotlari - {orderNumber}",
+      "customer": "Mijoz",
+      "status": "Status",
+      "subtotal": "Oraliq jami",
+      "tax": "Soliq",
+      "total": "Jami",
+      "notes": "Eslatmalar",
+      "staffMember": "Xodim a'zosi",
+      "date": "Sana",
+      "close": "Yopish"
+    },
+    "draftAssignment": {
+      "title": "Buyurtma loyihasini tayinlash - {orderNumber}",
+      "orderDetails": "Buyurtma tafsilotlari",
+      "customer": "Mijoz",
+      "total": "Jami",
+      "items": "Elementlar",
+      "selectTable": "Jadvalni tanlang",
+      "noOccupiedTables": "Topshiriq uchun band bo'lgan stollar mavjud emas",
+      "cancel": "Bekor qilish"
+    },
+    "draftTransactionAssignment": {
+      "title": "Buyurtma loyihasini kutilayotgan tranzaksiyaga tayinlash - {orderNumber}",
+      "selectTransaction": "Kutilayotgan tranzaksiyani tanlang",
+      "noTransactions": "Belgilash uchun kutilayotgan tranzaktsiyalar mavjud emas. Kutilayotgan tranzaksiyani yaratish uchun avvalo mustaqil buyurtma yarating."
+    }
+  },
+  "Transactions": {
+    "title": "Tranzaksiyalar",
+    "subtitle": "Toʻlovlar va tranzaktsiyalar tarixini boshqaring",
+    "loading": "Tranzaksiyalar yuklanmoqda...",
+    "refresh": "Yangilash",
+    "export": "Eksport",
+    "filters": {
+      "status": "Status",
+      "allStatus": "Barcha holat",
+      "dateRange": "Sana diapazoni",
+      "allTime": "Hamma vaqt",
+      "today": "Bugun",
+      "last7Days": "Oxirgi 7 kun",
+      "lastMonth": "O'tgan oy",
+      "search": "Qidiruv",
+      "searchPlaceholder": "Tranzaksiya identifikatori, buyurtma identifikatori yoki toʻlov usuli boʻyicha qidirish..."
+    },
+    "stats": {
+      "totalTransactions": "Jami tranzaktsiyalar",
+      "successful": "Muvaffaqiyatli",
+      "pending": "Kutilmoqda",
+      "revenue": "Daromad"
+    },
+    "table": {
+      "columns": {
+        "transactionId": "Tranzaksiya identifikatori",
+        "customer": "Mijoz",
+        "tableOrders": "Jadval/Buyurtmalar",
+        "amount": "Miqdori",
+        "status": "Status",
+        "paymentMethod": "To'lov usuli",
+        "date": "Sana",
+        "actions": "Harakatlar"
+      },
+      "walkInCustomer": "Kirish mijozi",
+      "notSpecified": "Belgilanmagan",
+      "table": "Jadval",
+      "order": "Buyurtma",
+      "items": "element{hisob, ko'plik, =1 {} boshqa {s}}",
+      "minutes": "min"
+    },
+    "statuses": {
+      "pending": "Kutilmoqda",
+      "success": "Muvaffaqiyat",
+      "failed": "Muvaffaqiyatsiz",
+      "cancelled": "Bekor qilingan",
+      "unknown": "Noma'lum"
+    },
+    "noTransactions": "Hech qanday tranzaksiya topilmadi",
+    "processPayment": {
+      "title": "To'lov jarayoni",
+      "customerInfo": "Mijoz haqida ma'lumot",
+      "name": "Ism",
+      "phone": "Telefon",
+      "orderSummary": "Xodimlarni tasdiqlash uchun buyurtma xulosasi",
+      "tableSessions": "Jadval sessiyalari:",
+      "duration": "Davomiyligi",
+      "customer": "Mijoz",
+      "fnbItems": "Buyurtma qilingan F&B mahsulotlari:",
+      "servedBy": "Xizmat ko'rsatgan",
+      "notes": "Eslatmalar",
+      "qty": "Miqdor",
+      "item": "Element",
+      "category": "Turkum",
+      "unitPrice": "Birlik narxi",
+      "subtotal": "Oraliq jami",
+      "orderSubtotal": "Buyurtma oraliq jami",
+      "tax": "Soliq",
+      "orderTotal": "Buyurtma jami",
+      "paymentBreakdown": "To'lovni taqsimlash",
+      "transactionNumber": "Tranzaksiya raqami",
+      "tableAmount": "Jadval miqdori",
+      "fnbAmount": "F&B miqdori",
+      "discountAmount": "Chegirma miqdori",
+      "taxAmount": "Soliq miqdori",
+      "totalAmount": "Jami miqdor",
+      "staffConfirmation": "Xodimlarni tasdiqlash: Iltimos, to‘lovni amalga oshirishdan oldin mijoz bilan bu ularning buyurtmasiga mos kelishini tekshiring.",
+      "confirmPaid": "Tasdiqlang va toʻlangan deb belgilang",
+      "cancelPayment": "To'lovni bekor qilish",
+      "close": "Yopish"
+    },
+    "transactionDetail": {
+      "title": "Tranzaksiya tafsilotlari",
+      "transactionNumber": "Tranzaksiya raqami",
+      "customerName": "Mijoz nomi",
+      "phoneNumber": "Telefon raqami",
+      "notProvided": "Taqdim etilmaydi",
+      "tableSessions": "Stol sessiyalari",
+      "table": "Jadval",
+      "duration": "Davomiyligi",
+      "startTime": "Boshlanish vaqti",
+      "ordersLinked": "{count} F&B buyurtmasi{son, koʻplik, =1 {} boshqa {s}} bogʻlangan",
+      "fnbOrders": "F&B buyurtmalari",
+      "orderNumber": "Buyurtma #",
+      "orderDate": "Buyurtma sanasi",
+      "orderItems": "Buyurtma buyumlari:",
+      "paymentSummary": "To'lov xulosasi",
+      "paymentMethod": "To'lov usuli",
+      "currency": "Valyuta",
+      "createdAt": "Yaratilgan",
+      "lastUpdated": "Oxirgi yangilangan",
+      "midtransResponse": "Midtrans javobi",
+      "print": "Kvitansiyani chop etish",
+      "close": "Yopish",
+      "printLanguagePrompt": "Kvitansiya tilini tanlang:",
+      "printInEnglish": "Ingliz tilida chop etish",
+      "receipt": {
+        "title": "BILLYARD",
+        "subtitle": "Kvitansiya",
+        "transaction": "Tranzaksiya",
+        "date": "Sana",
+        "customer": "Mijoz",
+        "phone": "Telefon",
+        "status": "Status",
+        "tableSessions": "JADVAL MASLAHATLARI",
+        "table": "Jadval",
+        "minutes": "min",
+        "foodBeverage": "OVQAT VA ICHIMLIK",
+        "notes": "Eslatmalar",
+        "paymentSummary": "TO'LOV XULOSASI",
+        "tableAmount": "Jadval miqdori",
+        "fnbAmount": "F&B miqdori",
+        "discount": "Chegirma",
+        "tax": "Soliq",
+        "total": "JAMI",
+        "footer": {
+          "thankYou": "Tashrif buyurganingiz uchun tashakkur!",
+          "businessName": "Kiy24 bilyard zali",
+          "generated": "Yaratilgan"
+        }
+      },
+      "printInRussian": "Rus tilida chop etish",
+      "printInUzbek": "Oʻzbek tilida chop eting"
+    }
+  },
+  "Alerts": {
+    "tableCreatedSuccess": "Jadval muvaffaqiyatli yaratildi",
+    "tableUpdatedSuccess": "Jadval muvaffaqiyatli yangilandi",
+    "tableDeletedSuccess": "Jadval muvaffaqiyatli oʻchirildi",
+    "sessionStartedSuccess": "Seans muvaffaqiyatli boshlandi",
+    "sessionEndedSuccess": "Seans muvaffaqiyatli yakunlandi",
+    "paymentRecordCreated": "To'lov yozuvi yaratildi. Iltimos, toʻlovni “Tranzaksiyalar” sahifasida amalga oshiring.",
+    "fnbOrderCreatedSuccess": "Buyurtma №{orderNumber} yaratildi! {tableName} hisobiga qo‘shildi.",
+    "genericError": "Kutilmagan xatolik yuz berdi",
+    "itemOutOfStock": "Buyum stokda yo‘q",
+    "notEnoughStock": "Zaxira yetarli emas",
+    "cartEmpty": "Arava bo‘sh",
+    "customerNameRequired": "Mijoz nomi talab qilinadi",
+    "staffMemberRequired": "Xodimni tanlash kerak",
+    "selectPendingTransaction": "Iltimos, kutilayotgan tranzaksiyani tanlang",
+    "selectTable": "Jadvalni tanlang",
+    "selectStaff": "Iltimos, xodimni tanlang",
+    "orderAssignedToTable": "Buyurtma loyihasi jadvalga muvaffaqiyatli tayinlandi",
+    "orderAssignedToTransaction": "Buyurtma loyihasi {transactionNumber} tranzaksiyaga muvaffaqiyatli tayinlandi",
+    "orderCreatedSuccess": "{orderType} #{orderNumber} muvaffaqiyatli yaratildi",
+    "orderCreatedWithPayment": "{orderType} #{orderNumber} muvaffaqiyatli yaratildi! {transactionNumber} toʻlov yozuvi Tranzaksiyalar sahifasida kutilmoqda.",
+    "paymentMarkedSuccess": "Toʻlov muvaffaqiyatli deb belgilandi",
+    "paymentCancelled": "Toʻlov muvaffaqiyatli bekor qilindi",
+    "categoryCreatedSuccess": "Turkum muvaffaqiyatli yaratildi",
+    "categoryUpdatedSuccess": "Turkum muvaffaqiyatli yangilandi",
+    "categoryDeletedSuccess": "Turkum muvaffaqiyatli oʻchirildi",
+    "itemCreatedSuccess": "Element muvaffaqiyatli yaratildi",
+    "itemUpdatedSuccess": "Element muvaffaqiyatli yangilandi",
+    "itemDeletedSuccess": "Element muvaffaqiyatli oʻchirildi",
+    "failedToLoadData": "Maʼlumotlarni yuklab boʻlmadi",
+    "failedToSaveCategory": "Turkum saqlanmadi",
+    "failedToDeleteCategory": "Kategoriyani o‘chirib bo‘lmadi",
+    "failedToSaveItem": "Elementni saqlab bo‘lmadi",
+    "failedToDeleteItem": "Elementni o‘chirib bo‘lmadi",
+    "failedToProcessOrder": "Buyurtmani amalga oshirib bo‘lmadi",
+    "failedToAssignDraftOrder": "Buyurtma loyihasini tayinlab bo‘lmadi",
+    "failedToUpdatePayment": "Toʻlov holatini yangilab boʻlmadi",
+    "failedToProcessPayment": "To‘lovni amalga oshirib bo‘lmadi",
+    "failedToCancelPayment": "To‘lovni bekor qilib bo‘lmadi",
+    "failedToLoadPayments": "Toʻlovlar yuklanmadi",
+    "durationTypeUpdatedSuccess": "Davomiylik turi muvaffaqiyatli yangilandi",
+    "failedToUpdateDurationType": "Davomiylik turini yangilab bo‘lmadi",
+    "durationUpdatedSuccess": "Davomiylik muvaffaqiyatli yangilandi",
+    "failedToUpdateDuration": "Davomiylikni yangilab bo‘lmadi",
+    "sessionMovedSuccess": "Seans {tableName} ga muvaffaqiyatli ko‘chirildi",
+    "paymentProcessedSuccess": "Toʻlov muvaffaqiyatli amalga oshirildi",
+    "failedToLoadFnBData": "F&B maʼlumotlarini yuklab boʻlmadi",
+    "itemOutOfStockNamed": "{itemName} zaxirada yo‘q",
+    "notEnoughStockAvailable": "Zaxira yetarli emas",
+    "tableSessionNotFound": "Jadval seansi topilmadi",
+    "cartIsEmpty": "Arava bo‘sh",
+    "pleaseSelectStaffMember": "Iltimos, xodimni tanlang",
+    "orderCreatedAddedToBill": "Buyurtma №{orderNumber} yaratildi! {tableName} hisobiga qo‘shildi.",
+    "failedToCreateOrder": "Buyurtma yaratib bo‘lmadi",
+    "noActiveSessionFound": "Ushbu jadval uchun faol seans topilmadi",
+    "failedToCreateTable": "Jadval yaratib bo‘lmadi",
+    "failedToUpdateTable": "Jadvalni yangilab bo‘lmadi",
+    "failedToDeleteTable": "Jadvalni o‘chirib bo‘lmadi",
+    "failedToStartSession": "Seans boshlanmadi",
+    "failedToUpdatePaymentStatus": "Toʻlov holatini yangilab boʻlmadi",
+    "paymentCancelledSuccess": "Toʻlov muvaffaqiyatli bekor qilindi",
+    "failedToEndSession": "Seansni yakunlab bo‘lmadi",
+    "taxSettingsUpdatedSuccess": "Soliq sozlamalari muvaffaqiyatli yangilandi",
+    "failedToUpdateTaxSettings": "Soliq sozlamalarini yangilab bo‘lmadi"
+  },
+  "Analytics": {
+    "title": "Kengaytirilgan Analytics boshqaruv paneli",
+    "subtitle": "Bilyard zalingiz va F&B faoliyati haqida toʻliq maʼlumot",
+    "breadcrumbHome": "Uy",
+    "breadcrumbAnalytics": "Kengaytirilgan tahlil",
+    "refresh": "Yangilash",
+    "overview": "Umumiy koʻrinish",
+    "fnbAnalytics": "F&B Analytics",
+    "operations": "Operatsiyalar",
+    "customerInsights": "Mijoz tushunchalari",
+    "timeRanges": {
+      "last7DaysDaily": "Oxirgi 7 kun (kunlik)",
+      "last14DaysDaily": "Oxirgi 14 kun (kunlik)",
+      "last30DaysDaily": "Oxirgi 30 kun (kunlik)",
+      "last30DaysWeekly": "Oxirgi 30 kun (haftalik)",
+      "last90DaysWeekly": "Oxirgi 90 kun (haftalik)",
+      "last90DaysMonthly": "Oxirgi 90 kun (oylik)"
+    },
+    "cards": {
+      "totalRevenue": "Jami daromad",
+      "tableRevenue": "Jadvaldagi daromad",
+      "fnbRevenue": "F&B daromadi",
+      "activeTables": "Faol stollar",
+      "sessions": "sessiyalar",
+      "orders": "buyurtmalar",
+      "utilization": "foydalanish",
+      "vsLastPeriod": "oxirgi davrga nisbatan"
+    },
+    "charts": {
+      "revenueBreakdownTrends": "Daromadlarni taqsimlash tendentsiyalari",
+      "quickStats": "Tezkor statistika",
+      "avgFnbOrderValue": "O'rtacha F&B buyurtma qiymati",
+      "customerSatisfaction": "Mijozlarni qondirish",
+      "avgSessionDuration": "Seansning oʻrtacha davomiyligi",
+      "topSellingItems": "Eng ko'p sotiladigan buyumlar",
+      "categoryPerformance": "Kategoriyalar samaradorligi",
+      "draftOrderPerformance": "Buyurtma loyihasining bajarilishi",
+      "staffPerformance": "Xodimlar faoliyati",
+      "operationalKPIs": "Operatsion KPI",
+      "hourlyActivityDistribution": "Soatlik faoliyatni taqsimlash",
+      "sessionsRevenueAndFnbByHour": "Seanslar, daromadlar va soat bo'yicha F&B buyurtmalari",
+      "customerOverview": "Mijozlarga umumiy nuqtai",
+      "visitFrequencyDistribution": "Chastotalar taqsimotiga tashrif buyuring"
+    },
+    "labels": {
+      "sold": "sotilgan",
+      "avgValue": "Oʻrtacha qiymat",
+      "totalDrafts": "Jami qoralamalar",
+      "assigned": "Tayinlangan",
+      "conversionRate": "Konvertatsiya darajasi",
+      "avgWaitTime": "Oʻrtacha kutish vaqti",
+      "staffMember": "Xodim a'zosi",
+      "role": "Rol",
+      "revenue": "Daromad",
+      "rating": "Reyting",
+      "tableUtilization": "Jadvaldan foydalanish",
+      "inventoryAlerts": "Inventarizatsiya haqida ogohlantirishlar",
+      "peakHours": "Eng yuqori soatlar",
+      "totalCustomers": "Jami mijozlar",
+      "returningCustomers": "Qaytgan mijozlar",
+      "retention": "ushlab turish",
+      "avgSpendPerCustomer": "Har bir mijoz uchun oʻrtacha xarajat",
+      "min": "min",
+      "hour": "Soat"
+    },
+    "tooltip": {
+      "tableRevenue": "Jadvaldagi daromad",
+      "fnbRevenue": "F&B daromadi",
+      "totalRevenue": "Jami daromad",
+      "sessions": "Seanslar",
+      "fnbOrders": "F&B buyurtmalari"
+    }
+  },
+  "Stock": {
+    "title": "Sklad qoldiqi",
+    "subtitle": "To'liq inventarizatsiyani boshqarish va aktsiyalarni tahlil qilish",
+    "breadcrumbHome": "Uy",
+    "breadcrumbStock": "Sklad qoldiqi",
+    "refresh": "Yangilash",
+    "timeRanges": {
+      "last7Days": "Oxirgi 7 kun",
+      "last14Days": "Oxirgi 14 kun",
+      "last30Days": "Oxirgi 30 kun",
+      "last90Days": "Oxirgi 90 kun"
+    },
+    "cards": {
+      "totalItems": "Jami elementlar",
+      "stockValue": "Aksiya qiymati",
+      "lowStockItems": "Kam zaxira buyumlar",
+      "outOfStock": "Stokda yoʻq",
+      "categories": "toifalar",
+      "totalInventoryValue": "Jami inventar qiymati",
+      "needAttention": "E'tibor kerak",
+      "urgentReorder": "Shoshilinch qayta tartiblash"
+    },
+    "sections": {
+      "stockAlerts": "Birja haqida ogohlantirishlar",
+      "categoryOverview": "Kategoriyaga umumiy nuqtai",
+      "currentStockLevels": "Hozirgi zaxira darajalari",
+      "stockMovement": "Birja harakati (oxirgi {days} kun)"
+    },
+    "table": {
+      "itemName": "Element nomi",
+      "category": "Turkum",
+      "currentStock": "Joriy zaxira",
+      "minLevel": "Minimal daraja",
+      "status": "Status",
+      "unit": "Birlik",
+      "stockValue": "Aksiya qiymati",
+      "totalSold": "Jami sotilgan",
+      "revenue": "Daromad",
+      "dailyAvg": "Kunlik oʻrtacha",
+      "orders": "Buyurtmalar",
+      "lastOrder": "Oxirgi buyurtma"
+    },
+    "status": {
+      "outOfStock": "Stokda yoʻq",
+      "lowStock": "Kam zaxira",
+      "mediumStock": "O'rtacha zaxira",
+      "highStock": "Yuqori zaxira",
+      "unknown": "Noma'lum",
+      "normal": "Oddiy",
+      "high": "Yuqori",
+      "medium": "O'rta",
+      "low": "Past"
+    },
+    "labels": {
+      "items": "buyumlar",
+      "reorder": "Qayta tartiblash",
+      "totalValue": "Umumiy qiymat",
+      "na": "Yoʻq"
+    }
+  },
+  "Users": {
+    "title": "Xodimlarni boshqarish",
+    "subtitle": "Jamoa a'zolarini va ularning rollarini boshqaring",
+    "addStaffMember": "Xodimlarni qo'shing",
+    "editStaffMember": "Xodimni tahrirlash",
+    "updateStaffMember": "Xodimlarni yangilash",
+    "addNewStaffMember": "Yangi xodim qo'shing",
+    "confirmDeactivation": "O'chirishni tasdiqlang",
+    "filters": {
+      "allStaff": "Barcha Xodimlar",
+      "activeOnly": "Faqat faol",
+      "inactiveOnly": "Faqat nofaol"
+    },
+    "table": {
+      "name": "Ism",
+      "role": "Rol",
+      "status": "Status",
+      "created": "Yaratilgan",
+      "actions": "Harakatlar"
+    },
+    "status": {
+      "active": "Faol",
+      "inactive": "Faol emas"
+    },
+    "actions": {
+      "edit": "Tahrirlash",
+      "activate": "Faollashtirish",
+      "deactivate": "Faolsizlantirish",
+      "delete": "Oʻchirish"
+    },
+    "roles": {
+      "staff": "Xodimlar",
+      "manager": "Menejer",
+      "admin": "Admin",
+      "cashier": "Kassir",
+      "waiter": "Ofitsiant",
+      "chef": "Oshpaz",
+      "supervisor": "Nazoratchi"
+    },
+    "form": {
+      "fullName": "To'liq ism",
+      "enterFullName": "To'liq ismni kiriting",
+      "role": "Rol",
+      "cancel": "Bekor qilish"
+    },
+    "messages": {
+      "totalStaffMembers": "Jami: {count} xodimlar",
+      "noStaffMembersFound": "Hech qanday xodim topilmadi",
+      "deactivateConfirmation": "Haqiqatan ham {name} faolsizlantirilsinmi?",
+      "deactivateDescription": "Bu ularni yangi topshiriqlar uchun ishlatib bo'lmaydi, lekin tarixiy ma'lumotlarni saqlaydi.",
+      "yesDeactivate": "Ha, o'chiring"
+    }
+  },
+  "Modals": {
+    "tableModal": {
+      "createTitle": "Yangi jadval yaratish",
+      "tableName": "Jadval nomi",
+      "tableNamePlaceholder": "masalan 1-jadval",
+      "billingType": "Hisob-kitob turi",
+      "hourlyBilling": "Soatlik hisob-kitob",
+      "perMinuteBilling": "Minutiga hisob-kitob",
+      "hourlyRate": "Soatlik tarif (UZS)",
+      "hourlyRatePlaceholder": "masalan 100000",
+      "hourlyRateHelper": "To'liq sessiya soatlari yaxlitlanadi",
+      "perMinuteRate": "Daqiqalik tarif (UZS)",
+      "perMinuteRatePlaceholder": "masalan 1500",
+      "perMinuteRateHelper": "Seans daqiqalari 30 soniyadan keyin yakunlanadi",
+      "status": "Status",
+      "statusPlaceholder": "Holatni tanlang",
+      "cancelButton": "Bekor qilish",
+      "createButton": "Jadval yaratish",
+      "updateButton": "Jadvalni yangilash",
+      "deleteButton": "Oʻchirish",
+      "editTitle": "Jadvalni tahrirlash"
+    },
+    "editTitle": "Jadvalni tahrirlash",
+    "deleteTitle": "Jadvalni o'chirish",
+    "deleteConfirmation": "Haqiqatan ham <strong>{tableName}</strong>ni oʻchirib tashlamoqchimisiz? Bu amalni ortga qaytarib bo‘lmaydi.",
+    "startSessionTitle": "Seansni boshlash - {tableName}",
+    "billingTitle": "Seans hisob-kitobi xulosasi",
+    "fnbTitle": "F&B buyurtmasi - {tableName}",
+    "customerLabel": "Mijoz nomi",
+    "hourlyRateLabel": "Soatlik tarif (UZS)",
+    "statusLabel": "Status",
+    "plannedDurationLabel": "Rejalashtirilgan davomiylik (daqiqa)",
+    "cancelButton": "Bekor qilish",
+    "createButton": "Jadval yaratish",
+    "updateButton": "Jadvalni yangilash",
+    "deleteButton": "Oʻchirish"
+  },
+  "Navigation": {
+    "dashboard": "Boshqaruv paneli",
+    "analytics": "Analitika",
+    "tables": "Stollar",
+    "f&b": "F&B",
+    "menumanagement": "Menyu boshqaruvi",
+    "possystem": "POS tizimi",
+    "pos": "POS",
+    "revenue": "Daromad",
+    "stockreport": "Sklad qoldiqi",
+    "transactions": "Tranzaksiyalar",
+    "usermanagement": "Foydalanuvchi boshqaruvi",
+    "adminsettings": "Administrator sozlamalari",
+    "pricingpackages": "Narxlar paketlari",
+    "pricingPackages": "Narxlar paketlari"
+  },
+  "Common": {
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "edit": "Tahrirlash",
+    "delete": "Oʻchirish",
+    "create": "Yaratish",
+    "update": "Yangilash",
+    "loading": "Yuklanmoqda...",
+    "error": "Xato",
+    "success": "Muvaffaqiyat",
+    "warning": "Ogohlantirish",
+    "info": "Ma'lumot",
+    "active": "Faol",
+    "inactive": "Faol emas",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "confirm": "Tasdiqlang",
+    "close": "Yopish",
+    "view": "Ko‘rish",
+    "actions": "Harakatlar",
+    "status": "Status",
+    "name": "Ism",
+    "description": "Tavsif",
+    "price": "Narxi",
+    "quantity": "Miqdori",
+    "total": "Jami",
+    "date": "Sana",
+    "time": "Vaqt",
+    "customer": "Mijoz",
+    "staff": "Xodimlar",
+    "table": "Jadval",
+    "order": "Buyurtma",
+    "payment": "To'lov",
+    "transaction": "Tranzaksiya",
+    "items": "buyumlar",
+    "clear": "Toza",
+    "menuItems": "Menyu elementlari",
+    "currentOrders": "Joriy buyurtmalar",
+    "newOrder": "Yangi buyurtma",
+    "cartIsEmpty": "Arava bo‘sh",
+    "staffMember": "Xodim a'zosi",
+    "selectStaff": "Xodimlarni tanlang",
+    "duration": "Davomiyligi",
+    "move": "Ko'chirish",
+    "durationManagement": "Davomiylikni boshqarish",
+    "loadingFnBMenu": "F&B menyusi yuklanmoqda...",
+    "moveSessionToAnotherTable": "Seansni boshqa jadvalga o'tkazish",
+    "currentSession": "Joriy sessiya",
+    "currentTable": "Joriy jadval",
+    "selectTargetTable": "Maqsadli jadvalni tanlang",
+    "loadingAvailableTables": "Mavjud stollar yuklanmoqda...",
+    "noAvailableTablesFound": "Hech qanday mavjud jadval topilmadi",
+    "selectATable": "Jadval tanlang...",
+    "targetTable": "Maqsadli jadval",
+    "rate": "Baho",
+    "available": "Mavjud",
+    "moveSessionWarning": "Seansni ko'chirish barcha kutilayotgan F&B buyurtmalarini yangi jadvalga o'tkazadi. Hisob-kitob bir xil muddat va tarif tuzilishi bilan davom etadi.",
+    "movingSession": "Seans ko‘chirilmoqda...",
+    "moveSession": "Seansni ko'chirish",
+    "failedToFetchAvailableTables": "Mavjud stollarni olib bo‘lmadi",
+    "errorFetchingTables": "Stollarni olishda xatolik yuz berdi",
+    "failedToMoveSession": "Seansni ko‘chirib bo‘lmadi",
+    "errorMovingSession": "Seansni ko‘chirishda xatolik yuz berdi",
+    "changeToPerMinute": "Minutiga o'zgartirish",
+    "changeToHourly": "Soatiga oʻzgartirish",
+    "currentDuration": "Joriy Davomiylik",
+    "minutes": "daqiqa",
+    "hours": "soat",
+    "min": "min",
+    "sec": "sek",
+    "billingType": "Hisob-kitob turi",
+    "hourlyRate": "Soatlik tarif",
+    "perMinuteRate": "Daqiqa tezligi",
+    "billableHours": "Hisob-kitob soatlari",
+    "durationAndBillingType": "Davomiyligi va hisob-kitob turi",
+    "durationMinutes": "Davomiyligi (daqiqa)",
+    "failedToRecalculateBilling": "Hisob-kitobni qayta hisoblab bo‘lmadi",
+    "errorRecalculatingBilling": "Hisob-kitobni qayta hisoblashda xatolik yuz berdi",
+    "currency": {
+      "compact": {
+        "thousand": "K",
+        "million": "M",
+        "billion": "B"
+      }
+    }
+  },
+  "AdminPage": {
+    "title": "Administrator sozlamalari",
+    "subtitle": "Tizim boʻylab konfiguratsiya va hisob-kitob sozlamalarini boshqaring",
+    "billingSystem": {
+      "title": "Jadval hisob-kitob tizimi",
+      "subtitle": "Stollarni boshqarish interfeysi yordamida har bir stol uchun alohida hisob-kitoblarni sozlang.",
+      "perMinuteAvailable": "Minutiga hisob-kitob qilish mumkin",
+      "features": {
+        "individualConfig": "Shaxsiy konfiguratsiya: Har bir jadval soatlik yoki daqiqalik hisob-kitob sifatida o'rnatilishi mumkin",
+        "hourlyBilling": "Soatlik hisob-kitob: Seans vaqti keyingi to'liq soatga yaxlitlanadi",
+        "perMinuteBilling": "Minutiga hisob-kitob: Seans vaqti daqiqada hisoblab chiqiladi (30 soniyadan keyin yaxlitlanadi)",
+        "easyManagement": "Oson boshqarish: stollarni yaratish yoki tahrirlashda hisob-kitob turini o‘zgartiring"
+      },
+      "howToTitle": "Stollarni qanday sozlash kerak:",
+      "steps": {
+        "step1": "Stollar → Yangi stol yaratish yoki mavjud stolni tahrirlash bo‘limiga o‘ting",
+        "step2": "Hisob-kitob turini tanlang: “Soatlik hisob-kitob” yoki “Daqiqalik hisob-kitob”",
+        "step3": "Tanlangan hisob-kitob turi uchun tarifni kiriting",
+        "step4": "Har bir jadval o'zining shaxsiy konfiguratsiyasiga ko'ra to'lanadi"
+      }
+    },
+    "systemInfo": {
+      "title": "Tizim ma'lumotlari:",
+      "version": "Versiya:",
+      "perMinuteBilling": "Bir daqiqalik hisob-kitob:",
+      "individualTableConfig": "Jadvalning individual konfiguratsiyasi:",
+      "apiEndpoints": "API so'nggi nuqtalari:",
+      "active": "Faol",
+      "enabled": "Yoqilgan"
+    },
+    "taxSettings": {
+      "title": "Soliq sozlamalari (PPN)",
+      "subtitle": "Jadval seanslari va F&B buyurtmalari uchun soliq sozlamalarini sozlang",
+      "enableTax": "Soliq undirishni yoqish",
+      "taxPercentage": "Soliq foizi (%)",
+      "taxName": "Soliq nomi/yorlig'i",
+      "applyTaxTo": "Soliqni qo'llash:",
+      "tableSessions": "Stol sessiyalari",
+      "fnbOrders": "Oziq-ovqat va ichimliklar buyurtmalari",
+      "note": "Eslatma:",
+      "noteText": "Hozirgi standart soliq stavkasi 11% (PPN). O'zgarishlar faqat yangi buyurtmalar va seanslarga tegishli.",
+      "saving": "Saqlanmoqda...",
+      "saveTaxSettings": "Soliq sozlamalarini saqlang"
+    },
+    "storeSettings": {
+      "title": "Do'kon ma'lumotlari",
+      "subtitle": "Kvitansiyalar uchun bilyard zali tafsilotlarini sozlang",
+      "storeName": "Do'kon nomi",
+      "storeNamePlaceholder": "masalan, taxta bilyard",
+      "storeAddress": "Manzil",
+      "storeAddressPlaceholder": "masalan, Jl. Sudirman № 123",
+      "storePhone": "Telefon raqami",
+      "storePhonePlaceholder": "masalan, 021-1234567",
+      "storeNotes": "Qo'shimcha eslatmalar (kvitansiyada chop etilgan)",
+      "storeNotesPlaceholder": "masalan, Wi-Fi paroli: billiard123",
+      "saving": "Saqlanmoqda...",
+      "saveStoreSettings": "Do'kon sozlamalarini saqlang"
+    },
+    "defaultStaff": {
+      "title": "Standart xodimlar",
+      "subtitle": "Tanlov ishqalanishini kamaytirish uchun standart xodimni o'rnating",
+      "selectStaff": "Standart xodimlarni tanlang",
+      "noDefault": "Standart yo'q (qo'lda tanlash kerak)",
+      "saving": "Saqlanmoqda...",
+      "saveDefaultStaff": "Standart xodimlarni saqlash"
+    },
+    "checkout": {
+      "printAndSave": "Chop etish va saqlash",
+      "adjustDuration": "Davomiylikni sozlash",
+      "taxBreakdown": "Soliq taqsimoti",
+      "tableTax": "Jadval solig'i",
+      "fnbTax": "F&B solig'i",
+      "duration": "Davomiyligi",
+      "hours": "Soat",
+      "minutes": "Daqiqalar",
+      "seconds": "soniyalar"
+    }
+  },
+  "PricingPackages": {
+    "title": "Narxlar paketlari",
+    "subtitle": "Jadvalingiz narxlari paketlarini boshqaring",
+    "addPackage": "Paket qo'shish",
+    "categories": {
+      "all": "Barcha paketlar",
+      "hourly": "Soatlik paketlar",
+      "per_minute": "Daqiqada paketlar"
+    },
+    "table": {
+      "name": "Paket nomi",
+      "category": "Turkum",
+      "rate": "Baho",
+      "status": "Status",
+      "default": "Standart",
+      "actions": "Harakatlar"
+    },
+    "form": {
+      "addTitle": "Yangi paket qo'shish",
+      "editTitle": "Paketni tahrirlash",
+      "name": "Paket nomi",
+      "namePlaceholder": "masalan, MALAM, WEEKEND, VIP",
+      "description": "Tavsif",
+      "descriptionPlaceholder": "Ushbu paket uchun ixtiyoriy tavsif",
+      "category": "Turkum",
+      "selectCategory": "Kategoriyani tanlang",
+      "hourlyRate": "Soatlik tarif",
+      "perMinuteRate": "Daqiqa tezligi",
+      "isDefault": "Ushbu turkum uchun sukut bo'yicha o'rnating",
+      "isActive": "Faol",
+      "sortOrder": "Saralash tartibi",
+      "create": "Paket yaratish",
+      "update": "Paketni yangilash",
+      "cancel": "Bekor qilish",
+      "saving": "Saqlanmoqda..."
+    },
+    "status": {
+      "active": "Faol",
+      "inactive": "Faol emas"
+    },
+    "messages": {
+      "createSuccess": "Paket muvaffaqiyatli yaratildi",
+      "updateSuccess": "Paket muvaffaqiyatli yangilandi",
+      "deleteSuccess": "Paket muvaffaqiyatli oʻchirildi",
+      "deleteError": "Amaldagi paketni oʻchirib boʻlmaydi",
+      "loadError": "Paketlarni yuklab bo‘lmadi",
+      "saveError": "Paket saqlanmadi",
+      "confirmDelete": "Haqiqatan ham bu paketni oʻchirib tashlamoqchimisiz?"
+    }
+  }
+}

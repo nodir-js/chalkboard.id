@@ -4,6 +4,8 @@ import { staff } from '@/schema/fnb';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -15,7 +17,7 @@ export async function GET(request: NextRequest) {
     const activeOnly = searchParams.get('active') === 'true';
 
     let staffMembers;
-    
+
     if (activeOnly) {
       staffMembers = await db.select().from(staff)
         .where(eq(staff.isActive, true))
@@ -42,8 +44,8 @@ export async function POST(request: NextRequest) {
     const { name, role } = body;
 
     if (!name || !role) {
-      return NextResponse.json({ 
-        error: 'Name and role are required' 
+      return NextResponse.json({
+        error: 'Name and role are required'
       }, { status: 400 });
     }
 
@@ -123,4 +125,4 @@ export async function DELETE(request: NextRequest) {
     console.error('Error deleting staff member:', error);
     return NextResponse.json({ error: 'Failed to delete staff member' }, { status: 500 });
   }
-} 
+}

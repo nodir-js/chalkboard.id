@@ -5,6 +5,8 @@ import { fnbOrders } from '@/schema/fnb';
 import { and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -71,7 +73,7 @@ export async function GET(request: NextRequest) {
     const completeHourlyData = Array.from({ length: 24 }, (_, hour) => {
       const sessionData = hourlySessionData.find(h => h.hour === hour);
       const fnbData = hourlyFnbData.find(h => h.hour === hour);
-      
+
       return {
         hour,
         sessions: sessionData?.sessions || 0,
@@ -84,11 +86,11 @@ export async function GET(request: NextRequest) {
     });
 
     // Find peak hours
-    const peakSessionHour = completeHourlyData.reduce((max, current) => 
+    const peakSessionHour = completeHourlyData.reduce((max, current) =>
       current.sessions > max.sessions ? current : max
     );
 
-    const peakRevenueHour = completeHourlyData.reduce((max, current) => 
+    const peakRevenueHour = completeHourlyData.reduce((max, current) =>
       current.totalRevenue > max.totalRevenue ? current : max
     );
 
@@ -109,4 +111,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching peak hours:', error);
     return NextResponse.json({ error: 'Failed to fetch peak hours' }, { status: 500 });
   }
-} 
+}

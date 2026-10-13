@@ -5,6 +5,8 @@ import { pricingPackages, type NewPricingPackage } from "@/schema";
 import { eq, and } from "drizzle-orm";
 import { z } from "zod";
 
+export const dynamic = 'force-dynamic';
+
 const createPackageSchema = z.object({
   name: z.string().min(1).max(255),
   description: z.string().max(500).optional(),
@@ -49,7 +51,7 @@ export async function GET(req: NextRequest) {
         .from(pricingPackages)
         .orderBy(pricingPackages.sortOrder);
     }
-    
+
     return NextResponse.json(packages);
   } catch (error) {
     console.error("Error fetching pricing packages:", error);

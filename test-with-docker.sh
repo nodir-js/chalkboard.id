@@ -5,7 +5,7 @@ echo "🐳 Setting up Docker PostgreSQL and running tests..."
 echo "=================================================="
 
 # Set test environment variables
-export DATABASE_URL="postgresql://postgres:postgres@localhost:5433/chalkboard_test"
+export DATABASE_URL="postgresql://postgres:postgres@localhost:5433/kiy24_test"
 export NEXTAUTH_SECRET="test-secret-key-for-github-actions-only"
 export NEXTAUTH_URL="http://localhost:3000"
 export DEPLOYMENT_MODE="test"
@@ -22,7 +22,7 @@ docker-compose -f docker-compose.test.yml up -d
 # Wait for PostgreSQL to be ready
 echo "⏳ Waiting for PostgreSQL to be ready..."
 timeout=30
-while ! docker-compose -f docker-compose.test.yml exec -T postgres pg_isready -U postgres -d chalkboard_test > /dev/null 2>&1; do
+while ! docker-compose -f docker-compose.test.yml exec -T postgres pg_isready -U postgres -d kiy24_test > /dev/null 2>&1; do
     timeout=$((timeout - 1))
     if [ $timeout -le 0 ]; then
         echo "❌ PostgreSQL failed to start within 30 seconds"
@@ -57,17 +57,17 @@ bun run test --passWithNoTests
 if [ $? -eq 0 ]; then
     echo ""
     echo "✅ All tests passed!"
-    
+
     # Run linting
     echo ""
     echo "🔍 Running linter..."
     bun run lint || echo "⚠️  Linting issues found"
-    
+
     # Test builds
     echo ""
     echo "🏗️  Testing build..."
     bun run build
-    
+
     echo ""
     echo "🎉 All checks completed successfully!"
 else

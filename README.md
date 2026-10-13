@@ -1,28 +1,6 @@
-# 🎱 Chalkboard.id v1.0.3
+# 🎱 Kiy24.uz v1.0.3
 
 A comprehensive billiard hall management system built with Next.js 15, React 19, and TypeScript. Manage table sessions, F&B orders, payments, staff, and analytics with ease.
-
-## 🚀 Quick Deploy
-
-### Railway (Recommended for Cloud)
-
-One-click deploy to Railway with automatic PostgreSQL database:
-
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/chalkboardid?referralCode=D8ivdW&utm_medium=integration&utm_source=template&utm_campaign=generic)
-
-### Docker (Recommended for Self-Hosting)
-
-Run with Docker using our official images:
-
-```bash
-# Quick start
-docker run -p 3000:3000 kugieapp/chalkboard:latest
-
-# Or use Docker Compose
-docker compose up
-```
-
-[🐳 View on Docker Hub](https://hub.docker.com/r/kugieapp/chalkboard)
 
 ### Desktop App (Recommended for Local)
 
@@ -39,11 +17,9 @@ Native desktop application powered by [Tauri v2](https://v2.tauri.app/) with an 
 2. Install and launch — the embedded PGlite database is set up automatically
 3. No external database or server configuration needed
 
-[📥 Download Desktop App](https://github.com/kugie-app/chalkboard.id/releases)
-
 ## 🎯 Overview
 
-This modern web application offers a complete solution for billiard hall operators to manage their business efficiently. From table bookings and session tracking to F&B orders and comprehensive analytics, Chalkboard.id handles all aspects of billiard hall operations.
+This modern web application offers a complete solution for billiard hall operators to manage their business efficiently. From table bookings and session tracking to F&B orders and comprehensive analytics, Kiy24.uz handles all aspects of billiard hall operations.
 
 ## 🏗️ Deployment Options
 
@@ -191,7 +167,7 @@ src/
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd chalkboard
+   cd kiy24
    ```
 
 2. **Install dependencies**
@@ -213,7 +189,7 @@ src/
    # Generate and push schema
    bun run db:generate
    bun run db:push
-   
+
    # Seed initial data (optional)
    bun run db:seed
    ```
@@ -320,4 +296,4 @@ For support and questions, please contact the development team or create an issu
 
 ---
 
-**Chalkboard.id** - Streamlining billiard hall operations with modern technology. Built by [kugie.app](https://kugie.app) and the open source community
+**Kiy24.uz** - Streamlining billiard hall operations with modern technology.

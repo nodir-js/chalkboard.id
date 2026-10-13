@@ -4,11 +4,11 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from 'next-intl';
 import { Button, Badge, Modal, TextInput, Label, Select, Alert, Tabs } from "flowbite-react";
-import { 
-  IconPlus, 
-  IconEdit, 
-  IconTrash, 
-  IconPlayerPlay, 
+import {
+  IconPlus,
+  IconEdit,
+  IconTrash,
+  IconPlayerPlay,
   IconPlayerStop,
   IconCurrencyDollar,
   IconClock,
@@ -32,16 +32,12 @@ import EnhancedBillingModal from "@/components/tables/EnhancedBillingModal";
 import { PricingPackage } from "@/schema";
 import { calculateTax as calculateTaxFromSettings, formatTaxLabel } from "@/lib/tax";
 import { printHtml } from "@/lib/print-html";
-
-// Helper function to format currency
-const formatCurrency = (amount: number | string) => {
-  const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    minimumFractionDigits: 0
-  }).format(num);
-};
+import {
+  AppLocale,
+  formatCurrencyByLocale,
+  formatDateTimeByLocale,
+  formatTimeByLocale,
+} from "@/lib/locale";
 
 interface BilliardTable {
   id: number;
@@ -152,6 +148,7 @@ const TablesManagement = () => {
   const tModals = useTranslations('Modals');
   const tCommon = useTranslations('Common');
   const tPOS = useTranslations('POS');
+  const appLocale = locale as AppLocale;
   const [tables, setTables] = useState<BilliardTable[]>([]);
   const [sessions, setSessions] = useState<{ [key: number]: TableSession }>({});
   const [loading, setLoading] = useState(true);
@@ -225,7 +222,7 @@ const TablesManagement = () => {
           return numA - numB || a.name.localeCompare(b.name);
         });
         setTables(sortedTables);
-        
+
         // Fetch current sessions for occupied tables
         data.forEach(async (table: BilliardTable) => {
           if (table.status === 'occupied') {
@@ -393,14 +390,14 @@ const TablesManagement = () => {
     }
 
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
-    
+
     if (existingItem) {
       if (existingItem.quantity >= item.stockQuantity) {
         showAlert('error', tAlerts('notEnoughStockAvailable'));
         return;
       }
-      setCart(cart.map(cartItem => 
-        cartItem.id === item.id 
+      setCart(cart.map(cartItem =>
+        cartItem.id === item.id
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
       ));
@@ -431,8 +428,8 @@ const TablesManagement = () => {
       return;
     }
 
-    setCart(cart.map(cartItem => 
-      cartItem.id === itemId 
+    setCart(cart.map(cartItem =>
+      cartItem.id === itemId
         ? { ...cartItem, quantity }
         : cartItem
     ));
@@ -445,10 +442,10 @@ const TablesManagement = () => {
   // Add item from existing order to cart (for editing existing orders)
   const addFromExistingToCart = (orderItem: ExistingOrderItem) => {
     const existingItem = cart.find(cartItem => cartItem.id === orderItem.itemId);
-    
+
     if (existingItem) {
-      setCart(cart.map(cartItem => 
-        cartItem.id === orderItem.itemId 
+      setCart(cart.map(cartItem =>
+        cartItem.id === orderItem.itemId
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
       ));
@@ -549,10 +546,10 @@ const TablesManagement = () => {
       showAlert('error', tAlerts('noActiveSessionFound'));
       return;
     }
-    
+
     setSelectedTable(table);
     setShowFnbModal(true);
-    
+
     // Fetch F&B data if not already loaded
     if (categories.length === 0) {
       await fetchFnbData();
@@ -643,7 +640,7 @@ const TablesManagement = () => {
 
   const handleStartSession = async () => {
     if (!selectedTable) return;
-    
+
     if (!sessionData.pricingPackageId) {
       showAlert('error', tSessionModal('packageRequired'));
       return;
@@ -817,28 +814,81 @@ const TablesManagement = () => {
   const printCheckoutReceipt = (paymentData: any, billingData: any) => {
     const billing = billingData.billing;
     const session = billingData.session;
+    const receiptCopy = appLocale === 'uz'
+      ? {
+          receipt: 'To‘lov cheki',
+          customer: 'Mijoz',
+          phone: 'Telefon',
+          tableSession: 'STOL SEANSI',
+          duration: 'Davomiylik',
+          minutes: 'daq',
+          hours: 'soat',
+          fnbOrders: 'F&B BUYURTMALARI',
+          paymentSummary: 'TO‘LOV XULOSASI',
+          table: 'Stol',
+          fnb: 'F&B',
+          total: 'JAMI',
+          thankYou: 'Tashrifingiz uchun rahmat!',
+          item: 'Mahsulot',
+          tax: 'Soliq',
+        }
+      : appLocale === 'ru'
+        ? {
+            receipt: 'Платежный чек',
+            customer: 'Клиент',
+            phone: 'Телефон',
+            tableSession: 'СЕАНС СТОЛА',
+            duration: 'Длительность',
+            minutes: 'мин',
+            hours: 'ч',
+            fnbOrders: 'ЗАКАЗЫ F&B',
+            paymentSummary: 'СВОДКА ПО ОПЛАТЕ',
+            table: 'Стол',
+            fnb: 'F&B',
+            total: 'ИТОГО',
+            thankYou: 'Спасибо за визит!',
+            item: 'Позиция',
+            tax: 'Налог',
+          }
+        : {
+            receipt: 'Receipt',
+            customer: 'Customer',
+            phone: 'Phone',
+            tableSession: 'TABLE SESSION',
+            duration: 'Duration',
+            minutes: 'min',
+            hours: 'hr',
+            fnbOrders: 'F&B ORDERS',
+            paymentSummary: 'PAYMENT SUMMARY',
+            table: 'Table',
+            fnb: 'F&B',
+            total: 'TOTAL',
+            thankYou: 'Thank you for visiting!',
+            item: 'Item',
+            tax: 'Tax',
+          };
 
     const formatCurrencyReceipt = (amount: number) =>
-      new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
+      formatCurrencyByLocale(amount, appLocale);
 
     // Fetch store settings for receipt
     fetch('/api/admin/settings')
       .then(res => res.json())
       .then(data => {
         const s = data.settings || {};
-        const storeName = (s.store_name || 'CHALKBOARD BILLIARD').trim();
+        const storeName = (s.store_name || 'Kiy24 BILLIARD').trim();
         const storeAddress = (s.store_address || '').trim();
         const storePhone = (s.store_phone || '').trim();
         const storeNotes = (s.store_notes || '').trim();
 
         const fnbSection = billing.fnbOrders && billing.fnbOrders.length > 0
           ? `<div class="section">
-              <h3>F&B ORDERS</h3>
+              <h3>${receiptCopy.fnbOrders}</h3>
               ${billing.fnbOrders.map((order: any) =>
                 order.items && order.items.length > 0
                   ? order.items.map((item: any) =>
                       `<div class="item-row">
-                        <span class="item-name">${item.quantity}x ${item.itemName || 'Item'}</span>
+                        <span class="item-name">${item.quantity}x ${item.itemName || receiptCopy.item}</span>
                         <span class="item-price">${formatCurrencyReceipt(parseFloat(item.subtotal))}</span>
                       </div>`
                     ).join('')
@@ -852,7 +902,7 @@ const TablesManagement = () => {
 
         const taxSection = billing.totalTaxAmount > 0
           ? `<div class="subtotal-row">
-              <span>${billing.taxSettings?.name || 'Tax'} (${billing.taxSettings?.percentage || 0}%):</span>
+              <span>${billing.taxSettings?.name || receiptCopy.tax} (${billing.taxSettings?.percentage || 0}%):</span>
               <span>${formatCurrencyReceipt(billing.totalTaxAmount)}</span>
             </div>`
           : '';
@@ -882,24 +932,30 @@ const TablesManagement = () => {
               <h1>${storeName.toUpperCase()}</h1>
               ${storeAddress ? `<p>${storeAddress}</p>` : ''}
               ${storePhone ? `<p>${storePhone}</p>` : ''}
-              <p>Struk Pembayaran</p>
+              <p>${receiptCopy.receipt}</p>
               <p style="font-size:13px; font-weight:bold; margin-top:4px">${paymentData.transactionNumber}</p>
-              <p>${new Date().toLocaleString('id-ID')}</p>
+              <p>${formatDateTimeByLocale(new Date(), appLocale, {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}</p>
             </div>
 
             <div class="section">
-              <p><strong>Customer:</strong> ${session.customerName}</p>
-              ${session.customerPhone ? `<p><strong>Phone:</strong> ${session.customerPhone}</p>` : ''}
+              <p><strong>${receiptCopy.customer}:</strong> ${session.customerName}</p>
+              ${session.customerPhone ? `<p><strong>${receiptCopy.phone}:</strong> ${session.customerPhone}</p>` : ''}
             </div>
 
             <div class="section">
-              <h3>TABLE SESSION</h3>
+              <h3>${receiptCopy.tableSession}</h3>
               <div class="item-row">
                 <span class="item-name">
-                  Duration: ${billing.actualDuration} min
+                  ${receiptCopy.duration}: ${billing.actualDuration} ${receiptCopy.minutes}
                   (${billing.billingDetails.type === 'hourly'
-                    ? billing.billingDetails.billableHours + ' hr'
-                    : billing.billingDetails.billableMinutes + ' min'})
+                    ? billing.billingDetails.billableHours + ' ' + receiptCopy.hours
+                    : billing.billingDetails.billableMinutes + ' ' + receiptCopy.minutes})
                 </span>
                 <span class="item-price">${formatCurrencyReceipt(billing.tableCost)}</span>
               </div>
@@ -908,26 +964,26 @@ const TablesManagement = () => {
             ${fnbSection}
 
             <div class="section">
-              <h3>PAYMENT SUMMARY</h3>
+              <h3>${receiptCopy.paymentSummary}</h3>
               <div class="subtotal-row">
-                <span>Table:</span>
+                <span>${receiptCopy.table}:</span>
                 <span>${formatCurrencyReceipt(billing.tableCost)}</span>
               </div>
               ${billing.fnbTotalCost > 0 ? `
                 <div class="subtotal-row">
-                  <span>F&B:</span>
+                  <span>${receiptCopy.fnb}:</span>
                   <span>${formatCurrencyReceipt(billing.fnbTotalCost)}</span>
                 </div>
               ` : ''}
               ${taxSection}
               <div class="total-row">
-                <span>TOTAL:</span>
+                <span>${receiptCopy.total}:</span>
                 <span>${formatCurrencyReceipt(billing.totalCost)}</span>
               </div>
             </div>
 
             <div class="footer">
-              <p>Terima kasih atas kunjungan Anda!</p>
+              <p>${receiptCopy.thankYou}</p>
               ${storeNotes ? `<p style="margin-top:4px">${storeNotes}</p>` : ''}
               <p>${storeName}</p>
             </div>
@@ -956,30 +1012,30 @@ const TablesManagement = () => {
 
   const getStatusBadgeStyle = (status: string) => {
     switch (status) {
-      case 'available': 
+      case 'available':
         return { backgroundColor: '#22C55E', color: 'white' };
-      case 'occupied': 
+      case 'occupied':
         return { backgroundColor: '#EF4444', color: 'white' };
-      case 'maintenance': 
+      case 'maintenance':
         return { backgroundColor: '#F59E0B', color: 'white' };
-      case 'reserved': 
+      case 'reserved':
         return { backgroundColor: '#3B82F6', color: 'white' };
-      default: 
+      default:
         return { backgroundColor: '#6B7280', color: 'white' };
     }
   };
 
   const getStatusBannerColor = (status: string) => {
     switch (status) {
-      case 'available': 
+      case 'available':
         return '#22C55E';
-      case 'occupied': 
+      case 'occupied':
         return '#EF4444';
-      case 'maintenance': 
+      case 'maintenance':
         return '#F59E0B';
-      case 'reserved': 
+      case 'reserved':
         return '#3B82F6';
-      default: 
+      default:
         return '#6B7280';
     }
   };
@@ -996,21 +1052,32 @@ const TablesManagement = () => {
 
   const getStockStatus = (item: FnbItem) => {
     if (item.stockQuantity <= 0) {
-      return { color: 'error', text: 'Out of Stock', bgColor: '#FEF2F2', textColor: '#EF4444' };
+      return {
+        color: 'error',
+        text: appLocale === 'uz' ? 'Tugagan' : appLocale === 'ru' ? 'Нет в наличии' : 'Out of Stock',
+        bgColor: '#FEF2F2',
+        textColor: '#EF4444'
+      };
     } else if (item.stockQuantity <= item.minStockLevel) {
-      return { color: 'warning', text: 'Low Stock', bgColor: '#FEF3C7', textColor: '#F59E0B' };
+      return {
+        color: 'warning',
+        text: appLocale === 'uz' ? 'Kam qoldi' : appLocale === 'ru' ? 'Мало на складе' : 'Low Stock',
+        bgColor: '#FEF3C7',
+        textColor: '#F59E0B'
+      };
     } else {
-      return { color: 'success', text: 'In Stock', bgColor: '#F0FDF4', textColor: '#22C55E' };
+      return {
+        color: 'success',
+        text: appLocale === 'uz' ? 'Mavjud' : appLocale === 'ru' ? 'В наличии' : 'In Stock',
+        bgColor: '#F0FDF4',
+        textColor: '#22C55E'
+      };
     }
   };
 
   const formatCurrency = (amount: string | number) => {
     const numericAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(numericAmount);
+    return formatCurrencyByLocale(numericAmount, appLocale);
   };
 
   const calculateElapsedTime = (startTime: string) => {
@@ -1027,11 +1094,10 @@ const TablesManagement = () => {
   };
 
   const formatTime = (dateTime: string | Date) => {
-    const date = new Date(dateTime);
-    return date.toLocaleTimeString('id-ID', { 
-      hour: '2-digit', 
+    return formatTimeByLocale(dateTime, appLocale, {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: false 
+      hour12: false
     });
   };
 
@@ -1067,7 +1133,7 @@ const TablesManagement = () => {
   const calculateTableCost = (table: BilliardTable, totalSeconds: number) => {
     const pricingPackage = table.pricingPackage;
     if (!pricingPackage) return 0;
-    
+
     // Use pricing package rates
     if (pricingPackage.category === 'per_minute') {
       const rate = pricingPackage.perMinuteRate ? parseFloat(pricingPackage.perMinuteRate) : 0;
@@ -1081,7 +1147,7 @@ const TablesManagement = () => {
   const getBillingInfo = (table: BilliardTable, totalSeconds: number, session?: TableSession) => {
     // Use pricing package information from session first, then table fallback
     const pricingPackage = (session as any)?.pricingPackage || table.pricingPackage;
-    
+
     if (!pricingPackage) {
       // Fallback to default values if no pricing package
       return {
@@ -1094,9 +1160,9 @@ const TablesManagement = () => {
 
     // Determine billing type based on session preference first, then pricing package category
     const sessionDurationType = session?.durationType;
-    const shouldUsePerMinute = sessionDurationType === 'per_minute' || 
+    const shouldUsePerMinute = sessionDurationType === 'per_minute' ||
                               (!sessionDurationType && pricingPackage.category === 'per_minute');
-    
+
     if (shouldUsePerMinute) {
       const elapsed = totalSeconds;
       const billableMinutes = calculateBillableMinutes(elapsed);
@@ -1125,12 +1191,12 @@ const TablesManagement = () => {
   const filteredItems = items.filter(item => {
     // Filter by category
     const categoryMatch = activeCategory ? item.categoryId === activeCategory : true;
-    
+
     // Filter by search query
-    const searchMatch = searchQuery.trim() === '' || 
+    const searchMatch = searchQuery.trim() === '' ||
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+
     return categoryMatch && searchMatch;
   });
 
@@ -1192,12 +1258,12 @@ const TablesManagement = () => {
               aria-label={`Table ${table.name} - ${table.status}`}
             >
               {/* Status Banner */}
-              <div 
+              <div
                 className="h-3 w-full"
                 style={{ backgroundColor: getStatusBannerColor(table.status) }}
                 aria-hidden="true"
               />
-              
+
               {/* Card Content */}
               <div className="p-4">
                 {/* Header */}
@@ -1220,7 +1286,7 @@ const TablesManagement = () => {
                             <div className="flex items-center gap-1">
                               <IconCurrencyDollar className="h-3 w-3" />
                               <span>
-                                {activePricingPackage.category === 'hourly' 
+                                {activePricingPackage.category === 'hourly'
                                   ? `${formatCurrency(activePricingPackage.hourlyRate || '0')}/hr`
                                   : `${formatCurrency(activePricingPackage.perMinuteRate || '0')}/min`
                                 }
@@ -1241,8 +1307,8 @@ const TablesManagement = () => {
                       </p>
                     )}
                   </div>
-                  <Badge 
-                    color={getStatusColor(table.status)} 
+                  <Badge
+                    color={getStatusColor(table.status)}
                     size="sm"
                     style={getStatusBadgeStyle(table.status)}
                   >
@@ -1258,14 +1324,14 @@ const TablesManagement = () => {
                       {isOccupied && session ? formatTime(session.startTime) : '--:--'}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-bodytext">{tCards('endTime')}:</span>
                     <span className="font-medium text-dark dark:text-white">
                       {isOccupied && session && session.plannedDuration > 0 && plannedEndTime ? formatTime(plannedEndTime) : '--:--'}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-bodytext">{tCards('duration')}:</span>
                     <span className="font-medium text-dark dark:text-white font-mono">
@@ -1310,7 +1376,7 @@ const TablesManagement = () => {
                       <IconToolsKitchen2 className="w-3 h-3 mr-1" />
                       {tCards('fnbButton')}
                     </Button>}
-                    
+
                     {isOccupied ? (
                       <Button
                         color="error"
@@ -1333,7 +1399,7 @@ const TablesManagement = () => {
                       </Button>
                     )}
                   </div>
-                  
+
                   {/* Additional Actions for Occupied Tables */}
                   {isOccupied && session && (
                     <div className="flex gap-2">
@@ -1411,9 +1477,9 @@ const TablesManagement = () => {
           <div className="flex items-center gap-3">
             <IconToolsKitchen2 className="w-6 h-6 text-primary" />
             <div>
-              <h3 className="text-xl font-semibold">F&B Order - {selectedTable?.name}</h3>
+              <h3 className="text-xl font-semibold">{tModals('fnbTitle', { tableName: selectedTable?.name || '' })}</h3>
               <p className="text-sm text-bodytext">
-                Customer: {selectedTable && sessions[selectedTable.id] ? sessions[selectedTable.id].customerName : 'N/A'}
+                {tCommon('customer')}: {selectedTable && sessions[selectedTable.id] ? sessions[selectedTable.id].customerName : 'N/A'}
               </p>
             </div>
           </div>
@@ -1431,7 +1497,7 @@ const TablesManagement = () => {
                   <h3 className="text-lg font-semibold text-dark dark:text-white mb-4">
                     {tCommon('menuItems')}
                   </h3>
-                  
+
                   {/* Search Input */}
                   <div className="relative mb-4">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -1439,13 +1505,13 @@ const TablesManagement = () => {
                     </div>
                     <TextInput
                       type="search"
-                      placeholder="Search menu items..."
+                      placeholder={appLocale === 'uz' ? 'Menyu mahsulotlarini qidiring...' : appLocale === 'ru' ? 'Поиск по меню...' : 'Search menu items...'}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-10"
                     />
                   </div>
-                  
+
                   {/* Categories */}
                   <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
                     <Button
@@ -1474,7 +1540,7 @@ const TablesManagement = () => {
                     {filteredItems.map(item => {
                       const stockStatus = getStockStatus(item);
                       const isOutOfStock = item.stockQuantity <= 0;
-                      
+
                       return (
                         <div
                           key={item.id}
@@ -1491,21 +1557,21 @@ const TablesManagement = () => {
                               <h4 className="font-semibold text-dark dark:text-white text-sm truncate">
                                 {item.name}
                               </h4>
-                              <Badge 
-                                color={stockStatus.color} 
+                              <Badge
+                                color={stockStatus.color}
                                 size="xs"
                                 style={{ backgroundColor: stockStatus.textColor, color: 'white' }}
                               >
                                 {stockStatus.text}
                               </Badge>
                             </div>
-                            
+
                             {item.description && (
                               <p className="text-xs text-bodytext mb-1 line-clamp-1">
                                 {item.description}
                               </p>
                             )}
-                            
+
                             <div className="flex justify-between items-center">
                               <div>
                                 <p className="font-bold text-primary text-sm">
@@ -1517,7 +1583,7 @@ const TablesManagement = () => {
                               </div>
                             </div>
                           </div>
-                          
+
                           {!isOutOfStock && (
                             <Button
                               color="primary"
@@ -1692,7 +1758,7 @@ const TablesManagement = () => {
                               <span>{formatCurrency(calculateTax(calculateTotal()))}</span>
                             </div>
                             <div className="flex justify-between font-bold text-base border-t pt-2">
-                              <span>Total:</span>
+                              <span>{tCommon('total')}:</span>
                               <span className="text-primary">
                                 {formatCurrency(calculateTotal() + calculateTax(calculateTotal()))}
                               </span>
@@ -1753,9 +1819,9 @@ const TablesManagement = () => {
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               >
-                <option value="available">Available</option>
-                <option value="maintenance">Maintenance</option>
-                <option value="reserved">Reserved</option>
+                <option value="available">{tCards('available')}</option>
+                <option value="maintenance">{tCards('maintenance')}</option>
+                <option value="reserved">{tCards('reserved')}</option>
               </Select>
             </div>
           </div>
@@ -1776,7 +1842,7 @@ const TablesManagement = () => {
         <Modal.Body>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="editName" value="Table Name" />
+              <Label htmlFor="editName" value={tModals('tableModal.tableName')} />
               <TextInput
                 id="editName"
                 value={formData.name}
@@ -1785,44 +1851,46 @@ const TablesManagement = () => {
               />
             </div>
             <div>
-              <Label htmlFor="editStatus" value="Status" />
+              <Label htmlFor="editStatus" value={tModals('statusLabel')} />
               <Select
                 id="editStatus"
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               >
-                <option value="available">Available</option>
-                <option value="maintenance">Maintenance</option>
-                <option value="reserved">Reserved</option>
+                <option value="available">{tCards('available')}</option>
+                <option value="maintenance">{tCards('maintenance')}</option>
+                <option value="reserved">{tCards('reserved')}</option>
               </Select>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button color="primary" onClick={handleUpdateTable}>
-            Update Table
+            {tModals('updateButton')}
           </Button>
           <Button color="secondary" onClick={() => setShowEditModal(false)}>
-            Cancel
+            {tCommon('cancel')}
           </Button>
         </Modal.Footer>
       </Modal>
 
       {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
-        <Modal.Header>Delete Table</Modal.Header>
+        <Modal.Header>{tModals('deleteTitle')}</Modal.Header>
         <Modal.Body>
           <p className="text-bodytext">
-            Are you sure you want to delete <strong>{selectedTable?.name}</strong>? 
-            This action cannot be undone.
+            {tModals.rich('deleteConfirmation', {
+              tableName: selectedTable?.name || '',
+              strong: (chunks) => <strong>{chunks}</strong>,
+            })}
           </p>
         </Modal.Body>
         <Modal.Footer>
           <Button color="error" onClick={handleDeleteTable}>
-            Delete
+            {tModals('deleteButton')}
           </Button>
           <Button color="secondary" onClick={() => setShowDeleteModal(false)}>
-            Cancel
+            {tCommon('cancel')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -1864,7 +1932,7 @@ const TablesManagement = () => {
                 <option value="">{tSessionModal('selectPackage')}</option>
                 {pricingPackages.map((pkg) => (
                   <option key={pkg.id} value={pkg.id}>
-                    {pkg.name} - {pkg.category === 'hourly' 
+                    {pkg.name} - {pkg.category === 'hourly'
                       ? `${formatCurrency(Number(pkg.hourlyRate))}/hour`
                       : `${formatCurrency(Number(pkg.perMinuteRate))}/min`
                     }
@@ -1892,10 +1960,10 @@ const TablesManagement = () => {
                 <div className="p-3 bg-lightinfo rounded-lg">
                   <p className="text-sm text-info">
                     <IconCurrencyDollar className="w-4 h-4 inline mr-1" />
-                    Estimated cost: {(() => {
+                    {tSessionModal('estimatedCost', { cost: (() => {
                       const selectedPackage = pricingPackages.find(p => p.id === sessionData.pricingPackageId);
                       if (!selectedPackage) return formatCurrency('0');
-                      
+
                       if (selectedPackage.category === 'hourly') {
                         return formatCurrency(
                           ((sessionData.plannedDuration / 60) * parseFloat(selectedPackage.hourlyRate || '0')).toString()
@@ -1905,7 +1973,7 @@ const TablesManagement = () => {
                           (sessionData.plannedDuration * parseFloat(selectedPackage.perMinuteRate || '0')).toString()
                         );
                       }
-                    })()}
+                    })() })}
                   </p>
                 </div>
               </>
@@ -1915,10 +1983,10 @@ const TablesManagement = () => {
         <Modal.Footer>
           <Button color="primary" onClick={handleStartSession}>
             <IconPlayerPlay className="w-4 h-4 mr-2" />
-            Start Session
+            {tSessionModal('startButton')}
           </Button>
           <Button color="secondary" onClick={() => setShowSessionModal(false)}>
-            Cancel
+            {tSessionModal('cancelButton')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -2007,4 +2075,4 @@ const TablesManagement = () => {
   );
 };
 
-export default TablesManagement; 
+export default TablesManagement;

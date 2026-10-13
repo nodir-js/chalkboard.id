@@ -11,7 +11,7 @@ const { execSync } = require('child_process');
 
 // Configuration
 const config = {
-  appName: 'Chalkboard.id',
+  appName: 'Kiy24.uz',
   version: require('../package.json').version,
   buildDir: path.join(__dirname, '..', '.next', 'standalone'),
   outputDir: path.join(__dirname, '..', 'dist'),
@@ -54,9 +54,9 @@ function ensurePkg() {
  */
 function createStandalonePackage() {
   const packagePath = path.join(config.buildDir, 'package.json');
-  
+
   const standalonePackage = {
-    name: 'chalkboard-standalone',
+    name: 'kiy24-standalone',
     version: config.version,
     main: 'server.js',
     scripts: {
@@ -138,7 +138,7 @@ if (fs.existsSync(envPath)) {
   });
 }
 
-console.log('🚀 Starting Chalkboard.id v${config.version}');
+console.log('🚀 Starting Kiy24.uz v${config.version}');
 console.log('📁 Working directory:', __dirname);
 console.log('🌐 Mode: Standalone Windows');
 
@@ -146,16 +146,16 @@ console.log('🌐 Mode: Standalone Windows');
 require('./server.js');
 `.trim();
 
-  const startupPath = path.join(config.buildDir, 'chalkboard.js');
+  const startupPath = path.join(config.buildDir, 'kiy24.js');
   fs.writeFileSync(startupPath, startupScript);
-  
+
   // Update package.json to use our startup script
   const packagePath = path.join(config.buildDir, 'package.json');
   const packageData = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
-  packageData.main = 'chalkboard.js';
-  packageData.bin = 'chalkboard.js';
+  packageData.main = 'kiy24.js';
+  packageData.bin = 'kiy24.js';
   fs.writeFileSync(packagePath, JSON.stringify(packageData, null, 2));
-  
+
   console.log('✅ Created startup script');
 }
 
@@ -167,7 +167,7 @@ function createInstaller() {
 @echo off
 echo.
 echo ====================================
-echo   Chalkboard.id v${config.version}
+echo   Kiy24.uz v${config.version}
 echo   Windows Standalone Installer
 echo ====================================
 echo.
@@ -175,7 +175,7 @@ echo.
 REM Check if PostgreSQL is installed
 where psql >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (
-    echo ⚠️  PostgreSQL not found. Please install PostgreSQL 12+ before running Chalkboard.id
+    echo ⚠️  PostgreSQL not found. Please install PostgreSQL 12+ before running Kiy24.uz
     echo    Download from: https://www.postgresql.org/download/windows/
     echo.
     pause
@@ -183,38 +183,38 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 REM Create installation directory
-if not exist "%PROGRAMFILES%\\Chalkboard" (
-    mkdir "%PROGRAMFILES%\\Chalkboard"
+if not exist "%PROGRAMFILES%\\Kiy24" (
+    mkdir "%PROGRAMFILES%\\Kiy24"
 )
 
 REM Copy executable
-copy "chalkboard-win.exe" "%PROGRAMFILES%\\Chalkboard\\chalkboard.exe"
+copy "kiy24-win.exe" "%PROGRAMFILES%\\Kiy24\\kiy24.exe"
 
 REM Create desktop shortcut
-set SHORTCUT="%USERPROFILE%\\Desktop\\Chalkboard.id.lnk"
+set SHORTCUT="%USERPROFILE%\\Desktop\\Kiy24.uz.lnk"
 echo Set oWS = WScript.CreateObject("WScript.Shell") > CreateShortcut.vbs
 echo sLinkFile = %SHORTCUT% >> CreateShortcut.vbs
 echo Set oLink = oWS.CreateShortcut(sLinkFile) >> CreateShortcut.vbs
-echo oLink.TargetPath = "%PROGRAMFILES%\\Chalkboard\\chalkboard.exe" >> CreateShortcut.vbs
-echo oLink.WorkingDirectory = "%PROGRAMFILES%\\Chalkboard" >> CreateShortcut.vbs
-echo oLink.Description = "Chalkboard.id - Billiard Hall Management System" >> CreateShortcut.vbs
+echo oLink.TargetPath = "%PROGRAMFILES%\\Kiy24\\kiy24.exe" >> CreateShortcut.vbs
+echo oLink.WorkingDirectory = "%PROGRAMFILES%\\Kiy24" >> CreateShortcut.vbs
+echo oLink.Description = "Kiy24.uz - Billiard Hall Management System" >> CreateShortcut.vbs
 echo oLink.Save >> CreateShortcut.vbs
 cscript CreateShortcut.vbs
 del CreateShortcut.vbs
 
 REM Create example environment file
-echo # Chalkboard.id Configuration > "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # Copy this file to .env and configure your settings >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # Database Configuration >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo DATABASE_URL=postgresql://postgres:password@localhost:5432/chalkboard >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # Authentication >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo NEXTAUTH_SECRET=your-secret-here-minimum-32-characters >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo NEXTAUTH_URL=http://localhost:3000 >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo # Auto-update Server (optional) >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
-echo UPDATE_SERVER_URL=https://your-update-server.com/api/updates >> "%PROGRAMFILES%\\Chalkboard\\.env.example"
+echo # Kiy24.uz Configuration > "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # Copy this file to .env and configure your settings >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # Database Configuration >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo DATABASE_URL=postgresql://postgres:password@localhost:5432/kiy24 >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # Authentication >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo NEXTAUTH_SECRET=your-secret-here-minimum-32-characters >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo NEXTAUTH_URL=http://localhost:3000 >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo # Auto-update Server (optional) >> "%PROGRAMFILES%\\Kiy24\\.env.example"
+echo UPDATE_SERVER_URL=https://your-update-server.com/api/updates >> "%PROGRAMFILES%\\Kiy24\\.env.example"
 
 echo.
 echo ✅ Installation completed successfully!
@@ -222,10 +222,10 @@ echo.
 echo 📋 Next steps:
 echo    1. Configure PostgreSQL database
 echo    2. Copy .env.example to .env and edit settings
-echo    3. Launch Chalkboard.id from desktop shortcut
+echo    3. Launch Kiy24.uz from desktop shortcut
 echo.
 echo 📖 For detailed setup instructions, visit:
-echo    https://github.com/your-username/chalkboard/blob/main/docs/STANDALONE.md
+echo    https://github.com/your-username/kiy24/blob/main/docs/STANDALONE.md
 echo.
 pause
 `.trim();
@@ -240,17 +240,17 @@ pause
  */
 function buildExecutable() {
   console.log('🔨 Building Windows executable...');
-  
+
   const pkgCommand = [
     'npx pkg',
     path.join(config.buildDir, 'package.json'),
     '--target node18-win-x64',
-    '--output', path.join(config.outputDir, 'chalkboard-win.exe'),
+    '--output', path.join(config.outputDir, 'kiy24-win.exe'),
     '--compress GZip'
   ].join(' ');
 
   try {
-    execSync(pkgCommand, { 
+    execSync(pkgCommand, {
       stdio: 'inherit',
       cwd: config.buildDir
     });
@@ -271,8 +271,8 @@ function createReleasePackage() {
   }
 
   // Copy executable
-  const executablePath = path.join(config.outputDir, 'chalkboard-win.exe');
-  const releaseExecutable = path.join(releaseDir, 'chalkboard-win.exe');
+  const executablePath = path.join(config.outputDir, 'kiy24-win.exe');
+  const releaseExecutable = path.join(releaseDir, 'kiy24-win.exe');
   fs.copyFileSync(executablePath, releaseExecutable);
 
   // Copy installer
@@ -288,19 +288,19 @@ function createReleasePackage() {
 
   // Create README
   const readmeContent = `
-# Chalkboard.id v${config.version} - Windows Standalone
+# Kiy24.uz v${config.version} - Windows Standalone
 
 ## Quick Start
 
-1. Run \`install.bat\` as Administrator to install Chalkboard.id
+1. Run \`install.bat\` as Administrator to install Kiy24.uz
 2. Configure PostgreSQL database (see Database Setup below)
-3. Configure environment variables in \`C:\\Program Files\\Chalkboard\\.env\`
-4. Launch Chalkboard.id from desktop shortcut
+3. Configure environment variables in \`C:\\Program Files\\Kiy24\\.env\`
+4. Launch Kiy24.uz from desktop shortcut
 
 ## Database Setup
 
 1. Install PostgreSQL 12+ from https://www.postgresql.org/download/windows/
-2. Create a database named \`chalkboard\`
+2. Create a database named \`kiy24\`
 3. Update DATABASE_URL in .env file
 
 ## Configuration
@@ -313,7 +313,7 @@ Copy \`.env.example\` to \`.env\` and configure:
 ## Support
 
 For help and documentation, visit:
-https://github.com/your-username/chalkboard/blob/main/docs/
+https://github.com/your-username/kiy24/blob/main/docs/
 
 ## Version Information
 

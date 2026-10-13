@@ -4,6 +4,8 @@ import { tables } from '@/schema/tables';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
@@ -80,4 +82,4 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete table' }, { status: 500 });
   }
-} 
+}

@@ -4,6 +4,8 @@ import { fnbItems, fnbCategories, fnbOrderItems, fnbOrders } from '@/schema/fnb'
 import { eq, and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -32,7 +34,7 @@ export async function GET(request: NextRequest) {
       cost: fnbItems.cost,
       isActive: fnbItems.isActive,
       stockStatus: sql<string>`
-        CASE 
+        CASE
           WHEN ${fnbItems.stockQuantity} = 0 THEN 'out_of_stock'
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 'low_stock'
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} * 2 THEN 'medium_stock'
@@ -41,7 +43,7 @@ export async function GET(request: NextRequest) {
       `,
       stockValue: sql<number>`${fnbItems.stockQuantity} * COALESCE(${fnbItems.cost}, ${fnbItems.price})`,
       daysUntilReorder: sql<number>`
-        CASE 
+        CASE
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 0
           ELSE ${fnbItems.stockQuantity} - ${fnbItems.minStockLevel}
         END
@@ -51,7 +53,7 @@ export async function GET(request: NextRequest) {
       .innerJoin(fnbCategories, eq(fnbItems.categoryId, fnbCategories.id))
       .where(eq(fnbItems.isActive, true))
       .orderBy(sql`
-        CASE 
+        CASE
           WHEN ${fnbItems.stockQuantity} = 0 THEN 1
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 2
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} * 2 THEN 3
@@ -91,22 +93,22 @@ export async function GET(request: NextRequest) {
       currentStock: fnbItems.stockQuantity,
       minStockLevel: fnbItems.minStockLevel,
       alertType: sql<string>`
-        CASE 
+        CASE
           WHEN ${fnbItems.stockQuantity} = 0 THEN 'OUT_OF_STOCK'
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 'LOW_STOCK'
           ELSE 'NORMAL'
         END
       `,
       urgency: sql<string>`
-        CASE 
+        CASE
           WHEN ${fnbItems.stockQuantity} = 0 THEN 'HIGH'
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 'MEDIUM'
           ELSE 'LOW'
         END
       `,
       suggestedReorderQuantity: sql<number>`
-        CASE 
-          WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 
+        CASE
+          WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN
             ${fnbItems.minStockLevel} * 3 - ${fnbItems.stockQuantity}
           ELSE 0
         END
@@ -121,7 +123,7 @@ export async function GET(request: NextRequest) {
         )
       )
       .orderBy(sql`
-        CASE 
+        CASE
           WHEN ${fnbItems.stockQuantity} = 0 THEN 1
           WHEN ${fnbItems.stockQuantity} <= ${fnbItems.minStockLevel} THEN 2
           ELSE 3
@@ -187,4 +189,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching stock data:', error);
     return NextResponse.json({ error: 'Failed to fetch stock data' }, { status: 500 });
   }
-} 
+}

@@ -4,6 +4,8 @@ import { tables, tableSessions } from '@/schema/tables';
 import { eq, and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -30,7 +32,7 @@ export async function GET(request: NextRequest) {
       totalHours: sql<number>`COALESCE(SUM(${tableSessions.actualDuration}), 0) / 60.0`,
       avgSessionDuration: sql<number>`COALESCE(AVG(${tableSessions.actualDuration}), 0)`,
       utilizationRate: sql<number>`
-        CASE 
+        CASE
           WHEN COUNT(${tableSessions.id}) > 0 THEN
             (COALESCE(SUM(${tableSessions.actualDuration}), 0) / 60.0) / (${days} * 24.0) * 100
           ELSE 0
@@ -38,7 +40,7 @@ export async function GET(request: NextRequest) {
       `,
     })
       .from(tables)
-      .leftJoin(tableSessions, 
+      .leftJoin(tableSessions,
         and(
           eq(tables.id, tableSessions.tableId),
           gte(tableSessions.createdAt, startDate),
@@ -54,7 +56,7 @@ export async function GET(request: NextRequest) {
       totalTables: sql<number>`COUNT(DISTINCT ${tables.id})`,
       activeTables: sql<number>`COUNT(DISTINCT CASE WHEN ${tables.status} = 'occupied' THEN ${tables.id} END)`,
       avgUtilization: sql<number>`
-        CASE 
+        CASE
           WHEN COUNT(${tableSessions.id}) > 0 THEN
             AVG((COALESCE(${tableSessions.actualDuration}, 0) / 60.0) / (${days} * 24.0) * 100)
           ELSE 0
@@ -64,7 +66,7 @@ export async function GET(request: NextRequest) {
       totalHours: sql<number>`COALESCE(SUM(${tableSessions.actualDuration}), 0) / 60.0`,
     })
       .from(tables)
-      .leftJoin(tableSessions, 
+      .leftJoin(tableSessions,
         and(
           eq(tables.id, tableSessions.tableId),
           gte(tableSessions.createdAt, startDate),
@@ -105,12 +107,12 @@ export async function GET(request: NextRequest) {
         endDate: endDate.toISOString().split('T')[0],
         days
       },
-      overallStats: overallStats[0] || { 
-        totalTables: 0, 
-        activeTables: 0, 
-        avgUtilization: 0, 
-        totalRevenue: 0, 
-        totalHours: 0 
+      overallStats: overallStats[0] || {
+        totalTables: 0,
+        activeTables: 0,
+        avgUtilization: 0,
+        totalRevenue: 0,
+        totalHours: 0
       },
       tableUtilization: tableUtilization || [],
       hourlyUtilization: completeHourlyUtilization,
@@ -119,4 +121,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching table utilization:', error);
     return NextResponse.json({ error: 'Failed to fetch table utilization' }, { status: 500 });
   }
-} 
+}

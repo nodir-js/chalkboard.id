@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import { useLocale } from "next-intl";
 import CardBox from "../shared/CardBox";
 import dynamic from "next/dynamic";
+import { formatCurrencyByLocale, formatDateByLocale } from "@/lib/locale";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface DailyRevenueChartProps {
@@ -16,6 +18,7 @@ interface DailyRevenueChartProps {
 }
 
 const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ data, title, subtitle }) => {
+  const locale = useLocale();
   const chartData: any = {
     series: [
       {
@@ -59,7 +62,7 @@ const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ data, title, subt
     xaxis: {
       categories: data.map(d => {
         const date = new Date(d.date);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return formatDateByLocale(date, locale, { month: 'short', day: 'numeric' });
       }),
       axisBorder: {
         show: false,
@@ -70,15 +73,10 @@ const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ data, title, subt
     },
     yaxis: {
       title: {
-        text: "Revenue (IDR)",
+        text: "Revenue (UZS)",
       },
       labels: {
-        formatter: (val: number) => new Intl.NumberFormat('id-ID', {
-          style: 'currency',
-          currency: 'IDR',
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        }).format(val),
+        formatter: (val: number) => formatCurrencyByLocale(val, locale),
       },
     },
     legend: {
@@ -97,11 +95,7 @@ const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ data, title, subt
       intersect: false,
       y: {
         formatter: function (val: number) {
-          return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-          }).format(val);
+          return formatCurrencyByLocale(val, locale);
         },
       },
     },
@@ -124,4 +118,4 @@ const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ data, title, subt
   );
 };
 
-export default DailyRevenueChart; 
+export default DailyRevenueChart;

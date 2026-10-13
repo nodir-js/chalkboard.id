@@ -5,6 +5,8 @@ import { fnbOrders, staff } from '@/schema/fnb';
 import { eq, and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -128,12 +130,12 @@ export async function GET(request: NextRequest) {
 
     // Calculate metrics
     const utilization = tableUtilizationData[0] || { totalTables: 0, activeTables: 0 };
-    const tableUtilizationPercent = utilization.totalTables > 0 
-      ? (utilization.activeTables / utilization.totalTables) * 100 
+    const tableUtilizationPercent = utilization.totalTables > 0
+      ? (utilization.activeTables / utilization.totalTables) * 100
       : 0;
 
     const avgSessionDuration = Number(sessionDurationData[0]?.avgDuration) || 0;
-    
+
     const peakHours = peakHoursData.map(p => Number(p.hour)).slice(0, 3);
 
     // Add some mock staff if none exist

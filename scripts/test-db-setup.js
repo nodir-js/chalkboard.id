@@ -7,7 +7,7 @@ import { existsSync } from 'fs';
 console.log('🧪 Testing database setup for CI...\n');
 
 // Check if we have a local PostgreSQL setup
-const localDbUrl = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/chalkboard_test';
+const localDbUrl = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/kiy24_test';
 
 try {
   console.log('1. Setting up test environment...');
@@ -24,14 +24,14 @@ try {
   execSync('bun run test:ci', { stdio: 'inherit' });
 
   console.log('\n✅ All tests passed! Database setup works correctly.');
-  
+
 } catch (error) {
   console.error('\n❌ Test failed:', error.message);
-  
+
   console.log('\n🔍 Troubleshooting tips:');
   console.log('- Make sure PostgreSQL is running: brew services start postgresql');
-  console.log('- Create test database: createdb chalkboard_test');
-  console.log('- Check connection: psql postgresql://postgres:postgres@localhost:5432/chalkboard_test');
-  
+  console.log('- Create test database: createdb kiy24_test');
+  console.log('- Check connection: psql postgresql://postgres:postgres@localhost:5432/kiy24_test');
+
   process.exit(1);
 }

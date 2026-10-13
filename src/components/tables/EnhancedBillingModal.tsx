@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Modal, Button, Label, TextInput } from 'flowbite-react';
 import { IconPrinter, IconCurrencyDollar, IconClock, IconLoader2 } from '@tabler/icons-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { AppLocale, formatCurrencyByLocale, formatDateTimeByLocale } from '@/lib/locale';
 
 interface TaxSettings {
   enabled: boolean;
@@ -83,8 +84,50 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
   billingData,
   onConfirmPayment
 }) => {
+  const locale = useLocale() as AppLocale;
   const tCommon = useTranslations('Common');
   const tCheckout = useTranslations('AdminPage.checkout');
+  const uiCopy = locale === 'uz'
+    ? {
+        title: 'Seans to‘lovi tasdiqlansin',
+        details: 'Seans tafsilotlari',
+        customer: 'Mijoz',
+        startTime: 'Boshlanish vaqti',
+        endTime: 'Tugash vaqti',
+        recalculated: 'Hisob-kitob qayta hisoblandi',
+        costBreakdown: 'Xarajatlar tafsiloti',
+        tableCost: 'Stol narxi',
+        fnbOrders: 'F&B buyurtmalari',
+        totalCost: 'Jami narx',
+        item: 'Mahsulot',
+      }
+    : locale === 'ru'
+      ? {
+          title: 'Подтверждение оплаты сеанса',
+          details: 'Детали сеанса',
+          customer: 'Клиент',
+          startTime: 'Время начала',
+          endTime: 'Время окончания',
+          recalculated: 'Расчет обновлен',
+          costBreakdown: 'Структура стоимости',
+          tableCost: 'Стоимость стола',
+          fnbOrders: 'Заказы F&B',
+          totalCost: 'Общая стоимость',
+          item: 'Позиция',
+        }
+      : {
+          title: 'Session Billing Confirmation',
+          details: 'Session Details',
+          customer: 'Customer',
+          startTime: 'Start Time',
+          endTime: 'End Time',
+          recalculated: 'Billing recalculated',
+          costBreakdown: 'Cost Breakdown',
+          tableCost: 'Table Cost',
+          fnbOrders: 'F&B Orders',
+          totalCost: 'Total Cost',
+          item: 'Item',
+        };
   const [hours, setHours] = useState('00');
   const [mins, setMins] = useState('00');
   const [secs, setSecs] = useState('00');
@@ -169,16 +212,11 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
   const currentBilling = recalculatedBilling || billingData;
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
+    return formatCurrencyByLocale(amount, locale);
   };
 
   const formatDateTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('id-ID', {
+    return formatDateTimeByLocale(dateString, locale, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -197,7 +235,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
       <Modal.Header>
         <div className="flex items-center gap-2">
           <IconCurrencyDollar className="w-5 h-5" />
-          Session Billing Confirmation
+          {uiCopy.title}
         </div>
       </Modal.Header>
       <Modal.Body>
@@ -205,23 +243,23 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
           {/* Session Info */}
           <div className="border-b pb-4">
             <h3 className="text-lg font-semibold text-dark dark:text-white mb-3">
-              Session Details
+              {uiCopy.details}
             </h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-bodytext">Customer:</span>
+                <span className="text-bodytext">{uiCopy.customer}:</span>
                 <span className="ml-2 font-medium text-dark dark:text-white">
                   {billingData.session.customerName}
                 </span>
               </div>
               <div>
-                <span className="text-bodytext">Start Time:</span>
+                <span className="text-bodytext">{uiCopy.startTime}:</span>
                 <span className="ml-2 font-medium text-dark dark:text-white">
                   {formatDateTime(billingData.session.startTime)}
                 </span>
               </div>
               <div>
-                <span className="text-bodytext">End Time:</span>
+                <span className="text-bodytext">{uiCopy.endTime}:</span>
                 <span className="ml-2 font-medium text-dark dark:text-white">
                   {formatDateTime(billingData.session.endTime)}
                 </span>
@@ -286,7 +324,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
             {recalculatedBilling && (
               <div className="mt-3 p-2 bg-lightsuccess rounded-lg">
                 <p className="text-success text-sm font-medium">
-                  ✓ Billing recalculated
+                  ✓ {uiCopy.recalculated}
                 </p>
               </div>
             )}
@@ -301,11 +339,11 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
           {/* Cost Breakdown */}
           <div className="border-b pb-4">
             <h3 className="text-lg font-semibold text-dark dark:text-white mb-3">
-              Cost Breakdown
+              {uiCopy.costBreakdown}
             </h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-bodytext">Table Cost:</span>
+                <span className="text-bodytext">{uiCopy.tableCost}:</span>
                 <span className="font-medium text-dark dark:text-white">
                   {formatCurrency(currentBilling?.billing.tableCost || 0)}
                 </span>
@@ -323,7 +361,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
                 </div>
               )}
               <div className="flex justify-between">
-                <span className="text-bodytext">F&B Orders:</span>
+                <span className="text-bodytext">{uiCopy.fnbOrders}:</span>
                 <span className="font-medium text-dark dark:text-white">
                   {formatCurrency(currentBilling?.billing.fnbTotalCost || 0)}
                 </span>
@@ -359,7 +397,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
               )}
 
               <div className="flex justify-between text-lg font-semibold border-t pt-2">
-                <span className="text-dark dark:text-white">Total Cost:</span>
+                <span className="text-dark dark:text-white">{uiCopy.totalCost}:</span>
                 <span className="text-primary">
                   {formatCurrency(currentBilling?.billing.totalCost || 0)}
                 </span>
@@ -371,7 +409,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
           {currentBilling?.billing.fnbOrders && currentBilling.billing.fnbOrders.length > 0 && (
             <div>
               <h3 className="text-lg font-semibold text-dark dark:text-white mb-3">
-                F&B Orders
+                {uiCopy.fnbOrders}
               </h3>
               <div className="max-h-40 overflow-y-auto space-y-1">
                 {currentBilling?.billing.fnbOrders?.map((order: any, orderIndex: number) => (
@@ -379,7 +417,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
                     {order.items && order.items.length > 0
                       ? order.items.map((item: any, itemIndex: number) => (
                           <div key={itemIndex} className="flex justify-between text-sm p-2 bg-lightgray rounded">
-                            <span>{item.quantity}x {item.itemName || 'Item'}</span>
+                            <span>{item.quantity}x {item.itemName || uiCopy.item}</span>
                             <span className="font-medium">{formatCurrency(parseFloat(item.subtotal))}</span>
                           </div>
                         ))
@@ -411,7 +449,7 @@ const EnhancedBillingModal: React.FC<EnhancedBillingModalProps> = ({
           onClick={onClose}
           disabled={isRecalculating}
         >
-          Cancel
+          {tCommon('cancel')}
         </Button>
       </Modal.Footer>
     </Modal>

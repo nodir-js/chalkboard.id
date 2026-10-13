@@ -4,6 +4,8 @@ import { payments } from '@/schema/payments';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -33,4 +35,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching pending transactions:', error);
     return NextResponse.json({ error: 'Failed to fetch pending transactions' }, { status: 500 });
   }
-} 
+}

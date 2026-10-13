@@ -8,13 +8,13 @@
 const { execSync, spawn } = require('child_process');
 const path = require('path');
 
-console.log('🚀 Chalkboard.id - Starting up...\n');
+console.log('🚀 Kiy24.uz - Starting up...\n');
 
 // Check if DATABASE_URL is set
 if (!process.env.DATABASE_URL) {
   console.error('❌ DATABASE_URL environment variable is not set!');
   console.log('Please set your PostgreSQL connection string in DATABASE_URL');
-  console.log('Example: postgresql://username:password@localhost:5432/chalkboard');
+  console.log('Example: postgresql://username:password@localhost:5432/kiy24');
   process.exit(1);
 }
 
@@ -33,9 +33,9 @@ if (!hasBun) {
   // Run database migration
   console.log('🔄 Setting up database...');
   try {
-    execSync('bun run db:push', { 
+    execSync('bun run db:push', {
       stdio: 'inherit',
-      env: process.env 
+      env: process.env
     });
     console.log('✅ Database setup completed!\n');
   } catch (error) {
@@ -44,7 +44,7 @@ if (!hasBun) {
   }
 }
 
-console.log('✅ Starting Chalkboard.id server...');
+console.log('✅ Starting Kiy24.uz server...');
 console.log('Access your application at: http://localhost:3000');
 console.log('Press Ctrl+C to stop\n');
 

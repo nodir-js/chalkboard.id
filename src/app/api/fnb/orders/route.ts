@@ -5,6 +5,8 @@ import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 import { payments } from '@/schema';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -17,7 +19,7 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get('limit');
 
     let orders;
-    
+
     if (status) {
       orders = await db.select().from(fnbOrders)
         .where(eq(fnbOrders.status, status))
@@ -42,34 +44,34 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { 
-      context, 
-      customerName, 
-      customerPhone, 
-      tableId, 
-      staffId, 
-      subtotal, 
-      tax, 
-      total, 
-      notes, 
-      items 
+    const {
+      context,
+      customerName,
+      customerPhone,
+      tableId,
+      staffId,
+      subtotal,
+      tax,
+      total,
+      notes,
+      items
     } = body;
 
     if (!customerName || !subtotal || !total || !items || items.length === 0 || !staffId) {
-      return NextResponse.json({ 
-        error: 'Customer name, subtotal, total, items, and staff ID are required' 
+      return NextResponse.json({
+        error: 'Customer name, subtotal, total, items, and staff ID are required'
       }, { status: 400 });
     }
 
     // Validate context-specific requirements
     if (context === 'table_session' && !tableId) {
-      return NextResponse.json({ 
-        error: 'Table ID is required for table session orders' 
+      return NextResponse.json({
+        error: 'Table ID is required for table session orders'
       }, { status: 400 });
     }
 
     // Generate order number with context prefix
-    const contextPrefix = context === 'standalone' ? 'FNB' : 
+    const contextPrefix = context === 'standalone' ? 'FNB' :
                          context === 'waiting' ? 'DRAFT' : 'TABLE';
     const orderNumber = `${contextPrefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
@@ -113,7 +115,7 @@ export async function POST(request: NextRequest) {
         const currentItem = await db.select().from(fnbItems).where(eq(fnbItems.id, itemId)).limit(1);
         const currentStock = currentItem[0]?.stockQuantity || 0;
         const newStock = Math.max(0, currentStock - quantity);
-        
+
         await db
           .update(fnbItems)
           .set({
@@ -139,7 +141,7 @@ export async function POST(request: NextRequest) {
     let paymentRecord = null;
     if (context === 'standalone') {
       const transactionNumber = `TXN-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-      
+
       // Create payment record for standalone order
       const newPayment = await db.insert(payments).values({
         transactionNumber,
@@ -153,14 +155,14 @@ export async function POST(request: NextRequest) {
         paymentMethods: JSON.stringify([{ type: 'cash', amount: total.toString() }]),
         staffId: parseInt(staffId),
         status: 'pending',
-        
+
         // Legacy fields for compatibility
         transactionId: `TXN-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
         midtransOrderId: `ORDER-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
         amount: total.toString(),
-        currency: 'IDR',
+        currency: 'UZS',
         paymentMethod: 'cash',
-        
+
         createdAt: new Date(),
         updatedAt: new Date(),
       }).returning();
@@ -187,4 +189,4 @@ export async function POST(request: NextRequest) {
     console.error('Error creating order:', error);
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 });
   }
-} 
+}

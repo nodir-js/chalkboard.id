@@ -4,8 +4,10 @@ import { fnbOrders, fnbOrderItems, fnbItems, fnbCategories, staff } from '@/sche
 import { eq, and } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
-  request: NextRequest, 
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -78,4 +80,4 @@ export async function GET(
     console.error('Error fetching table orders:', error);
     return NextResponse.json({ error: 'Failed to fetch table orders' }, { status: 500 });
   }
-} 
+}

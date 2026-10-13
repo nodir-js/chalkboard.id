@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_PASSWORD: testpass
       POSTGRES_USER: testuser
-      POSTGRES_DB: chalkboard_test
+      POSTGRES_DB: kiy24_test
     ports:
       - "5432:5432"
     volumes:
@@ -26,7 +26,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://testuser:testpass@postgres:5432/chalkboard_test
+      - DATABASE_URL=postgresql://testuser:testpass@postgres:5432/kiy24_test
       - NEXTAUTH_SECRET=test-secret-key
       - NEXTAUTH_URL=http://localhost:3000
       - DEPLOYMENT_MODE=node

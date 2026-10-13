@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import { useLocale } from "next-intl";
 import CardBox from "../shared/CardBox";
 import dynamic from "next/dynamic";
+import { formatCurrencyByLocale, formatDateByLocale, formatNumberByLocale } from "@/lib/locale";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface DailyStatsChartProps {
@@ -16,6 +18,7 @@ interface DailyStatsChartProps {
 }
 
 const DailyStatsChart: React.FC<DailyStatsChartProps> = ({ data, title, subtitle }) => {
+  const locale = useLocale();
   const chartData: any = {
     series: [
       {
@@ -54,7 +57,7 @@ const DailyStatsChart: React.FC<DailyStatsChartProps> = ({ data, title, subtitle
     xaxis: {
       categories: data.map(d => {
         const date = new Date(d.date);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return formatDateByLocale(date, locale, { month: 'short', day: 'numeric' });
       }),
       axisBorder: {
         show: false,
@@ -75,10 +78,10 @@ const DailyStatsChart: React.FC<DailyStatsChartProps> = ({ data, title, subtitle
       {
         opposite: true,
         title: {
-          text: "Revenue (IDR)",
+          text: "Revenue (UZS)",
         },
         labels: {
-          formatter: (val: number) => new Intl.NumberFormat('id-ID').format(val),
+          formatter: (val: number) => formatNumberByLocale(val, locale),
         },
       },
     ],
@@ -101,11 +104,7 @@ const DailyStatsChart: React.FC<DailyStatsChartProps> = ({ data, title, subtitle
           if (opts.seriesIndex === 0) {
             return val + " sessions";
           }
-          return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-          }).format(val);
+          return formatCurrencyByLocale(val, locale);
         },
       },
     },
@@ -128,4 +127,4 @@ const DailyStatsChart: React.FC<DailyStatsChartProps> = ({ data, title, subtitle
   );
 };
 
-export default DailyStatsChart; 
+export default DailyStatsChart;

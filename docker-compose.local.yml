@@ -3,10 +3,10 @@ services:
   # PostgreSQL database for standalone deployment
   postgres:
     image: postgres:15
-    container_name: chalkboard-postgres
+    container_name: kiy24-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: chalkboard
+      POSTGRES_DB: kiy24
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
@@ -16,9 +16,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init:/docker-entrypoint-initdb.d
     networks:
-      - chalkboard-network
+      - kiy24-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d chalkboard"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d kiy24"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -27,10 +27,10 @@ services:
   # pgAdmin for database management (optional)
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: chalkboard-pgadmin
+    container_name: kiy24-pgadmin
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@chalkboard.dev
+      PGADMIN_DEFAULT_EMAIL: admin@kiy24.dev
       PGADMIN_DEFAULT_PASSWORD: admin
       PGADMIN_LISTEN_PORT: 80
     ports:
@@ -38,7 +38,7 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     networks:
-      - chalkboard-network
+      - kiy24-network
     depends_on:
       postgres:
         condition: service_healthy
@@ -46,14 +46,14 @@ services:
   # Redis for caching (optional)
   redis:
     image: redis:7-alpine
-    container_name: chalkboard-redis
+    container_name: kiy24-redis
     restart: unless-stopped
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
     networks:
-      - chalkboard-network
+      - kiy24-network
     command: redis-server --appendonly yes
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -63,13 +63,13 @@ services:
 
 volumes:
   postgres_data:
-    name: chalkboard_postgres_data
+    name: kiy24_postgres_data
   pgadmin_data:
-    name: chalkboard_pgadmin_data
+    name: kiy24_pgadmin_data
   redis_data:
-    name: chalkboard_redis_data
+    name: kiy24_redis_data
 
 networks:
-  chalkboard-network:
-    name: chalkboard-network
+  kiy24-network:
+    name: kiy24-network
     driver: bridge

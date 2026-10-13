@@ -4,6 +4,8 @@ import { systemSettings } from '@/schema/settings';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await auth();
@@ -49,8 +51,8 @@ export async function PUT(request: NextRequest) {
 
     // Validate inputs
     if (enabled && (percentage < 0 || percentage > 100)) {
-      return NextResponse.json({ 
-        error: 'Tax percentage must be between 0 and 100' 
+      return NextResponse.json({
+        error: 'Tax percentage must be between 0 and 100'
       }, { status: 400 });
     }
 

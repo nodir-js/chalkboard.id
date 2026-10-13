@@ -6,6 +6,8 @@ import { tables } from "@/schema/tables";
 import { eq, count } from "drizzle-orm";
 import { z } from "zod";
 
+export const dynamic = 'force-dynamic';
+
 const updatePackageSchema = z.object({
   name: z.string().min(1).max(255).optional(),
   description: z.string().max(500).optional(),
@@ -122,7 +124,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    
+
     // Check if package is in use by any tables
     const [tablesUsingPackage] = await db
       .select({ count: count() })

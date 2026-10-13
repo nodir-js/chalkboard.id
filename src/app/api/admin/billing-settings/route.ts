@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getBillingRateType, setBillingRateType, BillingRateType } from '@/lib/settings';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await auth();
@@ -10,8 +12,8 @@ export async function GET() {
     }
 
     const billingRateType = await getBillingRateType();
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       billingRateType,
       availableTypes: ['hourly', 'per_minute']
     });
@@ -30,16 +32,16 @@ export async function POST(request: NextRequest) {
     const { billingRateType } = await request.json();
 
     if (!billingRateType || !['hourly', 'per_minute'].includes(billingRateType)) {
-      return NextResponse.json({ 
-        error: 'Invalid billing rate type. Must be "hourly" or "per_minute"' 
+      return NextResponse.json({
+        error: 'Invalid billing rate type. Must be "hourly" or "per_minute"'
       }, { status: 400 });
     }
 
     await setBillingRateType(billingRateType as BillingRateType);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Billing rate type updated successfully',
-      billingRateType 
+      billingRateType
     });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update billing settings' }, { status: 500 });

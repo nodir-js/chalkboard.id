@@ -4,6 +4,8 @@ import { fnbOrders, fnbOrderItems, fnbItems, fnbCategories } from '@/schema/fnb'
 import { eq, and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -89,12 +91,12 @@ export async function GET(request: NextRequest) {
 
     const metrics = fnbMetrics[0] || { avgOrderValue: 0, totalOrders: 0, totalRevenue: 0 };
     const drafts = draftOrderMetrics[0] || { totalDrafts: 0, assignedDrafts: 0, completedOrders: 0 };
-    
-    const conversionRate = drafts.totalDrafts > 0 
+
+    const conversionRate = drafts.totalDrafts > 0
       ? (drafts.completedOrders / drafts.totalDrafts) * 100
       : 0;
 
-    const orderConversionRate = metrics.totalOrders > 0 
+    const orderConversionRate = metrics.totalOrders > 0
       ? (drafts.completedOrders / metrics.totalOrders) * 100
       : 0;
 

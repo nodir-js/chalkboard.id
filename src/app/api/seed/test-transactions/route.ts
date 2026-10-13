@@ -21,8 +21,8 @@ export async function POST() {
       .limit(3);
 
     if (availableTables.length === 0) {
-      return NextResponse.json({ 
-        error: 'No available tables found. Please run the main seed first.' 
+      return NextResponse.json({
+        error: 'No available tables found. Please run the main seed first.'
       }, { status: 400 });
     }
 
@@ -32,15 +32,15 @@ export async function POST() {
       .limit(10);
 
     if (fnbItemsList.length === 0) {
-      return NextResponse.json({ 
-        error: 'No F&B items found. Please run the main seed first.' 
+      return NextResponse.json({
+        error: 'No F&B items found. Please run the main seed first.'
       }, { status: 400 });
     }
 
     // Create some test staff if none exist
     const existingStaff = await db.select().from(staff).limit(1);
     let testStaff;
-    
+
     if (existingStaff.length === 0) {
       const newStaff = await db.insert(staff).values([
         { name: 'John Doe', role: 'waiter' },
@@ -86,7 +86,7 @@ export async function POST() {
     for (let i = 0; i < Math.min(scenarios.length, availableTables.length); i++) {
       const table = availableTables[i];
       const scenario = scenarios[i];
-      
+
       console.log(`📊 Creating scenario ${i + 1} for ${table.name}...`);
 
       // 1. Start table session
@@ -122,7 +122,7 @@ export async function POST() {
         const total = subtotal + tax;
 
         const orderNumber = `TABLE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-        
+
         const order = await db.insert(fnbOrders).values({
           orderNumber,
           tableId: table.id,
@@ -171,11 +171,11 @@ export async function POST() {
       const hourlyRate = parseFloat(table.hourlyRate);
       const billableHours = Math.ceil(actualDuration / 60);
       const tableCost = billableHours * hourlyRate;
-      
+
       const fnbTotalCost = createdOrders.reduce((total, order) => {
         return total + parseFloat(order.total);
       }, 0);
-      
+
       const totalCost = tableCost + fnbTotalCost;
 
       // End the session
@@ -192,7 +192,7 @@ export async function POST() {
 
       // Create payment record
       const transactionId = `TXN-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-      
+
       const newPayment = await db.insert(payments).values({
         transactionNumber: transactionId,
         customerName: scenario.customerName,
@@ -205,7 +205,7 @@ export async function POST() {
         fnbAmount: fnbTotalCost.toFixed(2),
         discountAmount: '0',
         taxAmount: createdOrders.reduce((total, order) => total + parseFloat(order.tax || '0'), 0).toFixed(2),
-        currency: 'IDR',
+        currency: 'UZS',
         createdAt: new Date(),
         updatedAt: new Date(),
       }).returning();
@@ -219,7 +219,7 @@ export async function POST() {
 
       // Link all F&B orders to the payment
       await db.update(fnbOrders)
-        .set({ 
+        .set({
           paymentId,
           status: 'billed'
         })
@@ -265,4 +265,4 @@ export async function POST() {
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
-} 
+}

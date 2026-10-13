@@ -6,7 +6,7 @@ const config = {
   isLayout: "boxed", // This can be full or boxed
   isSidebarHover: false,
   isCollapse:"full-sidebar",
-  isLanguage: "id",
+  isLanguage: "uz",
   isCardShadow: true,
   isMobileSidebar: false,
   isHorizontal: false,
@@ -17,4 +17,3 @@ const config = {
 };
 
 export default config;
-

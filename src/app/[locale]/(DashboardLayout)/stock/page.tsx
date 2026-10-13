@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import BreadcrumbComp from "@/components/layout/shared/breadcrumb/BreadcrumbComp";
 import { Button, Select, Table, Badge } from "flowbite-react";
-import { 
-  IconBox, 
-  IconAlertTriangle, 
+import {
+  IconBox,
+  IconAlertTriangle,
   IconTrendingDown,
   IconPackage,
   IconRefresh,
@@ -19,15 +19,17 @@ import StatCard from "@/components/analytics/StatCard";
 import CardBox from "@/components/shared/CardBox";
 import { StockData, StockMovementItem } from "@/lib/stock-analytics-type";
 import DefaultSpinner from "@/components/ui-components/Spinner/DefaultSpinner";
+import { formatCurrencyByLocale, formatDateByLocale } from "@/lib/locale";
 
 // BCrumb will be constructed dynamically with translations
 
 const StockReport = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = useLocale();
   const tStock = useTranslations('Stock');
   const tCommon = useTranslations('Common');
-  
+
   const BCrumb = [
     {
       to: "/",
@@ -59,7 +61,7 @@ const StockReport = () => {
   const fetchStockData = async (days: string) => {
     setLoading(true);
     setRefreshing(true);
-    
+
     try {
       const response = await fetch(`/api/analytics/stock?days=${days}`);
       const data = await response.json();
@@ -128,19 +130,15 @@ const StockReport = () => {
 
   const formatCompactCurrency = (amount: number) => {
     const absAmount = Math.abs(amount);
-    
+
     if (absAmount >= 1000000000) {
-      return `Rp${(amount / 1000000000).toFixed(1)}${tCommon('currency.compact.billion')}`;
+      return `UZS ${(amount / 1000000000).toFixed(1)}${tCommon('currency.compact.billion')}`;
     } else if (absAmount >= 1000000) {
-      return `Rp${(amount / 1000000).toFixed(1)}${tCommon('currency.compact.million')}`;
+      return `UZS ${(amount / 1000000).toFixed(1)}${tCommon('currency.compact.million')}`;
     } else if (absAmount >= 1000) {
-      return `Rp${(amount / 1000).toFixed(1)}${tCommon('currency.compact.thousand')}`;
+      return `UZS ${(amount / 1000).toFixed(1)}${tCommon('currency.compact.thousand')}`;
     } else {
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0,
-      }).format(amount);
+      return formatCurrencyByLocale(amount, locale);
     }
   };
 
@@ -186,9 +184,9 @@ const StockReport = () => {
             <option value="30">{tStock('timeRanges.last30Days')}</option>
             <option value="90">{tStock('timeRanges.last90Days')}</option>
           </Select>
-          <Button 
-            color="primary" 
-            size="sm" 
+          <Button
+            color="primary"
+            size="sm"
             onClick={handleRefresh}
             disabled={refreshing}
           >
@@ -334,8 +332,8 @@ const StockReport = () => {
                         <Table.Cell>{item.categoryName}</Table.Cell>
                         <Table.Cell>
                           <span className={`font-semibold ${
-                            item.currentStock === 0 ? 'text-error' : 
-                            item.currentStock <= item.minStockLevel ? 'text-warning' : 
+                            item.currentStock === 0 ? 'text-error' :
+                            item.currentStock <= item.minStockLevel ? 'text-warning' :
                             'text-success'
                           }`}>
                             {item.currentStock}
@@ -388,8 +386,8 @@ const StockReport = () => {
                         </Table.Cell>
                         <Table.Cell>{item.orderCount}</Table.Cell>
                         <Table.Cell>
-                          {item.lastOrderDate ? 
-                            new Date(item.lastOrderDate).toLocaleDateString() : 
+                          {item.lastOrderDate ?
+                            formatDateByLocale(item.lastOrderDate, locale) :
                             tStock('labels.na')
                           }
                         </Table.Cell>
@@ -406,4 +404,4 @@ const StockReport = () => {
   );
 };
 
-export default StockReport; 
+export default StockReport;

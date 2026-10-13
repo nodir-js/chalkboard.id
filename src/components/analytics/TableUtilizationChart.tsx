@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import { useLocale } from "next-intl";
 import CardBox from "../shared/CardBox";
 import dynamic from "next/dynamic";
+import { formatCurrencyByLocale } from "@/lib/locale";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface TableUtilizationChartProps {
@@ -17,6 +19,7 @@ interface TableUtilizationChartProps {
 }
 
 const TableUtilizationChart: React.FC<TableUtilizationChartProps> = ({ data, title, subtitle }) => {
+  const locale = useLocale();
   const chartData: any = {
     series: [
       {
@@ -96,16 +99,12 @@ const TableUtilizationChart: React.FC<TableUtilizationChartProps> = ({ data, tit
         formatter: function (val: number, opts: any) {
           const tableIndex = opts.dataPointIndex;
           const tableData = data[tableIndex];
-          
+
           return `
             <div>
               <div>Utilization: ${val.toFixed(1)}%</div>
               <div>Sessions: ${tableData.totalSessions}</div>
-              <div>Revenue: ${new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0,
-              }).format(tableData.totalRevenue)}</div>
+              <div>Revenue: ${formatCurrencyByLocale(tableData.totalRevenue, locale)}</div>
             </div>
           `;
         },
@@ -130,4 +129,4 @@ const TableUtilizationChart: React.FC<TableUtilizationChartProps> = ({ data, tit
   );
 };
 
-export default TableUtilizationChart; 
+export default TableUtilizationChart;

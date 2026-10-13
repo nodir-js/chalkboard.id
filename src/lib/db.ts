@@ -26,7 +26,7 @@ function getPgliteDataDir(): string {
   if (process.env.DEPLOYMENT_MODE === 'desktop') {
     const os = require('os');
     const path = require('path');
-    const appName = 'com.kugie.chalkboard';
+    const appName = 'uz.kiy24.app';
     const platform = process.platform;
     if (platform === 'win32') {
       return path.join(process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming'), appName, 'data');
@@ -36,7 +36,7 @@ function getPgliteDataDir(): string {
       return path.join(process.env.XDG_DATA_HOME || path.join(os.homedir(), '.local', 'share'), appName, 'data');
     }
   }
-  return 'idb://chalkboard-db';
+  return 'idb://kiy24-db';
 }
 
 /**
@@ -56,7 +56,7 @@ function createConnectionString(): string | null {
   // Build connection string from individual components (for local deployment)
   const host = config.database.host || 'localhost';
   const port = config.database.port || 5432;
-  const database = config.database.database || 'chalkboard';
+  const database = config.database.database || 'kiy24';
   const username = config.database.username || 'postgres';
   const password = config.database.password || 'postgres';
 
@@ -158,4 +158,4 @@ export const connectionInfo = {
   provider: config.provider,
   useServerless: config.database.useServerless,
   pooling: config.database.pooling,
-}; 
+};

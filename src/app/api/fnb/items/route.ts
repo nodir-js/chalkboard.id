@@ -4,6 +4,8 @@ import { fnbItems, fnbCategories } from '@/schema/fnb';
 import { eq } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await auth();
@@ -44,21 +46,21 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { 
-      name, 
-      description, 
-      price, 
-      cost, 
-      stockQuantity = 0, 
-      minStockLevel = 0, 
-      unit = 'pcs', 
-      categoryId, 
-      isActive = true 
+    const {
+      name,
+      description,
+      price,
+      cost,
+      stockQuantity = 0,
+      minStockLevel = 0,
+      unit = 'pcs',
+      categoryId,
+      isActive = true
     } = body;
 
     if (!name || !price || !categoryId) {
-      return NextResponse.json({ 
-        error: 'Name, price, and category are required' 
+      return NextResponse.json({
+        error: 'Name, price, and category are required'
       }, { status: 400 });
     }
 
@@ -78,4 +80,4 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create item' }, { status: 500 });
   }
-} 
+}

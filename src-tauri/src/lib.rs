@@ -11,6 +11,8 @@ use std::{
 
 use tauri::{AppHandle, Manager, Runtime, Url};
 
+const DEFAULT_LOCALE: &str = "uz";
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   let next_server: Arc<Mutex<Option<Child>>> = Arc::new(Mutex::new(None));
@@ -80,8 +82,8 @@ fn start_next_server<R: Runtime>(
   let node_path = standalone_dir.join("node.exe");
   log_startup(&format!("standalone dir: {}", standalone_dir.display()));
 
-  let stdout = File::create(std::env::temp_dir().join("chalkboard-next.out.log"))?;
-  let stderr = File::create(std::env::temp_dir().join("chalkboard-next.err.log"))?;
+  let stdout = File::create(std::env::temp_dir().join("kiy24-next.out.log"))?;
+  let stderr = File::create(std::env::temp_dir().join("kiy24-next.err.log"))?;
 
   let mut child = Command::new(node_path)
     .arg("server.js")
@@ -90,7 +92,7 @@ fn start_next_server<R: Runtime>(
     .env("HOSTNAME", "127.0.0.1")
     .env("DEPLOYMENT_MODE", "desktop")
     .env("NEXTAUTH_URL", format!("http://127.0.0.1:{port}"))
-    .env("NEXTAUTH_SECRET", "chalkboard-desktop-secret")
+    .env("NEXTAUTH_SECRET", "kiy24-desktop-secret")
     .stdin(Stdio::null())
     .stdout(Stdio::from(stdout))
     .stderr(Stdio::from(stderr))
@@ -101,7 +103,9 @@ fn start_next_server<R: Runtime>(
   *next_server.lock().unwrap() = Some(child);
 
   if let Some(window) = app.get_webview_window("main") {
-    window.navigate(Url::parse(&format!("http://127.0.0.1:{port}/id/auth/signin"))?)?;
+    window.navigate(Url::parse(&format!(
+      "http://127.0.0.1:{port}/{DEFAULT_LOCALE}/auth/signin"
+    ))?)?;
   }
 
   Ok(())
@@ -185,7 +189,7 @@ mod raw_print {
       return Err(format!("Failed to open printer '{printer_name}'").into());
     }
 
-    let mut doc_name = wide_null("Chalkboard Receipt");
+    let mut doc_name = wide_null("Kiy24 Receipt");
     let mut data_type = wide_null("RAW");
     let doc_info = DOC_INFO_1W {
       pDocName: doc_name.as_mut_ptr(),
@@ -306,7 +310,7 @@ fn log_startup(message: &str) {
   if let Ok(mut file) = OpenOptions::new()
     .create(true)
     .append(true)
-    .open(std::env::temp_dir().join("chalkboard-desktop.log"))
+    .open(std::env::temp_dir().join("kiy24-desktop.log"))
   {
     let _ = writeln!(file, "{message}");
   }

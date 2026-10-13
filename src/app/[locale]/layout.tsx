@@ -7,11 +7,12 @@ import LocaleWrapper from "@/components/LocaleWrapper";
 import "./css/globals.css";
 import { ThemeModeScript } from "flowbite-react";
 import { Manrope } from "next/font/google";
+import { defaultLocale, isAppLocale } from "@/lib/locale";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Chalkboard.id - Dashboard",
+  title: "Kiy24.uz - Dashboard",
 };
 
 export default async function RootLayout({
@@ -21,10 +22,12 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
+  const { locale: requestedLocale } = await params;
+  const locale = isAppLocale(requestedLocale) ? requestedLocale : defaultLocale;
   const messages = await getMessages();
 
   return (
-    <html lang="id">
+    <html lang={locale}>
       <head>
         <ThemeModeScript />
       </head>
@@ -39,4 +42,4 @@ export default async function RootLayout({
       </body>
     </html>
   );
-} 
+}

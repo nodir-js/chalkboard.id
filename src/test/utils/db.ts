@@ -8,14 +8,14 @@ let testConnection: ReturnType<typeof postgres> | null = null;
 
 export async function getTestDatabase() {
   if (!testDb) {
-    const connectionString = process.env.DATABASE_URL || 
-      (process.env.CI ? 'postgresql://postgres:postgres@localhost:5432/chalkboard_test' : 
-       'postgresql://postgres:postgres@localhost:5433/chalkboard_test');
-    
+    const connectionString = process.env.DATABASE_URL ||
+      (process.env.CI ? 'postgresql://postgres:postgres@localhost:5432/kiy24_test' :
+       'postgresql://postgres:postgres@localhost:5433/kiy24_test');
+
     try {
       testConnection = postgres(connectionString, { max: 1 });
       testDb = drizzle(testConnection, { schema });
-      
+
       // Test the connection with a simple query
       await testDb.execute(sql`SELECT 1`);
     } catch (error) {
@@ -24,7 +24,7 @@ export async function getTestDatabase() {
       return null;
     }
   }
-  
+
   return testDb;
 }
 
@@ -34,11 +34,11 @@ export async function cleanupDatabase() {
     console.warn('⚠️ Database not available, skipping cleanup');
     return;
   }
-  
+
   try {
     // Use TRUNCATE for faster cleanup and to reset sequences
     await db.execute(sql`
-      TRUNCATE TABLE 
+      TRUNCATE TABLE
         fnb_order_items,
         table_sessions,
         fnb_orders,

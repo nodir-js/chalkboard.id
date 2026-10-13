@@ -13,9 +13,9 @@ const Profile = () => {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut({ 
+    await signOut({
       callbackUrl: '/auth/signin',
-      redirect: true 
+      redirect: true
     });
   };
 
@@ -71,7 +71,7 @@ const Profile = () => {
             />
             <div>
               <h5 className="text-15 font-semibold">
-                {session?.user?.name || "ChalkBoard User"}
+                {session?.user?.name || "Kiy24 User"}
                 {session?.user?.role === 'admin' && (
                   <span className="text-success ml-2">Admin</span>
                 )}
@@ -80,7 +80,7 @@ const Profile = () => {
                 )}
               </h5>
               <p className="text-sm text-ld opacity-80">
-                {session?.user?.email || "user@chalkboard.com"}
+                {session?.user?.email || "user@kiy24.com"}
               </p>
             </div>
           </div>

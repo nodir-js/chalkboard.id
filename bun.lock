@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "chalkboard.id",
+      "name": "kiy24.uz",
       "dependencies": {
         "@auth/drizzle-adapter": "^1.10.0",
         "@casl/ability": "6.3.3",

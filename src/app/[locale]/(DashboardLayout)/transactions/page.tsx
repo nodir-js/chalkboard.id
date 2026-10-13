@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import CardBox from "@/components/shared/CardBox";
 import { Button, Badge, Table, Modal, Alert, Select, Label, TextInput } from "flowbite-react";
 import {
@@ -15,6 +15,11 @@ import {
 } from "@tabler/icons-react";
 import DefaultSpinner from "@/components/ui-components/Spinner/DefaultSpinner";
 import { printHtml } from "@/lib/print-html";
+import {
+  AppLocale,
+  formatCurrencyByLocale,
+  formatDateTimeByLocale,
+} from "@/lib/locale";
 
 interface TableSession {
   id: number;
@@ -90,6 +95,7 @@ const TransactionsPage = () => {
   const { data: session, status } = sessionHook || { data: null, status: 'loading' };
   const router = useRouter();
   const searchParams = useSearchParams();
+  const locale = useLocale();
   const t = useTranslations();
   const tAlerts = useTranslations('Alerts');
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -245,15 +251,11 @@ const TransactionsPage = () => {
   };
 
   const formatCurrency = (amount: string) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(parseFloat(amount));
+    return formatCurrencyByLocale(amount, locale);
   };
 
   const formatDateTime = (dateString: string) => {
-    return new Date(dateString).toLocaleString('id-ID', {
+    return formatDateTimeByLocale(dateString, locale, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -331,49 +333,76 @@ const TransactionsPage = () => {
     setShowPrintLanguageModal(true);
   };
 
-  const printReceipt = (payment: Payment, locale: 'en' | 'id') => {
-    const receiptHtml = generateReceiptHTML(payment, locale);
+  const printReceipt = (payment: Payment, receiptLocale: AppLocale) => {
+    const receiptHtml = generateReceiptHTML(payment, receiptLocale);
     setShowPrintLanguageModal(false);
     printHtml(receiptHtml).catch((error) => {
       console.error('Failed to print receipt', error);
     });
   };
 
-  const generateReceiptHTML = (payment: Payment, locale: 'en' | 'id'): string => {
+  const generateReceiptHTML = (payment: Payment, receiptLocale: AppLocale): string => {
     // Get tax label with percentage
-    const taxLabel = taxSettings.enabled ? 
-      `${taxSettings.name} (${taxSettings.percentage}%)` : 
-      (locale === 'id' ? 'Pajak' : 'Tax');
-    
+    const taxLabel = taxSettings.enabled ?
+      `${taxSettings.name} (${taxSettings.percentage}%)` :
+      (receiptLocale === 'uz' ? 'Soliq' : receiptLocale === 'ru' ? 'Налог' : 'Tax');
+
     // Create a temporary translations object for the selected locale
-    const storeName = storeSettings.store_name || (locale === 'id' ? 'BILLIARD CHALKBOARD' : 'CHALKBOARD BILLIARD');
-    const receiptTranslations = locale === 'id' ? {
+    const storeName = storeSettings.store_name || 'Kiy24 BILLIARD';
+    const receiptTranslations = receiptLocale === 'uz' ? {
       title: storeName.toUpperCase(),
-      subtitle: 'Struk Pembayaran',
-      transaction: 'Transaksi',
-      date: 'Tanggal',
-      customer: 'Pelanggan',
-      phone: 'Telepon',
-      status: 'Status',
-      tableSessions: 'SESI MEJA',
-      table: 'Meja',
-      minutes: 'mnt',
-      foodBeverage: 'MAKANAN & MINUMAN',
-      notes: 'Catatan',
-      paymentSummary: 'RINGKASAN PEMBAYARAN',
-      tableAmount: 'Biaya Meja',
-      fnbAmount: 'Biaya F&B',
-      discount: 'Diskon',
+      subtitle: 'To‘lov cheki',
+      transaction: 'Tranzaksiya',
+      date: 'Sana',
+      customer: 'Mijoz',
+      phone: 'Telefon',
+      status: 'Holat',
+      tableSessions: 'STOL SEANSLARI',
+      table: 'Stol',
+      minutes: 'daq',
+      foodBeverage: 'OVQAT VA ICHIMLIK',
+      notes: 'Izohlar',
+      paymentSummary: 'TO‘LOV XULOSASI',
+      tableAmount: 'Stol summasi',
+      fnbAmount: 'F&B summasi',
+      discount: 'Chegirma',
       tax: taxLabel,
-      total: 'TOTAL',
-      walkInCustomer: 'Pelanggan Walk-in',
-      thankYou: 'Terima kasih atas kunjungan Anda!',
-      businessName: storeSettings.store_name || 'Billiard Hall ChalkBoard',
-      generated: 'Dicetak',
-      pending: 'TERTUNDA',
-      success: 'BERHASIL',
-      failed: 'GAGAL',
-      cancelled: 'DIBATALKAN'
+      total: 'JAMI',
+      walkInCustomer: 'Walk-in mijoz',
+      thankYou: 'Tashrifingiz uchun rahmat!',
+      businessName: storeSettings.store_name || 'Kiy24 Billiard Hall',
+      generated: 'Chop etildi',
+      pending: 'KUTILMOQDA',
+      success: 'MUVAFFAQIYATLI',
+      failed: 'MUVAFFAQIYATSIZ',
+      cancelled: 'BEKOR QILINGAN'
+    } : receiptLocale === 'ru' ? {
+      title: storeName.toUpperCase(),
+      subtitle: 'Платежный чек',
+      transaction: 'Транзакция',
+      date: 'Дата',
+      customer: 'Клиент',
+      phone: 'Телефон',
+      status: 'Статус',
+      tableSessions: 'СЕАНСЫ СТОЛОВ',
+      table: 'Стол',
+      minutes: 'мин',
+      foodBeverage: 'ЕДА И НАПИТКИ',
+      notes: 'Примечания',
+      paymentSummary: 'СВОДКА ПО ОПЛАТЕ',
+      tableAmount: 'Сумма стола',
+      fnbAmount: 'Сумма F&B',
+      discount: 'Скидка',
+      tax: taxLabel,
+      total: 'ИТОГО',
+      walkInCustomer: 'Гость без записи',
+      thankYou: 'Спасибо за визит!',
+      businessName: storeSettings.store_name || 'Kiy24 Billiard Hall',
+      generated: 'Напечатано',
+      pending: 'В ОЖИДАНИИ',
+      success: 'УСПЕШНО',
+      failed: 'ОШИБКА',
+      cancelled: 'ОТМЕНЕНО'
     } : {
       title: storeName.toUpperCase(),
       subtitle: 'Receipt',
@@ -395,7 +424,7 @@ const TransactionsPage = () => {
       total: 'TOTAL',
       walkInCustomer: 'Walk-in Customer',
       thankYou: 'Thank you for visiting!',
-      businessName: storeSettings.store_name || 'ChalkBoard Billiard Hall',
+      businessName: storeSettings.store_name || 'Kiy24 Billiard Hall',
       generated: 'Generated',
       pending: 'PENDING',
       success: 'SUCCESS',
@@ -413,7 +442,7 @@ const TransactionsPage = () => {
 
     return `
       <!DOCTYPE html>
-      <html lang="en">
+      <html lang="${receiptLocale}">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -539,7 +568,7 @@ const TransactionsPage = () => {
                   ${session.tableName || `${receiptTranslations.table} ${session.tableId}`}<br>
                   <small>${Math.round(session.actualDuration || session.plannedDuration)} ${receiptTranslations.minutes}</small>
                 </div>
-                <div class="item-price">${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(session.totalCost || '0'))}</div>
+                <div class="item-price">${formatCurrencyByLocale(parseFloat(session.totalCost || '0'), receiptLocale)}</div>
               </div>
             `).join('')}
           </div>
@@ -555,7 +584,7 @@ const TransactionsPage = () => {
                     ${item.quantity}x ${item.itemName}
                     ${item.itemDescription ? `<br><small>${item.itemDescription}</small>` : ''}
                   </div>
-                  <div class="item-price">${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(item.subtotal))}</div>
+                  <div class="item-price">${formatCurrencyByLocale(parseFloat(item.subtotal), receiptLocale)}</div>
                 </div>
               `).join('')}
               ${order.notes ? `<p><small><em>${receiptTranslations.notes}: ${order.notes}</em></small></p>` : ''}
@@ -568,30 +597,30 @@ const TransactionsPage = () => {
           ${parseFloat(payment.tableAmount) > 0 ? `
             <div class="subtotal-row">
               <span>${receiptTranslations.tableAmount}:</span>
-              <span>${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(payment.tableAmount))}</span>
+              <span>${formatCurrencyByLocale(parseFloat(payment.tableAmount), receiptLocale)}</span>
             </div>
           ` : ''}
           ${parseFloat(payment.fnbAmount) > 0 ? `
             <div class="subtotal-row">
               <span>${receiptTranslations.fnbAmount}:</span>
-              <span>${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(payment.fnbAmount))}</span>
+              <span>${formatCurrencyByLocale(parseFloat(payment.fnbAmount), receiptLocale)}</span>
             </div>
           ` : ''}
           ${parseFloat(payment.discountAmount) > 0 ? `
             <div class="subtotal-row">
               <span>${receiptTranslations.discount}:</span>
-              <span>-${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(payment.discountAmount))}</span>
+              <span>-${formatCurrencyByLocale(parseFloat(payment.discountAmount), receiptLocale)}</span>
             </div>
           ` : ''}
           ${parseFloat(payment.taxAmount) > 0 ? `
             <div class="subtotal-row">
               <span>${receiptTranslations.tax}:</span>
-              <span>${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(payment.taxAmount))}</span>
+              <span>${formatCurrencyByLocale(parseFloat(payment.taxAmount), receiptLocale)}</span>
             </div>
           ` : ''}
           <div class="total-row">
             <span>${receiptTranslations.total}:</span>
-            <span>${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parseFloat(payment.totalAmount))}</span>
+            <span>${formatCurrencyByLocale(parseFloat(payment.totalAmount), receiptLocale)}</span>
           </div>
         </div>
 
@@ -599,7 +628,7 @@ const TransactionsPage = () => {
           <p>${receiptTranslations.thankYou}</p>
           ${storeSettings.store_notes ? `<p style="margin-top:4px">${storeSettings.store_notes}</p>` : ''}
           <p>${receiptTranslations.businessName}</p>
-          <p>${receiptTranslations.generated}: ${new Date().toLocaleString(locale === 'id' ? 'id-ID' : 'en-US')}</p>
+          <p>${receiptTranslations.generated}: ${formatDateTimeByLocale(new Date(), receiptLocale)}</p>
         </div>
       </body>
       </html>
@@ -1030,7 +1059,7 @@ const TransactionsPage = () => {
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span>Status:</span>
+                    <span>{t('Common.status')}:</span>
                     <span>{getStatusBadge(selectedPayment.status)}</span>
                   </div>
                 </div>
@@ -1109,7 +1138,7 @@ const TransactionsPage = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Status
+                    {t('Common.status')}
                   </label>
                   <div className="mt-1">
                     {getStatusBadge(selectedPayment.status)}
@@ -1356,14 +1385,22 @@ const TransactionsPage = () => {
             <div className="flex flex-col gap-3">
               <Button
                 color="primary"
-                onClick={() => selectedPayment && printReceipt(selectedPayment, 'id')}
+                onClick={() => selectedPayment && printReceipt(selectedPayment, 'uz')}
                 className="w-full"
               >
                 <IconPrinter className="w-4 h-4 mr-2" />
-                {t('Transactions.transactionDetail.printInIndonesian')}
+                {t('Transactions.transactionDetail.printInUzbek')}
               </Button>
               <Button
                 color="secondary"
+                onClick={() => selectedPayment && printReceipt(selectedPayment, 'ru')}
+                className="w-full"
+              >
+                <IconPrinter className="w-4 h-4 mr-2" />
+                {t('Transactions.transactionDetail.printInRussian')}
+              </Button>
+              <Button
+                color="gray"
                 onClick={() => selectedPayment && printReceipt(selectedPayment, 'en')}
                 className="w-full"
               >
@@ -1383,4 +1420,4 @@ const TransactionsPage = () => {
   );
 };
 
-export default TransactionsPage; 
+export default TransactionsPage;

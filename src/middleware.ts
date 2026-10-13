@@ -1,10 +1,11 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import createIntlMiddleware from 'next-intl/middleware';
+import { defaultLocale, isAppLocale, locales } from "@/lib/locale";
 
 const intlMiddleware = createIntlMiddleware({
-  locales: ['id', 'en'],
-  defaultLocale: 'id',
+  locales,
+  defaultLocale,
   localeDetection: false
 });
 
@@ -16,11 +17,11 @@ export default withAuth(
     // Apply internationalization middleware first
     const intlResponse = intlMiddleware(req);
 
-    // Get the locale from the pathname or default to 'id'
+    // Get the locale from the pathname or default to the app default locale
     const locale = pathname.split('/')[1];
-    const isValidLocale = ['id', 'en'].includes(locale);
-    const actualLocale = isValidLocale ? locale : 'id';
-    
+    const isValidLocale = isAppLocale(locale);
+    const actualLocale = isValidLocale ? locale : defaultLocale;
+
     // Remove locale from pathname for auth checks
     const pathWithoutLocale = isValidLocale ? pathname.replace(`/${locale}`, '') || '/' : pathname;
 
@@ -40,32 +41,32 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl;
-        
+
         // Get the locale from the pathname
         const locale = pathname.split('/')[1];
-        const isValidLocale = ['id', 'en'].includes(locale);
+        const isValidLocale = isAppLocale(locale);
         const pathWithoutLocale = isValidLocale ? pathname.replace(`/${locale}`, '') || '/' : pathname;
-        
+
         // Allow access to public routes
         if (pathWithoutLocale.startsWith("/auth") || pathname === "/api/auth") {
           return true;
         }
-        
+
         // Allow access to API routes (they handle their own auth)
         if (pathname.startsWith("/api")) {
           return true;
         }
-        
+
         // For root path, allow both authenticated and unauthenticated
         if (pathWithoutLocale === "/") {
           return true;
         }
-        
+
         // For dashboard routes, require authentication
         if (pathWithoutLocale.startsWith("/dashboard")) {
           return !!token;
         }
-        
+
         return true;
       },
     },
@@ -85,4 +86,4 @@ export const config = {
      */
     "/((?!_next/static|_next/image|favicon.ico|images/|api/|public/).*)",
   ],
-}; 
+};

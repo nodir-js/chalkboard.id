@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import CardBox from "@/components/shared/CardBox";
 import { Button, Badge, Modal, TextInput, Label, Select, Alert } from "flowbite-react";
 import Link from "next/link";
-import { 
-  IconClock, 
-  IconUsers, 
-  IconCoffee, 
+import {
+  IconClock,
+  IconUsers,
+  IconCoffee,
   IconChartBar,
   IconPlayerPlay,
   IconPlayerStop,
@@ -17,6 +17,7 @@ import {
   IconCreditCard
 } from "@tabler/icons-react";
 import DefaultSpinner from "@/components/ui-components/Spinner/DefaultSpinner";
+import { formatCurrencyByLocale } from "@/lib/locale";
 
 interface Table {
   id: number;
@@ -35,9 +36,10 @@ interface TableSession {
   status: string;
 }
 
-const ChalkBoardDashboard = () => {
+const Kiy24Dashboard = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations('Dashboard');
   const tSessionModal = useTranslations('SessionModal');
   const tAlerts = useTranslations('Alerts');
@@ -101,12 +103,12 @@ const ChalkBoardDashboard = () => {
           return numA - numB || a.name.localeCompare(b.name);
         });
         setTables(sortedTables);
-        
+
         // Calculate stats
         const totalTables = data.length;
         const occupiedTables = data.filter((table: Table) => table.status === 'occupied').length;
         const availableTables = data.filter((table: Table) => table.status === 'available').length;
-        
+
         setStats({
           totalTables,
           occupiedTables,
@@ -182,15 +184,15 @@ const ChalkBoardDashboard = () => {
 
   const getStatusBadgeStyle = (status: string) => {
     switch (status) {
-      case 'available': 
+      case 'available':
         return { backgroundColor: '#22C55E', color: 'white' };
-      case 'occupied': 
+      case 'occupied':
         return { backgroundColor: '#EF4444', color: 'white' };
-      case 'maintenance': 
+      case 'maintenance':
         return { backgroundColor: '#F59E0B', color: 'white' };
-      case 'reserved': 
+      case 'reserved':
         return { backgroundColor: '#3B82F6', color: 'white' };
-      default: 
+      default:
         return { backgroundColor: '#6B7280', color: 'white' };
     }
   };
@@ -234,9 +236,9 @@ const ChalkBoardDashboard = () => {
   const getBillingInfo = (table: any, totalSeconds: number, session?: any) => {
     // Determine billing type based on session preference first, then table configuration
     const sessionDurationType = session?.durationType;
-    const shouldUsePerMinute = sessionDurationType === 'per_minute' || 
+    const shouldUsePerMinute = sessionDurationType === 'per_minute' ||
                               (!sessionDurationType && table.perMinuteRate);
-    
+
     if (shouldUsePerMinute) {
       const billableMinutes = calculateBillableMinutes(totalSeconds);
       const rate = table.perMinuteRate ? parseFloat(table.perMinuteRate) : parseFloat(table.hourlyRate) / 60;
@@ -263,13 +265,7 @@ const ChalkBoardDashboard = () => {
     }
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  const formatCurrency = (amount: number) => formatCurrencyByLocale(amount, locale);
 
   const showAlert = (type: 'success' | 'error', message: string) => {
     setAlert({ type, message });
@@ -433,8 +429,8 @@ const ChalkBoardDashboard = () => {
               <div
                 key={table.id}
                 className={`p-4 rounded-lg border-2 transition-all ${
-                  isOccupied 
-                    ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
+                  isOccupied
+                    ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
                     : 'border-green-500 bg-green-50 dark:bg-green-900/20'
                 }`}
               >
@@ -442,8 +438,8 @@ const ChalkBoardDashboard = () => {
                   <h1 className="font-semibold text-dark dark:text-white">
                     {table.name}
                   </h1>
-                  <Badge 
-                    color={getStatusColor(table.status)} 
+                  <Badge
+                    color={getStatusColor(table.status)}
                     size="sm"
                     style={getStatusBadgeStyle(table.status)}
                   >
@@ -455,7 +451,7 @@ const ChalkBoardDashboard = () => {
                   <p className="text-bodytext">
                     {t('tableStatusBoard.rate')}: {billingInfo.rateText}
                   </p>
-                  
+
                   {isOccupied && session ? (
                     <>
                       <p className="text-dark dark:text-white">
@@ -539,7 +535,7 @@ const ChalkBoardDashboard = () => {
             <div className="p-3 bg-lightinfo rounded-lg">
               <p className="text-sm text-info">
                 <IconClock className="w-4 h-4 inline mr-1" />
-                {tSessionModal('estimatedCost', { 
+                {tSessionModal('estimatedCost', {
                   cost: formatCurrency(((sessionData.plannedDuration / 60) * parseFloat(selectedTable?.hourlyRate || '0')))
                 })}
               </p>
@@ -666,4 +662,4 @@ const ChalkBoardDashboard = () => {
   );
 };
 
-export default ChalkBoardDashboard; 
+export default Kiy24Dashboard;

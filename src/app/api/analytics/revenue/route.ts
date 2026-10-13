@@ -6,6 +6,8 @@ import { payments } from '@/schema/payments';
 import { eq, and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -21,7 +23,7 @@ export async function GET(request: NextRequest) {
     // Use consistent date handling - create dates properly for range
     const endDate = date ? new Date(date) : new Date();
     endDate.setHours(23, 59, 59, 999); // End of day
-    
+
     const startDate = new Date(endDate);
     startDate.setDate(startDate.getDate() - days);
     startDate.setHours(0, 0, 0, 0); // Start of day
@@ -69,20 +71,20 @@ export async function GET(request: NextRequest) {
       sessions: number;
       orders: number;
     }[] = [];
-    
+
     if (period === 'daily') {
       // Generate daily data for exact number of days (days + 1 for inclusive range)
       for (let i = 0; i <= days; i++) {
         const currentDate = new Date(startDate);
         currentDate.setDate(startDate.getDate() + i);
         const dateStr = currentDate.toISOString().split('T')[0];
-        
+
         const tableData = dailyTableRevenue.find(item => item.date === dateStr);
         const fnbData = dailyFnbRevenue.find(item => item.date === dateStr);
-        
+
         const tableRevenue = Number(tableData?.tableRevenue || 0);
         const fnbRevenue = Number(fnbData?.fnbRevenue || 0);
-        
+
         revenueData.push({
           date: dateStr,
           tableRevenue,
@@ -95,87 +97,87 @@ export async function GET(request: NextRequest) {
     } else if (period === 'weekly') {
       // Group by week
       const weeklyData = new Map();
-      
+
       // Process table revenue
       dailyTableRevenue.forEach(item => {
         const date = new Date(item.date);
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay()); // Start of week (Sunday)
         const weekKey = weekStart.toISOString().split('T')[0];
-        
+
         if (!weeklyData.has(weekKey)) {
           weeklyData.set(weekKey, { date: weekKey, tableRevenue: 0, fnbRevenue: 0, sessions: 0, orders: 0 });
         }
-        
+
         const week = weeklyData.get(weekKey);
         week.tableRevenue += Number(item.tableRevenue);
         week.sessions += Number(item.sessions);
       });
-      
+
       // Process F&B revenue
       dailyFnbRevenue.forEach(item => {
         const date = new Date(item.date);
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay());
         const weekKey = weekStart.toISOString().split('T')[0];
-        
+
         if (!weeklyData.has(weekKey)) {
           weeklyData.set(weekKey, { date: weekKey, tableRevenue: 0, fnbRevenue: 0, sessions: 0, orders: 0 });
         }
-        
+
         const week = weeklyData.get(weekKey);
         week.fnbRevenue += Number(item.fnbRevenue);
         week.orders += Number(item.orders);
       });
-      
+
       // Convert to array and calculate totals
       weeklyData.forEach(week => {
         week.totalRevenue = week.tableRevenue + week.fnbRevenue;
         revenueData.push(week);
       });
-      
+
       revenueData.sort((a, b) => a.date.localeCompare(b.date));
     } else if (period === 'monthly') {
       // Group by month
       const monthlyData = new Map();
-      
+
       // Process table revenue
       dailyTableRevenue.forEach(item => {
         const date = new Date(item.date);
         const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
-        
+
         if (!monthlyData.has(monthKey)) {
           monthlyData.set(monthKey, { date: monthKey, tableRevenue: 0, fnbRevenue: 0, sessions: 0, orders: 0 });
         }
-        
+
         const month = monthlyData.get(monthKey);
         month.tableRevenue += Number(item.tableRevenue);
         month.sessions += Number(item.sessions);
       });
-      
+
       // Process F&B revenue
       dailyFnbRevenue.forEach(item => {
         const date = new Date(item.date);
         const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
-        
+
         if (!monthlyData.has(monthKey)) {
           monthlyData.set(monthKey, { date: monthKey, tableRevenue: 0, fnbRevenue: 0, sessions: 0, orders: 0 });
         }
-        
+
         const month = monthlyData.get(monthKey);
         month.fnbRevenue += Number(item.fnbRevenue);
         month.orders += Number(item.orders);
       });
-      
+
       // Convert to array and calculate totals
       monthlyData.forEach(month => {
         month.totalRevenue = month.tableRevenue + month.fnbRevenue;
         revenueData.push(month);
       });
-      
+
       revenueData.sort((a, b) => a.date.localeCompare(b.date));
     }
-    
+
     const dailyRevenue = revenueData;
 
     // Calculate summary from daily data to ensure consistency
@@ -198,7 +200,7 @@ export async function GET(request: NextRequest) {
       hourlyRate: tables.hourlyRate,
     })
       .from(tables)
-      .leftJoin(tableSessions, 
+      .leftJoin(tableSessions,
         and(
           eq(tables.id, tableSessions.tableId),
           gte(tableSessions.createdAt, startDate),
@@ -215,7 +217,7 @@ export async function GET(request: NextRequest) {
       totalAmount: sql<number>`COALESCE(SUM(CAST(${payments.amount} AS NUMERIC)), 0)`,
       transactionCount: sql<number>`COUNT(${payments.id})`,
       successRate: sql<number>`
-        CASE 
+        CASE
           WHEN COUNT(${payments.id}) > 0 THEN
             (COUNT(CASE WHEN ${payments.status} = 'success' THEN 1 END) * 100.0) / COUNT(${payments.id})
           ELSE 0
@@ -290,7 +292,7 @@ export async function GET(request: NextRequest) {
       const fnbData = hourlyFnbRevenue.find(h => h.hour === hour);
       const tableRevenue = Number(tableData?.tableRevenue || 0);
       const fnbRevenue = Number(fnbData?.fnbRevenue || 0);
-      
+
       return {
         hour,
         tableRevenue,
@@ -334,4 +336,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching revenue data:', error);
     return NextResponse.json({ error: 'Failed to fetch revenue data' }, { status: 500 });
   }
-} 
+}

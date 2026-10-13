@@ -2,22 +2,22 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import CardBox from "@/components/shared/CardBox";
-import { 
-  Button, 
-  Badge, 
-  TextInput, 
-  Select, 
-  Label, 
-  Modal, 
-  Alert, 
-  Tabs, 
+import {
+  Button,
+  Badge,
+  TextInput,
+  Select,
+  Label,
+  Modal,
+  Alert,
+  Tabs,
   Table,
   Textarea,
   Spinner
 } from "flowbite-react";
-import { 
+import {
   IconPlus,
   IconEdit,
   IconTrash,
@@ -34,6 +34,7 @@ import {
   IconArrowRight,
   IconNotes
 } from "@tabler/icons-react";
+import { formatCurrencyByLocale, formatDateByLocale } from "@/lib/locale";
 
 // Types
 interface FnbCategory {
@@ -106,8 +107,9 @@ interface PendingTransaction {
 const FnBManagement = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = useLocale();
   const t = useTranslations();
-  
+
   // State
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -120,7 +122,7 @@ const FnBManagement = () => {
   const [staff, setStaff] = useState<Staff[]>([]);
   const [tables, setTables] = useState<Table[]>([]);
   const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-  
+
   // Modal states
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showItemModal, setShowItemModal] = useState(false);
@@ -131,14 +133,14 @@ const FnBManagement = () => {
   const [editingItem, setEditingItem] = useState<FnbItem | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<FnbOrder | null>(null);
   const [selectedDraftOrder, setSelectedDraftOrder] = useState<FnbOrder | null>(null);
-  
+
   // Form data
   const [categoryForm, setCategoryForm] = useState({
     name: '',
     description: '',
     isActive: true
   });
-  
+
   const [itemForm, setItemForm] = useState({
     name: '',
     description: '',
@@ -150,7 +152,7 @@ const FnBManagement = () => {
     categoryId: '',
     isActive: true
   });
-  
+
   // Enhanced search and filter
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -250,7 +252,7 @@ const FnBManagement = () => {
     try {
       const url = editingCategory ? `/api/fnb/categories/${editingCategory.id}` : '/api/fnb/categories';
       const method = editingCategory ? 'PUT' : 'POST';
-      
+
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -282,7 +284,7 @@ const FnBManagement = () => {
 
   const handleCategoryDelete = async (id: number) => {
     if (!confirm(t('FnB.categories.modal.deleteConfirmation'))) return;
-    
+
     try {
       const response = await fetch(`/api/fnb/categories/${id}`, {
         method: 'DELETE'
@@ -310,7 +312,7 @@ const FnBManagement = () => {
     try {
       const url = editingItem ? `/api/fnb/items/${editingItem.id}` : '/api/fnb/items';
       const method = editingItem ? 'PUT' : 'POST';
-      
+
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -351,7 +353,7 @@ const FnBManagement = () => {
 
   const handleItemDelete = async (id: number) => {
     if (!confirm(t('FnB.items.modal.deleteConfirmation'))) return;
-    
+
     try {
       const response = await fetch(`/api/fnb/items/${id}`, {
         method: 'DELETE'
@@ -453,13 +455,7 @@ const FnBManagement = () => {
     }
   };
 
-  const formatCurrency = (amount: string) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(parseFloat(amount));
-  };
+  const formatCurrency = (amount: string) => formatCurrencyByLocale(amount, locale);
 
   if (loading) {
     return (
@@ -483,9 +479,9 @@ const FnBManagement = () => {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button 
-                color="gray" 
-                size="sm" 
+              <Button
+                color="gray"
+                size="sm"
                 onClick={fetchData}
                 disabled={refreshing}
               >
@@ -760,7 +756,7 @@ const FnBManagement = () => {
                             </Badge>
                           </Table.Cell>
                           <Table.Cell>
-                            {new Date(category.createdAt).toLocaleDateString()}
+                            {formatDateByLocale(category.createdAt, locale)}
                           </Table.Cell>
                           <Table.Cell>
                             <div className="flex gap-2">
@@ -1080,7 +1076,7 @@ const FnBManagement = () => {
                 </div>
                 <div>
                   <Label>Date</Label>
-                  <p className="font-medium">{new Date(selectedOrder.createdAt).toLocaleString()}</p>
+                  <p className="font-medium">{formatDateByLocale(selectedOrder.createdAt, locale)} {new Date(selectedOrder.createdAt).toLocaleTimeString()}</p>
                 </div>
               </div>
             </div>
@@ -1106,7 +1102,7 @@ const FnBManagement = () => {
               <p>Total: {selectedDraftOrder ? formatCurrency(selectedDraftOrder.total) : ''}</p>
               <p>Items: {selectedDraftOrder?.itemCount || 0}</p>
             </div>
-            
+
             <div>
               <Label>Select Table</Label>
               <div className="grid grid-cols-2 gap-3 mt-2">
@@ -1122,7 +1118,7 @@ const FnBManagement = () => {
                   </button>
                 ))}
               </div>
-              
+
               {tables.filter(table => table.status === 'occupied').length === 0 && (
                 <div className="text-center py-4 text-bodytext">
                   No occupied tables available for assignment
@@ -1151,7 +1147,7 @@ const FnBManagement = () => {
               <p>Total: {selectedDraftOrder ? formatCurrency(selectedDraftOrder.total) : ''}</p>
               <p>Items: {selectedDraftOrder?.itemCount || 0}</p>
             </div>
-            
+
             <div>
               <Label>Select Pending Transaction</Label>
               <div className="space-y-3 mt-2 max-h-96 overflow-y-auto">
@@ -1173,18 +1169,18 @@ const FnBManagement = () => {
                       <div className="text-right">
                         <div className="font-bold">{formatCurrency(transaction.totalAmount)}</div>
                         <div className="text-xs text-bodytext">
-                          {new Date(transaction.createdAt).toLocaleDateString()}
+                          {formatDateByLocale(transaction.createdAt, locale)}
                         </div>
                       </div>
                     </div>
                     <div className="mt-2 text-xs text-bodytext">
-                      Table: {formatCurrency(transaction.tableAmount)} | 
+                      Table: {formatCurrency(transaction.tableAmount)} |
                       F&B: {formatCurrency(transaction.fnbAmount)}
                     </div>
                   </button>
                 ))}
               </div>
-              
+
               {pendingTransactions.length === 0 && (
                 <div className="text-center py-4 text-bodytext">
                   No pending transactions available for assignment.
@@ -1204,4 +1200,4 @@ const FnBManagement = () => {
   );
 };
 
-export default FnBManagement; 
+export default FnBManagement;

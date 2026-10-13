@@ -1,6 +1,6 @@
 # Release Process Documentation
 
-This document outlines the automated release process for Chalkboard.id.
+This document outlines the automated release process for Kiy24.uz.
 
 ## Overview
 
@@ -51,20 +51,20 @@ Each release automatically creates:
 
 ### Windows Standalone
 - **Location**: GitHub Releases
-- **Format**: `chalkboard-windows-v1.0.1.tar.gz`
-- **Contents**: 
-  - `chalkboard-win.exe` - Main executable
+- **Format**: `kiy24-windows-v1.0.1.tar.gz`
+- **Contents**:
+  - `kiy24-win.exe` - Main executable
   - `install.bat` - Windows installer script
   - `README.txt` - Setup instructions
   - `.env.example` - Environment configuration template
 
 ### Docker Images
-- **Registry**: Docker Hub (`kugieapp/chalkboard`)
+- **Registry**: Docker Hub (`kugieapp/kiy24`)
 - **Tags Created**:
-  - `kugieapp/chalkboard:1.0.1` (version-specific)
-  - `kugieapp/chalkboard:latest` (latest stable)
-  - `kugieapp/chalkboard:1.0.1-edge` (edge runtime variant)
-  - `kugieapp/chalkboard:1.0.1-node` (node runtime variant)
+  - `kugieapp/kiy24:1.0.1` (version-specific)
+  - `kugieapp/kiy24:latest` (latest stable)
+  - `kugieapp/kiy24:1.0.1-edge` (edge runtime variant)
+  - `kugieapp/kiy24:1.0.1-node` (node runtime variant)
 
 ### Platforms Supported
 - **Windows**: x64 executable
@@ -108,13 +108,13 @@ Ensure these secrets are configured in your GitHub repository:
 2. Sign in with username: `kugieapp`
 3. Go to **Account Settings** → **Security**
 4. Click **New Access Token**
-5. Set description: "GitHub Actions - Chalkboard Release"
+5. Set description: "GitHub Actions - Kiy24 Release"
 6. Set permissions: **Read, Write, Delete**
 7. Copy the token and add it to GitHub Secrets
 
 ### Repository Setup
 
-1. Create repository: `kugieapp/chalkboard`
+1. Create repository: `kugieapp/kiy24`
 2. Set description: "Billiard hall management system"
 3. Link to GitHub repository
 4. Set as public repository
@@ -125,13 +125,13 @@ Ensure these secrets are configured in your GitHub repository:
 
 ```bash
 # Latest version
-docker run -p 3000:3000 kugieapp/chalkboard:latest
+docker run -p 3000:3000 kugieapp/kiy24:latest
 
 # Specific version
-docker run -p 3000:3000 kugieapp/chalkboard:1.0.1
+docker run -p 3000:3000 kugieapp/kiy24:1.0.1
 
 # Edge runtime (for serverless)
-docker run -p 3000:3000 kugieapp/chalkboard:1.0.1-edge
+docker run -p 3000:3000 kugieapp/kiy24:1.0.1-edge
 
 # Using Docker Compose
 docker compose up
@@ -139,7 +139,7 @@ docker compose up
 
 ### Windows Deployment
 
-1. Download `chalkboard-windows-v1.0.1.tar.gz` from GitHub Releases
+1. Download `kiy24-windows-v1.0.1.tar.gz` from GitHub Releases
 2. Extract the archive
 3. Run `install.bat` as Administrator
 4. Configure `.env` file in installation directory
@@ -185,7 +185,7 @@ bun run package:windows
 ```bash
 # Build and push manually
 docker buildx build --platform linux/amd64,linux/arm64 \
-  -t kugieapp/chalkboard:1.0.1 \
+  -t kugieapp/kiy24:1.0.1 \
   --push .
 ```
 

@@ -1,0 +1,1055 @@
+{
+  "auth": {
+    "signin": {
+      "title": "Войдите",
+      "subtitle": "Войдите в свою учетную запись",
+      "systemSubtitle": "Система управления бильярдным залом",
+      "email": "Электронная почта",
+      "password": "Пароль",
+      "helperText": "Нет учетной записи?",
+      "emailPlaceholder": "Введите свой электронная почта",
+      "passwordPlaceholder": "Введите пароль",
+      "loading": "Вход...",
+      "signin": "Войти",
+      "demoCredentials": "Демо-учетные данные",
+      "invalidCredentials": "Неверный адрес электронной почты или пароль",
+      "signInError": "Произошла ошибка во время входа в"
+    },
+    "signup": {
+      "title": "Создать аккаунт",
+      "name": "Имя",
+      "namePlaceholder": "Введите свое имя",
+      "email": "Электронную почту",
+      "emailPlaceholder": "Введите свой электронная почта",
+      "password": "Пароль",
+      "passwordPlaceholder": "Минимум 6 символов",
+      "signup": "Создать аккаунт",
+      "loading": "Создание аккаунта...",
+      "hasAccount": "У вас уже есть аккаунт?",
+      "switchToSignin": "Войти В",
+      "switchToSignup": "Создайте аккаунт"
+    }
+  },
+  "TablesManagement": {
+    "title": "Управление столами",
+    "subtitle": "Управляйте своими бильярдными столами и сессиями",
+    "addNewTable": "Добавить новый стол",
+    "loading": "Загрузка столов...",
+    "noTables": {
+      "title": "Столы не найдены",
+      "subtitle": "Начните с создания своего первого бильярдного стола.",
+      "button": "Создайте свой первый стол"
+    },
+    "stopConfirmation": {
+      "title": "Остановить сеанс",
+      "message": "Вы уверены, что хотите остановить сеанс для {tableName}?",
+      "currentDuration": "Текущая продолжительность",
+      "confirm": "Да, остановить сеанс",
+      "cancel": "Отмена"
+    },
+    "timeExpired": {
+      "notification": "Время для {tableName} истекло!"
+    }
+  },
+  "TableCard": {
+    "occupied": "АКТИВНЫЙ",
+    "available": "ПУСТОЙ",
+    "maintenance": "ОБСЛУЖИВАНИЕ",
+    "reserved": "СДЕРЖАННЫЙ",
+    "startTime": "Начинать",
+    "endTime": "Конец",
+    "duration": "Продолжительность",
+    "cost": "Расходы",
+    "billableHours": "{count, plural, =1 {# час} other {# часов}}",
+    "billableMinutes": "{count, plural, =1 {# минута} other {# минут}}",
+    "fnbButton": "Еда и напитки",
+    "stopButton": "Останавливаться",
+    "startButton": "Начинать",
+    "editButton": "Редактировать",
+    "deleteButton": "Удалить",
+    "perMinute": "в минуту",
+    "hourly": "Ежечасно"
+  },
+  "Dashboard": {
+    "title": "Панель управления Kiy24",
+    "subtitle": "С возвращением, {name}",
+    "loading": "Загрузка панели управления...",
+    "redirecting": "Перенаправление для входа в систему...",
+    "stats": {
+      "totalTables": "Всего столов",
+      "occupied": "Занято",
+      "available": "Доступно",
+      "todaysRevenue": "Сегодняшний доход"
+    },
+    "tableStatusBoard": {
+      "title": "Статус столов",
+      "refresh": "Обновить",
+      "rate": "Ставка",
+      "customer": "Клиент",
+      "duration": "Продолжительность",
+      "billableHours": "Оплачивается Часы",
+      "cost": "Стоимость",
+      "endSession": "Завершить сеанс",
+      "startSession": "Начать сеанс"
+    },
+    "noTables": "Столов не найдено",
+    "createFirstTable": "Создать первый стол",
+    "buttons": {
+      "posSystem": "POS Система",
+      "addTable": "Добавить таблицу"
+    },
+    "billingModal": {
+      "title": "Сводка счетов за сеанс",
+      "sessionDetails": "Детали сеанса",
+      "customer": "Клиент",
+      "duration": "Продолжительность",
+      "billableHours": "Оплачиваемые часы",
+      "billableMinutes": "Оплачиваемые минуты",
+      "tableCost": "Стоимость стола",
+      "fnbOrders": "Заказы на еду и напитки",
+      "fnbSubtotal": "Промежуточный итог по еде и напиткам",
+      "totalAmount": "Итого Сумма",
+      "processPayment": "Обработка платежа",
+      "closeButton": "Закрыть"
+    }
+  },
+  "SessionModal": {
+    "startTitle": "Начать сеанс - {tableName}",
+    "customerName": "Имя клиента",
+    "customerNamePlaceholder": "Введите имя клиента",
+    "plannedDuration": "Плановая продолжительность (минуты)",
+    "estimatedCost": "Примерная стоимость: {cost}",
+    "startButton": "Начало Сеанс",
+    "cancelButton": "Отмена",
+    "durationOptions": {
+      "30minutes": "30 минут",
+      "60minutes": "1 час",
+      "90minutes": "1,5 часа",
+      "120minutes": "2 часа",
+      "180minutes": "3 часа"
+    },
+    "customerLabel": "Клиент Имя",
+    "customerPlaceholder": "Введите имя клиента",
+    "plannedDurationLabel": "Запланированная продолжительность (минуты)",
+    "modeLabel": "Режим сеанса",
+    "modeOptions": {
+      "open": "Откройте таблицу (подсчитайте)",
+      "planned": "Запланировано (количество) вниз)"
+    },
+    "pricingPackageLabel": "Ценовой пакет",
+    "selectPackage": "Выберите ценовой пакет",
+    "packageRequired": "Пожалуйста, выберите ценовой пакет"
+  },
+  "POS": {
+    "title": "Расширенная POS-система",
+    "subtitle": "Расширенная точка продаж — продукты питания и напитки с черновыми заказами",
+    "loading": "Загрузка POS...",
+    "cartItems": "Корзина Товары",
+    "draftOrders": "Черновики заказов ({count})",
+    "menu": {
+      "allItems": "Все товары",
+      "outofstock": "Нет на складе",
+      "lowstock": "Низкий запас",
+      "instock": "В наличии",
+      "stock": "Остаток: {quantity} {unit}",
+      "noItemsFound": "Нет товаров в этом разделе категория"
+    },
+    "cart": {
+      "title": "Корзина",
+      "empty": "Ваша корзина пуста",
+      "addItems": "Добавить товары из меню",
+      "clear": "Очистить",
+      "subtotal": "Промежуточный итог",
+      "tax": "Налог (10%)",
+      "total": "Всего"
+    },
+    "checkout": {
+      "button": "Оплатить ({total})",
+      "title": "Расширенная проверка",
+      "orderType": "Тип заказа *",
+      "orderTypes": {
+        "standalone": {
+          "title": "Автономный",
+          "description": "Немедленно продажа"
+        },
+        "waiting": {
+          "title": "Ожидание",
+          "description": "Сохранить как черновик"
+        },
+        "tableSession": {
+          "title": "Сеанс стола",
+          "description": "Добавить к счету"
+        },
+        "pendingTransaction": {
+          "title": "Ожидающая транзакция",
+          "description": "Добавить к существующему"
+        }
+      },
+      "customerName": "Имя клиента *",
+      "customerNamePlaceholder": "Введите имя клиента",
+      "phoneNumber": "Номер телефона",
+      "phonePlaceholder": "Необязательно для черновика отслеживание",
+      "tableAssignment": "Назначение стола *",
+      "selectTable": "Выберите таблицу",
+      "pendingTransaction": "Ожидающая транзакция *",
+      "selectTransaction": "Выберите ожидающую транзакцию",
+      "noPendingTransactions": "Нет доступных ожидающих транзакций. Сначала создайте отдельный заказ, чтобы сгенерировать ожидающую транзакцию.",
+      "staffMember": "Сотрудник *",
+      "selectStaff": "Выберите сотрудника",
+      "notes": "Примечания",
+      "notesPlaceholder": "Особые инструкции или предпочтения клиента...",
+      "orderSummary": "Заказ Сводка",
+      "buttons": {
+        "processPayment": "Обработка платежа",
+        "saveAsDraft": "Сохранить как черновик",
+        "addToTableBill": "Добавить в таблицу счет",
+        "addToTransaction": "Добавить в транзакцию",
+        "cancel": "Отменить"
+      },
+      "contextInfo": {
+        "standalone": {
+          "title": "Автономно Заказ",
+          "description": "Этот заказ будет обработан немедленно как отдельная транзакция с оплатой."
+        },
+        "waiting": {
+          "title": "Проект заказа",
+          "description": "Этот заказ будет сохранен как черновик и позже может быть назначен столу."
+        },
+        "tableSession": {
+          "title": "Назначение стола",
+          "description": "Этот заказ будет добавлен в счет за столом. Платеж будет обработан после завершения сеанса."
+        },
+        "pendingTransaction": {
+          "title": "Назначение ожидающей транзакции",
+          "description": "Этот заказ будет добавлен к выбранной ожидающей транзакции. Общая сумма транзакции будет обновлена автоматически."
+        }
+      }
+    },
+    "draftOrdersModal": {
+      "title": "Управление проектами заказов — присвоение таблицам или транзакциям",
+      "noOrders": "Нет черновых заказов",
+      "ordersWillAppear": "Черновики заказов будут отображаться здесь, пока клиенты ждут",
+      "staffMember": "Сотрудник *",
+      "assignmentOptions": "Назначение Опции:",
+      "assignToTable": {
+        "title": "Назначить активной таблице",
+        "button": "Назначить таблице",
+        "noTables": "Нет доступных активных таблиц"
+      },
+      "assignToTransaction": {
+        "title": "Назначить ожидающей транзакции",
+        "button": "Назначить транзакции",
+        "noTransactions": "Нет доступных ожидающих транзакций. Сначала создайте отдельный заказ."
+      },
+      "selectStaff": "Выберите сотрудника",
+      "selectTable": "Выберите таблицу...",
+      "selectTransaction": "Выберите транзакцию...",
+      "close": "Закройте"
+    },
+    "orderCreated": "Заказ успешно создан",
+    "draftOrderCreated": "Черновик заказа создан успешно",
+    "tableOrderCreated": "Заказ на столик успешно создан",
+    "pendingTransactionOrderCreated": "Ожидающий заказ на транзакцию успешно создан",
+    "orderNumber": "Номер заказа: #{orderNumber}"
+  },
+  "FnB": {
+    "title": "Расширенное управление едой и напитками",
+    "subtitle": "Комплексное управление продуктами питания и напитками с черновиками заказов и обновлениями в режиме реального времени.",
+    "loading": "Загрузка...",
+    "refresh": "Обновить",
+    "filters": "Фильтры",
+    "search": "Искать...",
+    "advancedFilters": {
+      "status": "Статус",
+      "allStatus": "Все Статус",
+      "staffMember": "Сотрудник",
+      "allStaff": "Все сотрудники",
+      "dateRange": "Диапазон дат",
+      "today": "Сегодня",
+      "thisWeek": "На этой неделе",
+      "thisMonth": "В этом месяце",
+      "allTime": "Все Время",
+      "clearFilters": "Очистить фильтры"
+    },
+    "paymentWorkflow": {
+      "title": "Руководство по процессу оплаты",
+      "standalone": "Отдельные заказы: автоматическое создание записей о платежах. Проверьте страницу «Транзакции», чтобы обработать платеж.",
+      "draft": "Черновики заказов: могут быть назначены активным столам или ожидающим транзакциям для консолидированного выставления счетов.",
+      "table": "Заказы столов: автоматически включаются в выставление счетов за сеанс стола во время сеанса. заканчивается."
+    },
+    "tabs": {
+      "orders": "Заказы ({count})",
+      "categories": "Категории",
+      "items": "Товары"
+    },
+    "orders": {
+      "title": "Все заказы",
+      "drafts": "{count} черновиков",
+      "columns": {
+        "orderNumber": "Заказ №",
+        "customer": "Клиент",
+        "table": "Таблица",
+        "staff": "Персонал",
+        "total": "Общий",
+        "status": "Статус",
+        "payment": "Оплата",
+        "date": "Дата",
+        "actions": "Действия"
+      },
+      "statuses": {
+        "draft": "Черновик",
+        "pending": "В ожидании",
+        "billed": "выставлен счет",
+        "paid": "Оплаченный",
+        "cancelled": "Отменено"
+      },
+      "paymentStatuses": {
+        "readyToPay": "Готов заплатить",
+        "paid": "Оплаченный",
+        "noPayment": "Нет оплаты",
+        "pending": "В ожидании"
+      },
+      "noOrders": "Заказы не найдены"
+    },
+    "categories": {
+      "title": "Категории ({count})",
+      "addCategory": "Добавить категорию",
+      "columns": {
+        "name": "Имя",
+        "description": "Описание",
+        "status": "Статус",
+        "created": "Созданный",
+        "actions": "Действия"
+      },
+      "modal": {
+        "addTitle": "Добавить новую категорию",
+        "editTitle": "Изменить категорию",
+        "name": "Имя *",
+        "description": "Описание",
+        "active": "Активировать",
+        "create": "Создать",
+        "update": "Обновить",
+        "cancel": "Отменить",
+        "deleteConfirmation": "Вы действительно хотите удалить эту категорию?"
+      }
+    },
+    "items": {
+      "title": "Позиции ({count})",
+      "addItem": "Добавить Товар",
+      "columns": {
+        "name": "Название",
+        "category": "Категория",
+        "price": "Цена",
+        "stock": "Акция",
+        "status": "Статус",
+        "actions": "Действия"
+      },
+      "modal": {
+        "addTitle": "Добавить новый Товар",
+        "editTitle": "Редактировать товар",
+        "name": "Название *",
+        "category": "Категория *",
+        "selectCategory": "Выбрать категорию",
+        "description": "Описание",
+        "price": "Цена *",
+        "cost": "Стоимость",
+        "stockQuantity": "Количество на складе",
+        "minStockLevel": "Минимальный уровень запаса",
+        "unit": "Единица",
+        "units": {
+          "pcs": "Штук",
+          "kg": "Килограммы",
+          "g": "Грамм",
+          "l": "Литры",
+          "ml": "Миллилитры",
+          "dozen": "Дюжина"
+        },
+        "active": "Активный",
+        "create": "Создавать",
+        "update": "Обновлять",
+        "cancel": "Отмена",
+        "deleteConfirmation": "Вы уверены, что хотите удалить этот элемент?"
+      }
+    },
+    "orderDetail": {
+      "title": "Детали заказа - {orderNumber}",
+      "customer": "Клиент",
+      "status": "Статус",
+      "subtotal": "Итого",
+      "tax": "Налог",
+      "total": "Общий",
+      "notes": "Примечания",
+      "staffMember": "Сотрудник",
+      "date": "Дата",
+      "close": "Закрывать"
+    },
+    "draftAssignment": {
+      "title": "Назначить черновой заказ - {orderNumber}",
+      "orderDetails": "Детали заказа",
+      "customer": "Клиент",
+      "total": "Общий",
+      "items": "Предметы",
+      "selectTable": "Выберите таблицу",
+      "noOccupiedTables": "Нет занятых столов, доступных для назначения.",
+      "cancel": "Отменить"
+    },
+    "draftTransactionAssignment": {
+      "title": "Привязать черновой заказ к ожидающей транзакции - {orderNumber}",
+      "selectTransaction": "Выбрать ожидающую транзакцию",
+      "noTransactions": "Нет ожидающих транзакций, доступных для назначения. Сначала создайте отдельный заказ, чтобы создать ожидающую транзакцию."
+    }
+  },
+  "Transactions": {
+    "title": "Транзакции",
+    "subtitle": "Управление платежами и историей транзакций",
+    "loading": "Загрузка транзакции...",
+    "refresh": "Обновить",
+    "export": "Экспорт",
+    "filters": {
+      "status": "Статус",
+      "allStatus": "Все Статус",
+      "dateRange": "Диапазон дат",
+      "allTime": "Все Время",
+      "today": "Сегодня",
+      "last7Days": "Последние 7 дней",
+      "lastMonth": "В прошлом месяце",
+      "search": "Поиск",
+      "searchPlaceholder": "Поиск по идентификатору транзакции, идентификатору заказа или способу оплаты..."
+    },
+    "stats": {
+      "totalTransactions": "Всего Транзакции",
+      "successful": "Успешная",
+      "pending": "Ожидание",
+      "revenue": "Доход"
+    },
+    "table": {
+      "columns": {
+        "transactionId": "Транзакция Идентификатор",
+        "customer": "Клиент",
+        "tableOrders": "Таблица/Заказы",
+        "amount": "Сумма",
+        "status": "Статус",
+        "paymentMethod": "Способ оплаты",
+        "date": "Дата",
+        "actions": "Действия"
+      },
+      "walkInCustomer": "Приходящий клиент",
+      "notSpecified": "Не указан",
+      "table": "Стол",
+      "order": "Заказ",
+      "items": "позици{count, plural, =1 {я} other {и}}",
+      "minutes": "мин"
+    },
+    "statuses": {
+      "pending": "В ожидании",
+      "success": "Успех",
+      "failed": "Неуспешный",
+      "cancelled": "Отменено",
+      "unknown": "Неизвестный"
+    },
+    "noTransactions": "Транзакции не найдены",
+    "processPayment": {
+      "title": "Обработка платежа",
+      "customerInfo": "Информация о клиенте",
+      "name": "Имя",
+      "phone": "Телефон",
+      "orderSummary": "Сводка заказа для подтверждения персонала",
+      "tableSessions": "Застольные сессии:",
+      "duration": "Продолжительность",
+      "customer": "Клиент",
+      "fnbItems": "Заказанные продукты питания и напитки:",
+      "servedBy": "Обслуживает",
+      "notes": "Примечания",
+      "qty": "Кол-во",
+      "item": "Товар",
+      "category": "Категория",
+      "unitPrice": "Цена за единицу",
+      "subtotal": "Промежуточный итог",
+      "orderSubtotal": "Заказ Промежуточный итог",
+      "tax": "Налог",
+      "orderTotal": "Общая сумма заказа",
+      "paymentBreakdown": "Разбивка платежей",
+      "transactionNumber": "Номер транзакции",
+      "tableAmount": "Сумма стола",
+      "fnbAmount": "F&B Сумма",
+      "discountAmount": "Сумма скидки",
+      "taxAmount": "Сумма налога",
+      "totalAmount": "Общая сумма",
+      "staffConfirmation": "Подтверждение персонала: перед обработкой платежа убедитесь у клиента, что это соответствует его заказу.",
+      "confirmPaid": "Подтвердите и отметьте как Оплачено",
+      "cancelPayment": "Отменить платеж",
+      "close": "Закрыть"
+    },
+    "transactionDetail": {
+      "title": "Детали транзакции",
+      "transactionNumber": "Номер транзакции",
+      "customerName": "Имя клиента",
+      "phoneNumber": "Телефон Номер",
+      "notProvided": "Не указан",
+      "tableSessions": "Застольные сессии",
+      "table": "Стол",
+      "duration": "Продолжительность",
+      "startTime": "Время начала",
+      "ordersLinked": "Связано заказов F&B: {count}",
+      "fnbOrders": "Заказы еды и напитков",
+      "orderNumber": "Заказ #",
+      "orderDate": "Дата заказа",
+      "orderItems": "Товары для заказа:",
+      "paymentSummary": "Сводка платежей",
+      "paymentMethod": "Способ оплаты",
+      "currency": "Валюта",
+      "createdAt": "Создано в",
+      "lastUpdated": "Последнее обновление",
+      "midtransResponse": "Ответ Midtrans",
+      "print": "Распечатать квитанцию",
+      "close": "Закрывать",
+      "printLanguagePrompt": "Выберите язык квитанции:",
+      "printInEnglish": "Печатать на английском",
+      "receipt": {
+        "title": "МЕЛОВАЯ ДОСКА БИЛЬЯРД",
+        "subtitle": "Квитанция",
+        "transaction": "Сделка",
+        "date": "Дата",
+        "customer": "Клиент",
+        "phone": "Телефон",
+        "status": "Статус",
+        "tableSessions": "ТАБЛИЧНЫЕ СЕССИИ",
+        "table": "Таблица",
+        "minutes": "мин",
+        "foodBeverage": "ЕДА И НАПИТКИ",
+        "notes": "Примечания",
+        "paymentSummary": "СВОДКА ОПЛАТЫ",
+        "tableAmount": "Сумма стола",
+        "fnbAmount": "Еда и напитки Сумма",
+        "discount": "Скидка",
+        "tax": "Налог",
+        "total": "ИТОГО",
+        "footer": {
+          "thankYou": "Спасибо за посещение!",
+          "businessName": "Kiy24 Бильярд Зал",
+          "generated": "Сгенерировано"
+        }
+      },
+      "printInRussian": "Печатать на русском",
+      "printInUzbek": "Печатать на узбекском"
+    }
+  },
+  "Alerts": {
+    "tableCreatedSuccess": "Таблица успешно создана",
+    "tableUpdatedSuccess": "Таблица успешно обновлена",
+    "tableDeletedSuccess": "Таблица успешно удалена",
+    "sessionStartedSuccess": "Сеанс успешно начат",
+    "sessionEndedSuccess": "Сеанс завершен успешно",
+    "paymentRecordCreated": "Запись о платеже создана. Пожалуйста, обработайте платеж на странице «Транзакции».",
+    "fnbOrderCreatedSuccess": "Заказ #{orderNumber} успешно создан! Добавлен в счет стола {tableName}.",
+    "genericError": "Произошла непредвиденная ошибка",
+    "itemOutOfStock": "Товара нет в наличии",
+    "notEnoughStock": "Недостаточно товара",
+    "cartEmpty": "Корзина пуста",
+    "customerNameRequired": "Имя клиента: требуется",
+    "staffMemberRequired": "Необходимо выбрать сотрудника",
+    "selectPendingTransaction": "Выберите ожидающую транзакцию",
+    "selectTable": "Выберите стол",
+    "selectStaff": "Выберите сотрудника",
+    "orderAssignedToTable": "Проект заказа успешно присвоен таблице",
+    "orderAssignedToTransaction": "Черновой заказ успешно привязан к транзакции {transactionNumber}",
+    "orderCreatedSuccess": "Заказ {orderType} #{orderNumber} успешно создан",
+    "orderCreatedWithPayment": "Заказ {orderType} #{orderNumber} успешно создан! Платежная запись {transactionNumber} ожидает обработки на странице транзакций.",
+    "paymentMarkedSuccess": "Платеж отмечен как успешный",
+    "paymentCancelled": "Платеж отменен успешно",
+    "categoryCreatedSuccess": "Категория успешно создана",
+    "categoryUpdatedSuccess": "Категория успешно обновлена",
+    "categoryDeletedSuccess": "Категория успешно удалена",
+    "itemCreatedSuccess": "Элемент создан успешно",
+    "itemUpdatedSuccess": "Элемент обновлен успешно",
+    "itemDeletedSuccess": "Элемент удален успешно",
+    "failedToLoadData": "Не удалось загрузить данные",
+    "failedToSaveCategory": "Не удалось сохранить категорию",
+    "failedToDeleteCategory": "Не удалось удалить категорию",
+    "failedToSaveItem": "Не удалось сохранить элемент",
+    "failedToDeleteItem": "Не удалось удалить элемент",
+    "failedToProcessOrder": "Не удалось для обработки заказа",
+    "failedToAssignDraftOrder": "Не удалось назначить черновик заказа",
+    "failedToUpdatePayment": "Не удалось обновить статус платежа",
+    "failedToProcessPayment": "Не удалось обработать платеж",
+    "failedToCancelPayment": "Не удалось отменить платеж",
+    "failedToLoadPayments": "Не удалось загрузить платежи",
+    "durationTypeUpdatedSuccess": "Тип длительности успешно обновлен",
+    "failedToUpdateDurationType": "Не удалось обновить тип длительности",
+    "durationUpdatedSuccess": "Продолжительность успешно обновлена",
+    "failedToUpdateDuration": "Не удалось обновить продолжительность",
+    "sessionMovedSuccess": "Сеанс успешно перенесен на {tableName}",
+    "paymentProcessedSuccess": "Платеж успешно обработан",
+    "failedToLoadFnBData": "Не удалось загрузить данные о продуктах питания и напитках",
+    "itemOutOfStockNamed": "{itemName} отсутствует на складе",
+    "notEnoughStockAvailable": "Недостаточно товара",
+    "tableSessionNotFound": "Сеанс стола невозможен найдено",
+    "cartIsEmpty": "Корзина пуста",
+    "pleaseSelectStaffMember": "Пожалуйста, выберите сотрудника",
+    "orderCreatedAddedToBill": "Заказ #{orderNumber} успешно создан! Добавлен в счет стола {tableName}.",
+    "failedToCreateOrder": "Не удалось создать заказ",
+    "noActiveSessionFound": "Для этой таблицы не найдено активного сеанса",
+    "failedToCreateTable": "Не удалось создать таблицу",
+    "failedToUpdateTable": "Не удалось обновить table",
+    "failedToDeleteTable": "Не удалось удалить таблицу",
+    "failedToStartSession": "Не удалось начать сеанс",
+    "failedToUpdatePaymentStatus": "Не удалось обновить статус платежа",
+    "paymentCancelledSuccess": "Платеж успешно отменен",
+    "failedToEndSession": "Не удалось завершить сеанс",
+    "taxSettingsUpdatedSuccess": "Налог Настройки успешно обновлены.",
+    "failedToUpdateTaxSettings": "Не удалось обновить налоговые настройки."
+  },
+  "Analytics": {
+    "title": "Панель расширенной аналитики",
+    "subtitle": "Комплексная информация о вашем бильярдном зале и эффективности еды и напитков",
+    "breadcrumbHome": "Дом",
+    "breadcrumbAnalytics": "Расширенный Аналитика",
+    "refresh": "Обновить",
+    "overview": "Обзор",
+    "fnbAnalytics": "Аналитика F&B",
+    "operations": "Операции",
+    "customerInsights": "Сведения о клиентах",
+    "timeRanges": {
+      "last7DaysDaily": "Последние 7 дней (ежедневно)",
+      "last14DaysDaily": "Последние 14 дней (ежедневно)",
+      "last30DaysDaily": "Последние 30 дней (Ежедневно)",
+      "last30DaysWeekly": "Последние 30 дней (еженедельно)",
+      "last90DaysWeekly": "Последние 90 дней (еженедельно)",
+      "last90DaysMonthly": "Последние 90 дней (ежемесячно)"
+    },
+    "cards": {
+      "totalRevenue": "Общий доход",
+      "tableRevenue": "Таблица Доход",
+      "fnbRevenue": "Доход от еды и напитков",
+      "activeTables": "Активные столы",
+      "sessions": "сеансы",
+      "orders": "заказы",
+      "utilization": "использование",
+      "vsLastPeriod": "по сравнению с последним период"
+    },
+    "charts": {
+      "revenueBreakdownTrends": "Тенденции распределения доходов",
+      "quickStats": "Краткая статистика",
+      "avgFnbOrderValue": "Средняя стоимость заказа еды и напитков",
+      "customerSatisfaction": "Удовлетворенность клиентов",
+      "avgSessionDuration": "Средняя сессия Продолжительность",
+      "topSellingItems": "Самые продаваемые товары",
+      "categoryPerformance": "Эффективность категории",
+      "draftOrderPerformance": "Эффективность чернового заказа",
+      "staffPerformance": "Производительность персонала",
+      "operationalKPIs": "Операционные ключевые показатели эффективности",
+      "hourlyActivityDistribution": "Почасовое распределение активности",
+      "sessionsRevenueAndFnbByHour": "Сеансы, доход и заказы на еду по часам",
+      "customerOverview": "Обзор клиентов",
+      "visitFrequencyDistribution": "Частота посещений Распространение"
+    },
+    "labels": {
+      "sold": "продано",
+      "avgValue": "Среднее значение",
+      "totalDrafts": "Всего черновиков",
+      "assigned": "Назначено",
+      "conversionRate": "Коэффициент конверсии",
+      "avgWaitTime": "Среднее ожидание Время",
+      "staffMember": "Сотрудник",
+      "role": "Роль",
+      "revenue": "Доход",
+      "rating": "Рейтинг",
+      "tableUtilization": "Использование столов",
+      "inventoryAlerts": "Инвентарь Оповещения",
+      "peakHours": "Часы пик",
+      "totalCustomers": "Всего клиентов",
+      "returningCustomers": "Вернувшихся клиентов",
+      "retention": "удержания",
+      "avgSpendPerCustomer": "Средние расходы на единицу Клиент",
+      "min": "мин",
+      "hour": "час"
+    },
+    "tooltip": {
+      "tableRevenue": "Таблица Доход",
+      "fnbRevenue": "Доход от еды и напитков",
+      "totalRevenue": "Общий доход",
+      "sessions": "Сеансы",
+      "fnbOrders": "Заказы на еду и напитки"
+    }
+  },
+  "Stock": {
+    "title": "Отчет о запасах",
+    "subtitle": "Комплексное управление запасами и анализ акций",
+    "breadcrumbHome": "Главная",
+    "breadcrumbStock": "Отчет об акциях",
+    "refresh": "Обновить",
+    "timeRanges": {
+      "last7Days": "Последние 7 дней",
+      "last14Days": "Последние 14 дней",
+      "last30Days": "Последние 30 дней",
+      "last90Days": "Последние 90 дней"
+    },
+    "cards": {
+      "totalItems": "Всего товаров",
+      "stockValue": "Стоимость запасов",
+      "lowStockItems": "Низкий запас товаров",
+      "outOfStock": "Нет Запасы",
+      "categories": "категории",
+      "totalInventoryValue": "Общая стоимость запасов",
+      "needAttention": "Требует внимания",
+      "urgentReorder": "Срочный повторный заказ"
+    },
+    "sections": {
+      "stockAlerts": "Уведомления о наличии запасов",
+      "categoryOverview": "Категория Обзор",
+      "currentStockLevels": "Текущие уровни запасов",
+      "stockMovement": "Движение запасов (последние {days} дней)"
+    },
+    "table": {
+      "itemName": "Название предмета",
+      "category": "Категория",
+      "currentStock": "Текущий запас",
+      "minLevel": "Минимальный уровень",
+      "status": "Статус",
+      "unit": "Единица",
+      "stockValue": "Акции Стоимость",
+      "totalSold": "Общий объем продаж",
+      "revenue": "Доход",
+      "dailyAvg": "Средний за день",
+      "orders": "Заказы",
+      "lastOrder": "Последний заказ"
+    },
+    "status": {
+      "outOfStock": "Из Склад",
+      "lowStock": "Низкий запас",
+      "mediumStock": "Средний запас",
+      "highStock": "Высокий Стандартный",
+      "unknown": "Неизвестно",
+      "normal": "Нормальный",
+      "high": "Высокий",
+      "medium": "Я число",
+      "low": "Низкое"
+    },
+    "labels": {
+      "items": "элементов",
+      "reorder": "Переупорядочить",
+      "totalValue": "Всего Значение",
+      "na": "Н/Д"
+    }
+  },
+  "Users": {
+    "title": "Управление персоналом",
+    "subtitle": "Управляйте членами вашей команды и их ролями",
+    "addStaffMember": "Добавить сотрудника",
+    "editStaffMember": "Редактировать сотрудника",
+    "updateStaffMember": "Обновить сотрудника",
+    "addNewStaffMember": "Добавить нового сотрудника",
+    "confirmDeactivation": "Подтвердите деактивацию",
+    "filters": {
+      "allStaff": "Весь персонал",
+      "activeOnly": "Только активный",
+      "inactiveOnly": "Только неактивный"
+    },
+    "table": {
+      "name": "Имя",
+      "role": "Роль",
+      "status": "Статус",
+      "created": "Созданный",
+      "actions": "Действия"
+    },
+    "status": {
+      "active": "Активный",
+      "inactive": "Неактивный"
+    },
+    "actions": {
+      "edit": "Редактировать",
+      "activate": "Активировать",
+      "deactivate": "Деактивировать",
+      "delete": "Удалить"
+    },
+    "roles": {
+      "staff": "Персонал",
+      "manager": "Менеджер",
+      "admin": "Админ",
+      "cashier": "Касса",
+      "waiter": "Официант",
+      "chef": "Шеф-повар",
+      "supervisor": "Руководитель"
+    },
+    "form": {
+      "fullName": "Полное имя",
+      "enterFullName": "Введите полное имя",
+      "role": "Роль",
+      "cancel": "Отмена"
+    },
+    "messages": {
+      "totalStaffMembers": "Всего: {count} сотрудников",
+      "noStaffMembersFound": "Сотрудники не найдены",
+      "deactivateConfirmation": "Вы уверены, что хотите деактивировать {name}?",
+      "deactivateDescription": "Это сделает их недоступными для новых назначений, но сохранит исторические данные.",
+      "yesDeactivate": "Да, деактивировать"
+    }
+  },
+  "Modals": {
+    "tableModal": {
+      "createTitle": "Создать новый Таблица",
+      "tableName": "Название стола",
+      "tableNamePlaceholder": "например. Таблица 1.",
+      "billingType": "Тип оплаты",
+      "hourlyBilling": "Почасовая оплата",
+      "perMinuteBilling": "Поминутная оплата",
+      "hourlyRate": "Почасовая ставка (UZS)",
+      "hourlyRatePlaceholder": "например. 100000",
+      "hourlyRateHelper": "Все часы сеанса будут округлены в большую сторону",
+      "perMinuteRate": "Поминутная ставка (UZS)",
+      "perMinuteRatePlaceholder": "напр. 1500",
+      "perMinuteRateHelper": "Минуты сеанса округляются в большую сторону через 30 секунд",
+      "status": "Статус",
+      "statusPlaceholder": "Выбрать статус",
+      "cancelButton": "Отмена",
+      "createButton": "Создать таблицу",
+      "updateButton": "Обновить таблицу",
+      "deleteButton": "Удалить",
+      "editTitle": "Редактировать таблицу"
+    },
+    "editTitle": "Редактировать таблицу",
+    "deleteTitle": "Удалить таблицу",
+    "deleteConfirmation": "Вы уверены, что хотите удалить <strong>{tableName}</strong>? Это действие нельзя отменить.",
+    "startSessionTitle": "Начать сеанс - {tableName}",
+    "billingTitle": "Оплата сеанса Сводка",
+    "fnbTitle": "Заказ F&B - {tableName}",
+    "customerLabel": "Имя клиента",
+    "hourlyRateLabel": "Почасовая ставка (UZS)",
+    "statusLabel": "Статус",
+    "plannedDurationLabel": "Плановая продолжительность (минуты)",
+    "cancelButton": "Отмена",
+    "createButton": "Создать Таблица",
+    "updateButton": "Обновление Таблица",
+    "deleteButton": "Удалить"
+  },
+  "Navigation": {
+    "dashboard": "Панель мониторинга",
+    "analytics": "Аналитика",
+    "tables": "Stollar",
+    "f&b": "F&B",
+    "menumanagement": "Меню Управление",
+    "possystem": "Система POS",
+    "pos": "POS",
+    "revenue": "Доход",
+    "stockreport": "Отчет по складу",
+    "transactions": "Транзакции",
+    "usermanagement": "Управление пользователями",
+    "adminsettings": "Настройки администратора",
+    "pricingpackages": "Ценовые пакеты",
+    "pricingPackages": "Ценовые пакеты"
+  },
+  "Common": {
+    "save": "Сохранять",
+    "cancel": "Отмена",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "create": "Создавать",
+    "update": "Обновлять",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успех",
+    "warning": "Предупреждение",
+    "info": "Информация",
+    "active": "Активный",
+    "inactive": "Неактивный",
+    "yes": "Да",
+    "no": "Нет",
+    "confirm": "Подтверждать",
+    "close": "Закрывать",
+    "view": "Вид",
+    "actions": "Действия",
+    "status": "Статус",
+    "name": "Имя",
+    "description": "Описание",
+    "price": "Цена",
+    "quantity": "Количество",
+    "total": "Всего",
+    "date": "Дата",
+    "time": "Время",
+    "customer": "Клиент",
+    "staff": "S taff",
+    "table": "Таблица",
+    "order": "Заказ",
+    "payment": "Оплата",
+    "transaction": "Транзакция",
+    "items": "элементы",
+    "clear": "Очистить",
+    "menuItems": "Меню Товары",
+    "currentOrders": "Текущие заказы",
+    "newOrder": "Новый заказ",
+    "cartIsEmpty": "Корзина пуста",
+    "staffMember": "Сотрудник",
+    "selectStaff": "Выбрать Персонал",
+    "duration": "Продолжительность",
+    "move": "Переместить",
+    "durationManagement": "Управление продолжительностью",
+    "loadingFnBMenu": "Загрузка меню еды и напитков...",
+    "moveSessionToAnotherTable": "Переместить сеанс на другой стол",
+    "currentSession": "Текущий сеанс",
+    "currentTable": "Текущая таблица",
+    "selectTargetTable": "Выберите целевую таблицу",
+    "loadingAvailableTables": "Загрузка доступных таблиц...",
+    "noAvailableTablesFound": "Доступных таблиц не найдено",
+    "selectATable": "Выберите таблицу...",
+    "targetTable": "Цель Таблица",
+    "rate": "Цена",
+    "available": "Доступна",
+    "moveSessionWarning": "При перемещении сеанса все ожидающие заказы на еду и напитки будут перенесены в новый стол. Выставление счетов будет продолжаться с той же продолжительностью и структурой тарифов.",
+    "movingSession": "Перенос сеанса...",
+    "moveSession": "Перенос сеанса",
+    "failedToFetchAvailableTables": "Не удалось получить доступные столы",
+    "errorFetchingTables": "Ошибка получения таблиц",
+    "failedToMoveSession": "Не удалось переместить сеанс",
+    "errorMovingSession": "Ошибка перемещения сеанса",
+    "changeToPerMinute": "Изменить на поминутный",
+    "changeToHourly": "Изменить на почасовой",
+    "currentDuration": "Текущий Продолжительность",
+    "minutes": "минуты",
+    "hours": "часов",
+    "min": "минут",
+    "sec": "секунд",
+    "billingType": "Тип оплаты",
+    "hourlyRate": "Почасовая ставка",
+    "perMinuteRate": "Поминутная ставка",
+    "billableHours": "Оплачиваемые часы",
+    "durationAndBillingType": "Продолжительность и тип биллинга",
+    "durationMinutes": "Продолжительность (минуты)",
+    "failedToRecalculateBilling": "Не удалось пересчитать счет",
+    "errorRecalculatingBilling": "Ошибка перерасчета Billing",
+    "currency": {
+      "compact": {
+        "thousand": "K",
+        "million": "M",
+        "billion": "B"
+      }
+    }
+  },
+  "AdminPage": {
+    "title": "Настройки администратора",
+    "subtitle": "Управление общесистемной конфигурацией и настройками выставления счетов",
+    "billingSystem": {
+      "title": "Таблица выставления счетов Система",
+      "subtitle": "Настройте оплату для каждого стола индивидуально с помощью интерфейса управления таблицами.",
+      "perMinuteAvailable": "Доступна поминутная оплата",
+      "features": {
+        "individualConfig": "Индивидуальная конфигурация: для каждого стола можно установить почасовую или поминутную оплату",
+        "hourlyBilling": "Почасовая оплата: время сеанса округляется до следующего полного час",
+        "perMinuteBilling": "Поминутная оплата: время сеанса оплачивается поминутно (округляется через 30 секунд в большую сторону)",
+        "easyManagement": "Простое управление: изменение типа биллинга при создании или редактировании таблиц"
+      },
+      "howToTitle": "Как настроить столы:",
+      "steps": {
+        "step1": "Перейдите в раздел «Stollar» → «Создать новый стол» или «Редактировать существующий стол»",
+        "step2": "Выберите тип биллинга: «Почасовой биллинг» или «Поминутный биллинг»",
+        "step3": "Введите тариф для выбранного типа биллинга",
+        "step4": "Каждая таблица будет выставлять счета в соответствии с его индивидуальной конфигурацией"
+      }
+    },
+    "systemInfo": {
+      "title": "Система Информация:",
+      "version": "Версия:",
+      "perMinuteBilling": "Поминутная оплата:",
+      "individualTableConfig": "Конфигурация отдельного стола:",
+      "apiEndpoints": "Конечные точки API:",
+      "active": "Активно",
+      "enabled": "Включено"
+    },
+    "taxSettings": {
+      "title": "Налоговые настройки (PPN)",
+      "subtitle": "Настройка налоговых настроек для сеансов за столиками и заказов еды и напитков",
+      "enableTax": "Включить сбор налогов",
+      "taxPercentage": "Процент налога (%)",
+      "taxName": "Название/метка налога",
+      "applyTaxTo": "Применить налог Кому:",
+      "tableSessions": "Сеансы за столиками",
+      "fnbOrders": "Заказы на еду и напитки",
+      "note": "Примечание:",
+      "noteText": "Текущая ставка налога по умолчанию составляет 11 % (PPN). Изменения применяются только к новым заказам и сеансам.",
+      "saving": "Сохранение...",
+      "saveTaxSettings": "Сохранить настройки налога"
+    },
+    "storeSettings": {
+      "title": "Информация о магазине",
+      "subtitle": "Настройте данные бильярдного зала для квитанций",
+      "storeName": "Магазин Имя",
+      "storeNamePlaceholder": "например, «Бильярд на доске»",
+      "storeAddress": "Адрес",
+      "storeAddressPlaceholder": "например, Jl. Судирман № 123",
+      "storePhone": "Номер телефона",
+      "storePhonePlaceholder": "например, 021-1234567",
+      "storeNotes": "Дополнительные примечания (печатаются при получении)",
+      "storeNotesPlaceholder": "например, пароль Wi-Fi: billiard123",
+      "saving": "Сохранение...",
+      "saveStoreSettings": "Сохранить настройки магазина"
+    },
+    "defaultStaff": {
+      "title": "Сотрудник по умолчанию",
+      "subtitle": "Установить сотрудника по умолчанию, чтобы уменьшить выбор трение",
+      "selectStaff": "Выбрать персонал по умолчанию",
+      "noDefault": "Нет по умолчанию (требуется выбор вручную)",
+      "saving": "Сохранение...",
+      "saveDefaultStaff": "Сохранить персонал по умолчанию"
+    },
+    "checkout": {
+      "printAndSave": "Распечатать и сохранить",
+      "adjustDuration": "Изменить Продолжительность",
+      "taxBreakdown": "Разбивка налогов",
+      "tableTax": "Таблица налогов",
+      "fnbTax": "F&B Налог",
+      "duration": "Продолжительность",
+      "hours": "Часы",
+      "minutes": "Минуты",
+      "seconds": "Секунды"
+    }
+  },
+  "PricingPackages": {
+    "title": "Ценовые пакеты",
+    "subtitle": "Управляйте ценами в таблице пакеты",
+    "addPackage": "Добавить пакет",
+    "categories": {
+      "all": "Все пакеты",
+      "hourly": "Почасовые пакеты",
+      "per_minute": "Поминутные пакеты"
+    },
+    "table": {
+      "name": "Имя пакета",
+      "category": "Категория",
+      "rate": "Оценка",
+      "status": "Статус",
+      "default": "По умолчанию",
+      "actions": "Действия"
+    },
+    "form": {
+      "addTitle": "Добавить новый пакет",
+      "editTitle": "Изменить Пакет",
+      "name": "Название пакета",
+      "namePlaceholder": "например, MALAM, WEEKEND, VIP",
+      "description": "Описание",
+      "descriptionPlaceholder": "Необязательное описание для этого пакета",
+      "category": "Категория",
+      "selectCategory": "Выбрать категория",
+      "hourlyRate": "Почасовая ставка",
+      "perMinuteRate": "Поминутная ставка",
+      "isDefault": "Установлено по умолчанию для этой категории",
+      "isActive": "Активно",
+      "sortOrder": "Порядок сортировки",
+      "create": "Создать Пакет",
+      "update": "Обновить пакет",
+      "cancel": "Отмена",
+      "saving": "Сохранение..."
+    },
+    "status": {
+      "active": "Активен",
+      "inactive": "Неактивен"
+    },
+    "messages": {
+      "createSuccess": "Пакет успешно создан",
+      "updateSuccess": "Пакет успешно обновлен",
+      "deleteSuccess": "Пакет успешно удален",
+      "deleteError": "Невозможно удалить используемый пакет",
+      "loadError": "Не удалось загрузить пакеты",
+      "saveError": "Не удалось сохранить package",
+      "confirmDelete": "Вы уверены, что хотите удалить этот пакет?"
+    }
+  }
+}

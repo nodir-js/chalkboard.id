@@ -6,6 +6,8 @@ import { payments } from '@/schema/payments';
 import { eq, and, sql, gte, lte } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
@@ -87,4 +89,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching daily stats:', error);
     return NextResponse.json({ error: 'Failed to fetch daily stats' }, { status: 500 });
   }
-} 
+}

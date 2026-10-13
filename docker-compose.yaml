@@ -1,6 +1,6 @@
 services:
   # Default service (auto mode)
-  chalkboard:
+  kiy24:
     platform: linux/amd64
     build:
       context: .
@@ -16,7 +16,7 @@ services:
         - DB_POOLING=${DB_POOLING:-true}
     ports:
       - "3000:3000"
-    image: kugieapp/chalkboard:latest
+    image: kugieapp/kiy24:latest
     environment:
       - DATABASE_URL=${DATABASE_URL:-postgresql://username:password@host:5432/database}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-your-nextauth-secret}

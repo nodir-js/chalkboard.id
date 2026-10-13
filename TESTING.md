@@ -1,12 +1,12 @@
 # Testing & CI/CD Setup
 
-This document describes the comprehensive testing and CI/CD setup for the Chalkboard billiard hall management system.
+This document describes the comprehensive testing and CI/CD setup for the Kiy24 billiard hall management system.
 
 ## 🧪 Testing Infrastructure
 
 ### Test Framework
 - **Jest** - Primary test runner with TypeScript support
-- **Testing Library** - React component testing utilities  
+- **Testing Library** - React component testing utilities
 - **Supertest** - API endpoint testing
 - **PostgreSQL** - Test database for integration tests
 
@@ -98,7 +98,7 @@ services:
     env:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: chalkboard_test
+      POSTGRES_DB: kiy24_test
 ```
 
 - Sets up PostgreSQL service container
@@ -119,7 +119,7 @@ services:
 bun install
 
 # Optional: Set up local PostgreSQL
-createdb chalkboard_test
+createdb kiy24_test
 ```
 
 #### Manual Testing Script
@@ -144,7 +144,7 @@ This script tests:
 
 ### Test Environment Variables
 ```bash
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/chalkboard_test"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/kiy24_test"
 NEXTAUTH_SECRET="test-secret-key"
 NEXTAUTH_URL="http://localhost:3000"
 DEPLOYMENT_MODE="test"
@@ -217,10 +217,10 @@ The workflow ensures that every PR:
 brew services start postgresql
 
 # Create test database
-createdb chalkboard_test
+createdb kiy24_test
 
 # Test connection
-psql postgresql://postgres:postgres@localhost:5432/chalkboard_test
+psql postgresql://postgres:postgres@localhost:5432/kiy24_test
 ```
 
 #### TypeScript Errors

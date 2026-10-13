@@ -5,6 +5,8 @@ import { pricingPackages } from '@/schema/pricing-packages';
 import { eq, asc } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await auth();
@@ -39,7 +41,7 @@ export async function GET() {
       .leftJoin(pricingPackages, eq(tables.pricingPackageId, pricingPackages.id))
       .where(eq(tables.isActive, true))
       .orderBy(asc(tables.id));
-    
+
     return NextResponse.json(allTables);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch tables' }, { status: 500 });
@@ -72,4 +74,4 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create table' }, { status: 500 });
   }
-} 
+}

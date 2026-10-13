@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Chalkboard",
+  "productName": "Kiy24",
   "version": "1.0.0",
-  "identifier": "com.kugie.chalkboard",
+  "identifier": "uz.kiy24.app",
   "build": {
     "frontendDist": "frontend",
     "devUrl": "http://localhost:3000",
@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "Chalkboard - Billiard Hall Management",
+        "title": "Kiy24 - Billiard Hall Management",
         "width": 1400,
         "height": 900,
         "minWidth": 1024,
@@ -37,8 +37,8 @@
     ],
     "shortDescription": "Billiard Hall Management System",
     "longDescription": "Professional billiard hall management system with table tracking, F&B orders, and payment processing",
-    "publisher": "Kugie",
-    "copyright": "Copyright © 2024-2026 Kugie. All rights reserved.",
+    "publisher": "Kiy24.uz",
+    "copyright": "Copyright © 2024-2026 Kiy24.uz. All rights reserved.",
     "category": "Business",
     "fileAssociations": [],
     "resources": {

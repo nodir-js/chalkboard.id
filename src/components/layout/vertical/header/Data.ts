@@ -10,7 +10,7 @@ interface appsLinkType {
 
 const appsLink: appsLinkType[] = [
   {
-    href: "https://kugie.app/contact",
+    href: "https://kiy24.uz/contact",
     title: "Contact Support",
     subtext: "Contact us for any questions or support",
     icon: "solar:chat-line-bold-duotone",

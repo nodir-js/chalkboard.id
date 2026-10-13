@@ -15,45 +15,45 @@ interface StatCardProps {
   tCommon?: (key: string) => string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ 
-  title, 
-  value, 
-  subtitle, 
-  icon: Icon, 
+const StatCard: React.FC<StatCardProps> = ({
+  title,
+  value,
+  subtitle,
+  icon: Icon,
   color,
   trend,
   tCommon
 }) => {
   const formatValue = (val: string | number) => {
     // If it's already a formatted string with translations (contains common suffixes), return as-is
-    if (typeof val === 'string' && tCommon && /Rp\d+(\.\d+)?(Rb|Jt|Mly|K|M|B)/.test(val)) {
+    if (typeof val === 'string' && tCommon && /UZS\s?\d+(\.\d+)?(Rb|Jt|Mly|K|M|B)/.test(val)) {
       return val;
     }
     // If it's already a formatted string (contains K, M, or B), return as-is for backwards compatibility
-    if (typeof val === 'string' && /Rp\d+(\.\d+)?[KMB]/.test(val)) {
+    if (typeof val === 'string' && /UZS\s?\d+(\.\d+)?[KMB]/.test(val)) {
       return val;
     }
-    
+
     // Convert string numbers to actual numbers
     let numericValue: number;
-    
+
     if (typeof val === 'string') {
-      // Handle currency strings like "Rp374,888,166"
-      if (val.includes('Rp')) {
+      // Handle currency strings like "UZS 374,888,166"
+      if (val.includes('UZS')) {
         numericValue = parseFloat(val.replace(/[^0-9.-]/g, ''));
       } else {
         // Handle pure numeric strings like "374888166.45"
         numericValue = parseFloat(val);
       }
-      
+
       if (isNaN(numericValue)) {
         return val; // Return original if can't parse
       }
-      
-      // Format with appropriate suffix and currency prefix if original had Rp
-      const hasRp = val.includes('Rp');
-      const prefix = hasRp ? 'Rp' : '';
-      
+
+      // Format with appropriate suffix and currency prefix if original had UZS
+      const hasUzs = val.includes('UZS');
+      const prefix = hasUzs ? 'UZS ' : '';
+
       if (numericValue >= 1000000000) {
         const suffix = tCommon ? tCommon('currency.compact.billion') : 'B';
         return `${prefix}${(numericValue / 1000000000).toFixed(1)}${suffix}`;
@@ -64,10 +64,10 @@ const StatCard: React.FC<StatCardProps> = ({
         const suffix = tCommon ? tCommon('currency.compact.thousand') : 'K';
         return `${prefix}${(numericValue / 1000).toFixed(1)}${suffix}`;
       }
-      
-      return hasRp ? `Rp${numericValue.toLocaleString()}` : numericValue.toLocaleString();
+
+      return hasUzs ? `UZS ${numericValue.toLocaleString()}` : numericValue.toLocaleString();
     }
-    
+
     // Handle actual numbers
     if (typeof val === 'number') {
       if (val >= 1000000000) {
@@ -82,7 +82,7 @@ const StatCard: React.FC<StatCardProps> = ({
       }
       return val.toLocaleString();
     }
-    
+
     return val;
   };
 
@@ -115,7 +115,7 @@ const StatCard: React.FC<StatCardProps> = ({
             </div>
           </div>
         </div>
-        
+
         {trend && (
           <div className={`flex items-center gap-1 ${getTrendColor()}`}>
             <span className="text-sm font-medium">
@@ -128,4 +128,4 @@ const StatCard: React.FC<StatCardProps> = ({
   );
 };
 
-export default StatCard; 
+export default StatCard;

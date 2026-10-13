@@ -22,7 +22,7 @@ DEFAULT_LOCALE = "en"
 DB_POOLING = "true"
 
 [services.web]
-name = "chalkboard-web"
+name = "kiy24-web"
 source = "."
 
 [services.web.variables]
